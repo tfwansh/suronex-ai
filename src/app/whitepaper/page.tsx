@@ -8,52 +8,100 @@ import { Search, Calendar, Clock, ArrowRight, FileText, Sparkles } from "lucide-
 import Navbar from "@/app/components/Navbar";
 import { Footer } from "@/app/components/footer";
 
-
+// --- WHITEPAPERS LIST ---
+// IMPORTANT: The 'slug' here must match the key in [slug]/page.tsx exactly.
 const whitepapers = [
   {
     id: "1",
-    slug: "multi-cloud-security-redefined",
-    title: "Multi-Cloud Security Redefined",
-    excerpt: "Transform compliance from complexity to confidence. Discover how AI-driven intelligence is eliminating blind spots and automating compliance across AWS, Azure, and GCP.",
+    slug: "cloud-vulnerability-management",
+    title: "Cloud Vulnerability Management: Strengthening Cloud Security Posture",
+    excerpt: "Proactive strategies to identify, assess, and remediate vulnerabilities across your cloud infrastructure before they can be exploited by malicious actors.",
     category: "Cloud Security",
-    author: "Suronex Research",
-    publishedDate: "2025-12-19",
-    readingTime: 12,
-    featuredImage: "/dashboard.png", 
-    isFeatured: true,
+    author: "Suronex Security",
+    publishedDate: "June 22, 2025",
+    readingTime: 10,
+    featuredImage: null,
+    isFeatured: true, 
   },
   {
     id: "2",
-    slug: "ai-governance-policy",
-    title: "The Future of AI Governance",
-    excerpt: "Navigating the complex landscape of AI regulation. A comprehensive guide to securing LLMs and ensuring data privacy in the age of generative AI.",
+    slug: "navigating-cloud-security",
+    title: "Navigating Cloud Security: Risk Management & Compliance Best Practices",
+    excerpt: "A comprehensive guide to aligning your cloud operations with major regulatory frameworks while effectively managing security risks in a dynamic environment.",
     category: "Compliance",
-    author: "Suronex Team",
-    publishedDate: "2025-11-15",
-    readingTime: 8,
-    featuredImage: null, 
+    author: "Compliance Team",
+    publishedDate: "August 30, 2025",
+    readingTime: 15,
+    featuredImage: null,
     isFeatured: false,
   },
   {
     id: "3",
-    slug: "inventory-management-guide",
-    title: "Mastering Cloud Inventory",
-    excerpt: "Why visibility is the foundation of security. Learn how to discover, classify, and monitor every resource across your multi-cloud infrastructure.",
-    category: "Inventory",
-    author: "Suronex Tech",
-    publishedDate: "2025-10-26",
-    readingTime: 6,
+    slug: "future-of-cloud-security",
+    title: "The Future of Cloud Security: Proactive Identity & Data Protection",
+    excerpt: "Exploring the shift towards identity-centric security models and data-first protection strategies in an evolving threat landscape where boundaries are disappearing.",
+    category: "Cloud Security",
+    author: "Suronex Labs",
+    publishedDate: "August 15, 2025",
+    readingTime: 9,
+    featuredImage: null,
+    isFeatured: false,
+  },
+  {
+    id: "4",
+    slug: "cloud-threat-intelligence",
+    title: "Cloud Threat Intelligence: Strengthening Security in the Digital Age",
+    excerpt: "Leveraging real-time threat data to anticipate attacks, understand adversary tactics, and fortify your digital defenses against sophisticated campaigns.",
+    category: "Threat Intel",
+    author: "Threat Research",
+    publishedDate: "July 22, 2025",
+    readingTime: 11,
+    featuredImage: null,
+    isFeatured: false,
+  },
+  {
+    id: "5",
+    slug: "external-threat-attack-surface",
+    title: "Cloud Security – External Threat Attack Surface",
+    excerpt: "Understanding and reducing your external attack surface to minimize exposure to internet-facing threats, shadow IT, and unmanaged assets.",
+    category: "Cloud Security",
+    author: "Suronex Security",
+    publishedDate: "July 05, 2025",
+    readingTime: 7,
+    featuredImage: null,
+    isFeatured: false,
+  },
+  {
+    id: "6",
+    slug: "hosting-service-questions",
+    title: "10 Questions to Ask Before Choosing a Hosting Service for Your Website",
+    excerpt: "Essential criteria and security considerations for evaluating hosting providers to ensure reliability, performance, and data safety for your digital presence.",
+    category: "Best Practices",
+    author: "Suronex Advisory",
+    publishedDate: "June 18, 2025",
+    readingTime: 5,
+    featuredImage: null,
+    isFeatured: false,
+  },
+  {
+    id: "7",
+    slug: "cspm-importance-startups",
+    title: "CSPM Solution and Its Importance to Startup Organizations",
+    excerpt: "Why Cloud Security Posture Management (CSPM) is critical for startups to scale securely, maintain compliance, and build customer trust from day one.",
+    category: "Cloud Security",
+    author: "Suronex Growth",
+    publishedDate: "June 01, 2025",
+    readingTime: 8,
     featuredImage: null,
     isFeatured: false,
   }
 ];
 
-const categories = ["All", "Cloud Security", "Compliance", "Inventory", "AI Safety"];
+const categories = ["All", "Cloud Security", "Compliance", "Threat Intel", "Best Practices"];
 
 export default function WhitepaperListing() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-
 
   const filteredPapers = whitepapers.filter(paper => {
     const matchesCategory = selectedCategory === "All" || paper.category === selectedCategory;
@@ -67,10 +115,7 @@ export default function WhitepaperListing() {
 
   return (
     <div className="min-h-screen bg-[#030014] text-white selection:bg-[#D33E9E]/30 relative font-sans">
-      
-     
       <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none">
-      
         <div className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center">
           <motion.div
             animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.2, 0.5, 0.2] }}
@@ -85,7 +130,6 @@ export default function WhitepaperListing() {
             <Image src="/shield-bg.png" alt="Shield" fill className="object-contain" priority />
           </motion.div>
         </div>
-      
         <div className="absolute inset-0 overflow-hidden font-sans z-[-2]">
           <motion.div 
             animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
@@ -100,14 +144,11 @@ export default function WhitepaperListing() {
         </div>
       </div>
 
-  
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
 
         <main className="flex-grow pt-32 md:pt-48 pb-20 px-6">
           <div className="max-w-7xl mx-auto">
-            
-      
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -127,11 +168,8 @@ export default function WhitepaperListing() {
               </p>
             </motion.div>
 
-            
             <div className="sticky top-24 z-40 mb-16">
               <div className="rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center shadow-2xl">
-                
-              
                 <div className="relative w-full md:w-96">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                   <input 
@@ -142,8 +180,6 @@ export default function WhitepaperListing() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#D33E9E]/50 transition-all"
                   />
                 </div>
-
-             
                 <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
                   {categories.map((cat) => (
                     <button
@@ -162,7 +198,6 @@ export default function WhitepaperListing() {
               </div>
             </div>
 
-        
             {featuredPaper && !searchQuery && selectedCategory === "All" && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -188,13 +223,11 @@ export default function WhitepaperListing() {
                         {featuredPaper.title}
                       </h2>
                       <p className="text-gray-400 text-lg mb-8 line-clamp-3">{featuredPaper.excerpt}</p>
-                      
                       <div className="flex items-center gap-6 text-sm text-gray-500 mb-8">
                         <span className="text-white font-medium">{featuredPaper.author}</span>
                         <span className="flex items-center gap-2"><Calendar className="w-4 h-4" /> {featuredPaper.publishedDate}</span>
                         <span className="flex items-center gap-2"><Clock className="w-4 h-4" /> {featuredPaper.readingTime} min read</span>
                       </div>
-
                       <div className="flex items-center gap-2 text-[#D33E9E] font-semibold group-hover:gap-4 transition-all">
                         Read Whitepaper <ArrowRight className="w-4 h-4" />
                       </div>
@@ -204,7 +237,6 @@ export default function WhitepaperListing() {
               </motion.div>
             )}
 
-            
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPapers.map((paper, idx) => (
                 <motion.div
@@ -227,11 +259,9 @@ export default function WhitepaperListing() {
                         {paper.category}
                       </div>
                     </div>
-                    
                     <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#D33E9E] transition-colors">{paper.title}</h3>
+                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#D33E9E] transition-colors line-clamp-2">{paper.title}</h3>
                       <p className="text-gray-400 text-sm mb-6 flex-1 line-clamp-3">{paper.excerpt}</p>
-                      
                       <div className="flex items-center justify-between text-xs text-gray-500 border-t border-white/5 pt-4">
                         <span>{paper.publishedDate}</span>
                         <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {paper.readingTime} min</span>
@@ -248,11 +278,9 @@ export default function WhitepaperListing() {
                 <p className="text-gray-400">Try adjusting your search or filters.</p>
               </div>
             )}
-
           </div>
         </main>
         
-      
         <div className="relative w-full border-t border-white/10 bg-[#030014]/60 backdrop-blur-xl [&_footer]:!bg-transparent [&_section]:!bg-transparent [&_div]:!bg-transparent">
           <Footer />
         </div>
