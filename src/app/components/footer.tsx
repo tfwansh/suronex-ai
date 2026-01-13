@@ -8,9 +8,9 @@ import { Facebook, Youtube, Linkedin } from "lucide-react"
 
 const footerLinks = {
   products: [
+    { label: "Cloud Compliance", href: "/products/cloud-compliance" },
     { label: "Cloud Security", href: "/products/cloud-security" },
     { label: "Inventory Management", href: "/products/inventory-management" },
-    { label: "Governance, Risk & Compliance", href: "/products/governance-risk-compliance" },
   ],
   company: [
     { label: "About us", href: "/about-us" },
