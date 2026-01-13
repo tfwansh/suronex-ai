@@ -1,9 +1,9 @@
 // app/about-us/page.tsx
 "use client"
 
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { useRef, useState } from "react"
-import { Shield, Target, Heart, ArrowRight, Globe } from "lucide-react"
+import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
+import { Shield, Target, Heart, ArrowRight, Globe, Check, Sparkles, Lock, Zap } from "lucide-react"
 import Navbar from "@/app/components/Navbar";
 import { Footer } from "@/app/components/footer";
 
@@ -298,7 +298,7 @@ function ClosingStatement() {
   )
 }
 
-// REFINED Mission/Vision/Values - exactly.ai style with gradient background
+// SOPHISTICATED Mission/Vision/Values - Stacked with Liquid Flow
 function RefinedMissionVisionValues() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.2 })
@@ -307,17 +307,6 @@ function RefinedMissionVisionValues() {
     <section ref={ref} className="relative py-32 px-6 overflow-hidden">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#D33E9E]/10 via-[#8B4FB8]/5 to-[#3530BA]/10" />
-      
-      {/* Shield Background Image */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'url(/shield-bg.png)',
-          backgroundPosition: 'center',
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
 
       {/* Animated gradient orbs */}
       <motion.div
@@ -345,14 +334,14 @@ function RefinedMissionVisionValues() {
         }}
       />
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.8 }}
-          className="mb-24"
+          className="mb-32"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-7xl font-bold mb-6">
             What Drives{" "}
             <span className="bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-transparent bg-clip-text">
               Us
@@ -361,37 +350,76 @@ function RefinedMissionVisionValues() {
         </motion.div>
 
         {/* Mission */}
-        <RefinedPrinciple
+        <SophisticatedPrinciple
           label="Mission"
           title="Empowering secure innovation"
           content="Our Mission is to empower organizations to securely innovate and operate in the cloud by providing comprehensive solutions for compliance, security and governance. We enable proactive risk management, ensure regulatory adherence, and safeguard critical data through automated controls, continuous monitoring, and actionable insights, fostering trust, resilience, and sustainable growth."
+          highlights={["empower organizations", "securely innovate and operate", "proactive risk management", "automated controls", "continuous monitoring"]}
           index={0}
+          gradient="from-[#D33E9E] to-[#3530BA]"
         />
 
         {/* Vision */}
-        <RefinedPrinciple
+        <SophisticatedPrinciple
           label="Vision"
           title="Leading cloud security excellence"
           content="Our vision is to be the leading catalyst in securing cloud environments and driving regulatory excellence, empowering organizations worldwide to confidently embrace digital transformation. We envision a future where security, compliance, and governance are seamlessly integrated into every cloud operation—enabling innovation without compromise."
+          highlights={["leading catalyst", "securing cloud environments", "regulatory excellence", "seamlessly integrated", "innovation without compromise"]}
           index={1}
+          gradient="from-[#8B4FB8] to-[#3530BA]"
         />
 
         {/* Values */}
-        <RefinedPrinciple
+        <SophisticatedPrinciple
           label="Values"
           title="Integrity, Authenticity, Honesty"
           content="At Suronex, we are committed to Integrity, Authenticity, and Honesty in delivering secure and compliant solutions. By emphasizing clear communication and a strong sense of responsibility, we safeguard digital assets and build lasting trust with every client interaction."
+          highlights={["Integrity, Authenticity, and Honesty", "clear communication", "safeguard digital assets", "lasting trust"]}
           index={2}
+          gradient="from-[#5049B8] to-[#3530BA]"
         />
       </div>
     </section>
   )
 }
 
-function RefinedPrinciple({ label, title, content, index }: any) {
+function SophisticatedPrinciple({ label, title, content, highlights, index, gradient }: any) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, amount: 0.5 })
   const [isHovered, setIsHovered] = useState(false)
+  const [activeHighlight, setActiveHighlight] = useState<string | null>(null)
+
+  // Render content with highlights
+  const renderContent = () => {
+    let remainingContent = content
+    const segments: any[] = []
+    
+    highlights.forEach((highlight: string) => {
+      const index = remainingContent.toLowerCase().indexOf(highlight.toLowerCase())
+      if (index !== -1) {
+        if (index > 0) {
+          segments.push({
+            type: 'text',
+            content: remainingContent.substring(0, index)
+          })
+        }
+        segments.push({
+          type: 'highlight',
+          content: remainingContent.substring(index, index + highlight.length),
+          key: highlight
+        })
+        remainingContent = remainingContent.substring(index + highlight.length)
+      }
+    })
+    if (remainingContent) {
+      segments.push({
+        type: 'text',
+        content: remainingContent
+      })
+    }
+    
+    return segments
+  }
 
   return (
     <motion.div
@@ -401,21 +429,22 @@ function RefinedPrinciple({ label, title, content, index }: any) {
       transition={{ duration: 0.6, delay: index * 0.15 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group mb-20 last:mb-0 border-l border-white/10 pl-8 md:pl-12 relative cursor-default"
+      className="mb-24 last:mb-0 border-l-2 border-white/10 pl-12 relative cursor-default max-w-5xl"
     >
-      {/* Animated border accent on hover */}
+      {/* Liquid flow animated border accent on hover */}
       <motion.div
-        className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-[#D33E9E] to-[#3530BA] origin-top"
+        className={`absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b ${gradient} origin-top`}
         initial={{ scaleY: 0 }}
         animate={{ scaleY: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
       />
 
-      <div className="mb-4 overflow-hidden">
-        <motion.span 
-          className="text-sm font-mono text-gray-500 uppercase tracking-wider inline-block"
+      {/* Label - Premium Typography */}
+      <div className="mb-6 overflow-hidden">
+        <motion.span
+          className="text-base font-light text-gray-500 uppercase tracking-[0.3em] inline-block"
           animate={{
-            letterSpacing: isHovered ? "0.2em" : "0.1em",
+            letterSpacing: isHovered ? "0.35em" : "0.3em",
             color: isHovered ? "rgb(156, 163, 175)" : "rgb(107, 114, 128)"
           }}
           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -423,8 +452,9 @@ function RefinedPrinciple({ label, title, content, index }: any) {
           {label}
         </motion.span>
       </div>
-      
-      <h3 className="text-2xl md:text-3xl font-medium mb-6 text-white relative overflow-hidden">
+
+      {/* Title - Large and Sophisticated */}
+      <h3 className="text-4xl md:text-5xl lg:text-6xl font-light mb-8 text-white relative overflow-hidden tracking-tight leading-tight">
         <motion.span
           className="inline-block"
           animate={{
@@ -434,57 +464,121 @@ function RefinedPrinciple({ label, title, content, index }: any) {
         >
           {title}
         </motion.span>
-        
+
         {/* Subtle glow effect on hover */}
         <motion.span
-          className="absolute inset-0 bg-gradient-to-r from-[#D33E9E]/20 via-[#8B4FB8]/20 to-[#3530BA]/20 blur-xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
+          className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-0 blur-xl pointer-events-none`}
+          animate={{ opacity: isHovered ? 0.15 : 0 }}
           transition={{ duration: 0.4 }}
         />
       </h3>
-      
-      <motion.p 
-        className="text-base md:text-lg leading-relaxed max-w-3xl relative"
+
+      {/* Content - Premium Typography with proper wrapping */}
+      <motion.div
+        className="text-lg md:text-xl leading-relaxed text-gray-400 font-light max-w-4xl"
         animate={{
           color: isHovered ? "rgb(229, 231, 235)" : "rgb(156, 163, 175)"
         }}
         transition={{ duration: 0.3 }}
+        style={{
+          wordBreak: "normal",
+          overflowWrap: "break-word",
+          hyphens: "auto"
+        }}
       >
-        {content}
-      </motion.p>
+        <p>
+          {renderContent().map((segment: any, i: number) => {
+            if (segment.type === 'highlight') {
+              return (
+                <motion.span
+                  key={i}
+                  onMouseEnter={() => setActiveHighlight(segment.key)}
+                  onMouseLeave={() => setActiveHighlight(null)}
+                  className="relative inline-block cursor-default mx-0.5"
+                >
+                  <motion.span
+                    className="relative z-10 font-normal"
+                    animate={{
+                      color: activeHighlight === segment.key ? "#ffffff" : "inherit",
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {segment.content}
+                  </motion.span>
+                  
+                  {/* Subtle underline on hover */}
+                  <motion.span
+                    className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r ${gradient}`}
+                    initial={{ scaleX: 0 }}
+                    animate={{
+                      scaleX: activeHighlight === segment.key ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    style={{ transformOrigin: "left" }}
+                  />
+                </motion.span>
+              )
+            }
+            return <span key={i}>{segment.content}</span>
+          })}
+        </p>
+      </motion.div>
 
       {/* Accent line with gradient reveal */}
-      <div className="mt-6 h-px bg-white/5 relative overflow-hidden">
+      <div className="mt-8 h-px bg-white/5 relative overflow-hidden">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-[#D33E9E]/50 via-[#8B4FB8]/50 to-[#3530BA]/50"
+          className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-50`}
           initial={{ scaleX: 0 }}
-          animate={{ 
+          animate={{
             scaleX: isInView ? 1 : 0,
             opacity: isHovered ? 1 : 0.3
           }}
-          transition={{ 
+          transition={{
             scaleX: { delay: index * 0.15 + 0.3, duration: 0.8 },
             opacity: { duration: 0.3 }
           }}
           style={{ transformOrigin: "left" }}
         />
       </div>
+    </motion.div>
+  )
+}
 
-      {/* Hover indicator - subtle arrow */}
-      <motion.div
-        className="absolute right-0 top-1/2 -translate-y-1/2"
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ 
-          opacity: isHovered ? 0.3 : 0,
-          x: isHovered ? 0 : -10
-        }}
-        transition={{ duration: 0.3 }}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-white">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </motion.div>
+// Final CTA
+function FinalCTA() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="text-center p-16 rounded-3xl bg-gradient-to-br from-[#D33E9E]/10 via-[#8B4FB8]/5 to-[#3530BA]/10 border border-white/10"
+    >
+      <h3 className="text-3xl md:text-4xl font-bold mb-6">
+        Ready to secure your cloud with confidence?
+      </h3>
+      <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+        Join teams who've reduced compliance time by 78% while shipping faster
+      </p>
+      <div className="flex gap-4 justify-center flex-wrap">
+        <motion.a
+          href="/contact"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-8 py-4 bg-gradient-to-r from-[#D33E9E] to-[#3530BA] rounded-lg font-semibold text-lg inline-flex items-center gap-2"
+        >
+          Book a Demo
+          <ArrowRight className="w-5 h-5" />
+        </motion.a>
+        <motion.a
+          href="/products/cloud-compliance"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-8 py-4 border-2 border-white/20 rounded-lg font-semibold text-lg hover:bg-white/5 transition-colors"
+        >
+          Explore Platform
+        </motion.a>
+      </div>
     </motion.div>
   )
 }

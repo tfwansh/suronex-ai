@@ -21,9 +21,9 @@ const navlinks: Navlink[] = [
     base: "Products",
     href: "/",
     dropdown: [
+      { text: "Cloud Compliance", link: "/products/cloud-compliance" },
       { text: "Cloud Security", link: "/products/cloud-security" },
-      { text: "Inventory Management", link: "/products/inventory-management" },
-      { text: "Governance, Risk & Compliance", link: "/products/governance-risk-compliance" }
+      { text: "Inventory Management", link: "/products/inventory-management" }
     ]
   },
   {
