@@ -8,6 +8,7 @@ import Solution from "./components/Solution";
 import CallToAction from "./components/CallToAction";
 import { Footer } from "./components/footer";
 import Image from "next/image";
+import { IntegrationsShowcase } from "./components/IntegrationsShowcase"; 
 
 export default function Home() {
   return (
@@ -59,7 +60,7 @@ export default function Home() {
 
         {/* Solution */}
         <Solution />
-
+<IntegrationsShowcase />
         {/* Call to Action */}
         <CallToAction />
       </div>

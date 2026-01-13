@@ -9,89 +9,88 @@ import Navbar from "@/app/components/Navbar";
 import { Footer } from "@/app/components/footer";
 
 // --- WHITEPAPERS LIST ---
-// IMPORTANT: The 'slug' here must match the key in [slug]/page.tsx exactly.
 const whitepapers = [
   {
     id: "1",
-    slug: "cloud-vulnerability-management",
-    title: "Cloud Vulnerability Management: Strengthening Cloud Security Posture",
-    excerpt: "Proactive strategies to identify, assess, and remediate vulnerabilities across your cloud infrastructure before they can be exploited by malicious actors.",
-    category: "Cloud Security",
-    author: "Suronex Security",
-    publishedDate: "June 22, 2025",
-    readingTime: 10,
-    featuredImage: null,
-    isFeatured: true, 
-  },
-  {
-    id: "2",
-    slug: "navigating-cloud-security",
+    slug: "cloud-security-risk-management",
     title: "Navigating Cloud Security: Risk Management & Compliance Best Practices",
     excerpt: "A comprehensive guide to aligning your cloud operations with major regulatory frameworks while effectively managing security risks in a dynamic environment.",
     category: "Compliance",
-    author: "Compliance Team",
-    publishedDate: "August 30, 2025",
+    author: "Suronex Research Team",
+    publishedDate: "June 28, 2025",
     readingTime: 15,
+    featuredImage: null,
+    isFeatured: true,
+  },
+  {
+    id: "2",
+    slug: "cloud-vulnerability-management",
+    title: "Cloud Vulnerability Management: Strengthening Cloud Security Posture",
+    excerpt: "Continuous detection, assessment, and remediation of security weaknesses across cloud infrastructure, applications, and services.",
+    category: "Cloud Security",
+    author: "Suronex",
+    publishedDate: "June 22, 2025",
+    readingTime: 12,
     featuredImage: null,
     isFeatured: false,
   },
   {
     id: "3",
-    slug: "future-of-cloud-security",
-    title: "The Future of Cloud Security: Proactive Identity & Data Protection",
-    excerpt: "Exploring the shift towards identity-centric security models and data-first protection strategies in an evolving threat landscape where boundaries are disappearing.",
-    category: "Cloud Security",
-    author: "Suronex Labs",
-    publishedDate: "August 15, 2025",
-    readingTime: 9,
+    slug: "cloud-threat-intelligence",
+    title: "Cloud Threat Intelligence: Strengthening Security in the Digital Age",
+    excerpt: "Leveraging real-time insights and threat data to proactively safeguard cloud assets against emerging cyber threats.",
+    category: "Threat Intel",
+    author: "Suronex",
+    publishedDate: "June 30, 2025",
+    readingTime: 14,
     featuredImage: null,
     isFeatured: false,
   },
   {
     id: "4",
-    slug: "cloud-threat-intelligence",
-    title: "Cloud Threat Intelligence: Strengthening Security in the Digital Age",
-    excerpt: "Leveraging real-time threat data to anticipate attacks, understand adversary tactics, and fortify your digital defenses against sophisticated campaigns.",
-    category: "Threat Intel",
-    author: "Threat Research",
-    publishedDate: "July 22, 2025",
-    readingTime: 11,
+    slug: "future-cloud-security-identity-data-protection",
+    title: "The Future of Cloud Security: Proactive Identity & Data Protection",
+    excerpt: "Building resilient security strategies through proactive identity management and comprehensive data protection.",
+    category: "Cloud Security",
+    author: "Suronex",
+    publishedDate: "July 7, 2025",
+    readingTime: 10,
     featuredImage: null,
     isFeatured: false,
   },
   {
     id: "5",
-    slug: "external-threat-attack-surface",
-    title: "Cloud Security – External Threat Attack Surface",
-    excerpt: "Understanding and reducing your external attack surface to minimize exposure to internet-facing threats, shadow IT, and unmanaged assets.",
+    slug: "cloud-infrastructure-entitlement-management",
+    title: "Cloud Infrastructure Entitlement Management: Securing Access in Multi-Cloud",
+    excerpt: "Managing and enforcing least-privilege access controls to minimize security risks and ensure compliance across multi-cloud environments.",
     category: "Cloud Security",
-    author: "Suronex Security",
-    publishedDate: "July 05, 2025",
-    readingTime: 7,
+    author: "Suronex",
+    publishedDate: "July 17, 2025",
+    readingTime: 11,
     featuredImage: null,
     isFeatured: false,
   },
   {
     id: "6",
-    slug: "hosting-service-questions",
-    title: "10 Questions to Ask Before Choosing a Hosting Service for Your Website",
-    excerpt: "Essential criteria and security considerations for evaluating hosting providers to ensure reliability, performance, and data safety for your digital presence.",
-    category: "Best Practices",
-    author: "Suronex Advisory",
-    publishedDate: "June 18, 2025",
-    readingTime: 5,
+    slug: "cloud-security-external-threat-attack-surface",
+    title: "Cloud Security – External Threat Attack Surface",
+    excerpt: "Understanding evolving threat actor tactics and implementing robust defenses against data exfiltration and identity exploitation.",
+    category: "Threat Intel",
+    author: "Suronex",
+    publishedDate: "July 3, 2025",
+    readingTime: 18,
     featuredImage: null,
     isFeatured: false,
   },
   {
     id: "7",
-    slug: "cspm-importance-startups",
+    slug: "cspm-solution-importance-for-startups",
     title: "CSPM Solution and Its Importance to Startup Organizations",
-    excerpt: "Why Cloud Security Posture Management (CSPM) is critical for startups to scale securely, maintain compliance, and build customer trust from day one.",
-    category: "Cloud Security",
-    author: "Suronex Growth",
-    publishedDate: "June 01, 2025",
-    readingTime: 8,
+    excerpt: "How Cloud Security Posture Management drives startup success through secure cloud environments, compliance, and investor confidence.",
+    category: "Best Practices",
+    author: "Suronex",
+    publishedDate: "July 26, 2025",
+    readingTime: 16,
     featuredImage: null,
     isFeatured: false,
   }
@@ -105,7 +104,7 @@ export default function WhitepaperListing() {
 
   const filteredPapers = whitepapers.filter(paper => {
     const matchesCategory = selectedCategory === "All" || paper.category === selectedCategory;
-    const matchesSearch = paper.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchesSearch = paper.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           paper.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
@@ -115,6 +114,7 @@ export default function WhitepaperListing() {
 
   return (
     <div className="min-h-screen bg-[#030014] text-white selection:bg-[#D33E9E]/30 relative font-sans">
+      {/* Background Effects */}
       <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none">
         <div className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center">
           <motion.div
@@ -122,7 +122,7 @@ export default function WhitepaperListing() {
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="absolute w-4/5 h-4/5 rounded-full bg-gradient-radial from-[#D33E9E]/60 via-[#3530BA]/30 to-transparent blur-[70px] -z-10"
           />
-          <motion.div 
+          <motion.div
             animate={{ opacity: [0.15, 0.5, 0.15] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="relative w-full h-full drop-shadow-[0_0_15px_rgba(211,62,158,0.9)]"
@@ -131,15 +131,15 @@ export default function WhitepaperListing() {
           </motion.div>
         </div>
         <div className="absolute inset-0 overflow-hidden font-sans z-[-2]">
-          <motion.div 
+          <motion.div
             animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3530BA]/10 rounded-full blur-[150px]" 
+            className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3530BA]/10 rounded-full blur-[150px]"
           />
-          <motion.div 
+          <motion.div
             animate={{ x: [0, -50, 0], y: [0, 50, 0] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear", delay: 2 }}
-            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D33E9E]/10 rounded-full blur-[150px]" 
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D33E9E]/10 rounded-full blur-[150px]"
           />
         </div>
       </div>
@@ -149,6 +149,7 @@ export default function WhitepaperListing() {
 
         <main className="flex-grow pt-32 md:pt-48 pb-20 px-6">
           <div className="max-w-7xl mx-auto">
+            {/* Header */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -168,13 +169,14 @@ export default function WhitepaperListing() {
               </p>
             </motion.div>
 
+            {/* Search & Filter Bar */}
             <div className="sticky top-24 z-40 mb-16">
               <div className="rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-xl p-4 flex flex-col md:flex-row gap-4 justify-between items-center shadow-2xl">
                 <div className="relative w-full md:w-96">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input 
-                    type="text" 
-                    placeholder="Search whitepapers..." 
+                  <input
+                    type="text"
+                    placeholder="Search whitepapers..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#D33E9E]/50 transition-all"
@@ -186,8 +188,8 @@ export default function WhitepaperListing() {
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                        selectedCategory === cat 
-                          ? "bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-white shadow-lg" 
+                        selectedCategory === cat
+                          ? "bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-white shadow-lg"
                           : "bg-white/5 text-gray-400 hover:bg-white/10 border border-white/10"
                       }`}
                     >
@@ -198,6 +200,7 @@ export default function WhitepaperListing() {
               </div>
             </div>
 
+            {/* Featured Whitepaper */}
             {featuredPaper && !searchQuery && selectedCategory === "All" && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -207,11 +210,13 @@ export default function WhitepaperListing() {
               >
                 <Link href={`/whitepaper/${featuredPaper.slug}`} className="group block relative rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] hover:border-[#D33E9E]/30 transition-all duration-500">
                   <div className="grid lg:grid-cols-2 gap-0">
-                    <div className="relative h-64 lg:h-auto bg-white/5">
+                    <div className="relative h-64 lg:h-auto bg-gradient-to-br from-[#D33E9E]/20 to-[#3530BA]/20">
                       {featuredPaper.featuredImage ? (
                         <Image src={featuredPaper.featuredImage} alt={featuredPaper.title} fill className="object-cover object-left group-hover:scale-105 transition-transform duration-700" />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center"><Sparkles className="w-20 h-20 text-white/10" /></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Sparkles className="w-20 h-20 text-white/10" />
+                        </div>
                       )}
                       <div className="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-[#D33E9E] text-white text-xs font-bold uppercase tracking-wider shadow-lg">
                         Featured
@@ -237,6 +242,7 @@ export default function WhitepaperListing() {
               </motion.div>
             )}
 
+            {/* Whitepaper Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularPapers.map((paper, idx) => (
                 <motion.div
@@ -247,11 +253,11 @@ export default function WhitepaperListing() {
                   transition={{ delay: idx * 0.1 }}
                 >
                   <Link href={`/whitepaper/${paper.slug}`} className="group block h-full rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#3530BA]/30 overflow-hidden hover:bg-white/[0.04] transition-all duration-300 flex flex-col">
-                    <div className="relative aspect-[16/9] bg-white/5 overflow-hidden">
+                    <div className="relative aspect-[16/9] bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
                       {paper.featuredImage ? (
                         <Image src={paper.featuredImage} alt={paper.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent">
+                        <div className="absolute inset-0 flex items-center justify-center">
                           <FileText className="w-16 h-16 text-white/5" />
                         </div>
                       )}
@@ -272,15 +278,17 @@ export default function WhitepaperListing() {
               ))}
             </div>
 
+            {/* No Results */}
             {filteredPapers.length === 0 && (
               <div className="text-center py-20">
+                <FileText className="w-16 h-16 text-white/10 mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-white mb-2">No whitepapers found</h3>
                 <p className="text-gray-400">Try adjusting your search or filters.</p>
               </div>
             )}
           </div>
         </main>
-        
+
         <div className="relative w-full border-t border-white/10 bg-[#030014]/60 backdrop-blur-xl [&_footer]:!bg-transparent [&_section]:!bg-transparent [&_div]:!bg-transparent">
           <Footer />
         </div>
@@ -288,3 +296,4 @@ export default function WhitepaperListing() {
     </div>
   );
 }
+
