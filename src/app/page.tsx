@@ -2,7 +2,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import LogoTicker from "./components/LogoTicker";
 import { BuiltForWorkV2 } from "./components/BuiltForWorkV2";
-import MultiCloudChallenge from "./components/MultiCloudChallenge";
+import  MultiCloudChallenge  from "./components/MultiCloudChallenge";
 import FlowSection from "./components/FlowSection";
 import Solution from "./components/Solution";
 import CallToAction from "./components/CallToAction";
@@ -46,20 +46,20 @@ export default function Home() {
         {/* Hero Section */}
         <Hero />
 
-        {/* Logo Ticker */}
-        <LogoTicker />
+        {/* Multi-Cloud Challenge */}
+        <MultiCloudChallenge />
 
         {/* Platform Features */}
         <BuiltForWorkV2 />
 
-        {/* Multi-Cloud Challenge */}
-        <MultiCloudChallenge />
 
         {/* Flow Section */}
         <FlowSection />
 
         {/* Solution */}
         <Solution />
+        {/* Logo Ticker */}
+        <LogoTicker />
 <IntegrationsShowcase />
         {/* Call to Action */}
         <CallToAction />

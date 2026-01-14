@@ -27,9 +27,9 @@ export default function ContactHero() {
       transition={{ duration: 0.6, delay: 0.3 }}
       className="space-y-6"
     >
-      
-      {/* Contact Sales Card (Now wrapped in glass) */}
-      <motion.div 
+
+      {/* Contact Sales Card */}
+      <motion.div
         className="group relative"
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
@@ -44,9 +44,9 @@ export default function ContactHero() {
               Contact Sales
             </h3>
           </div>
-          
+
           <div className="flex items-center justify-between group-hover:pl-2 transition-all duration-300">
-            <a 
+            <a
               href="mailto:contact@suronex.ai"
               className="text-2xl font-semibold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#D33E9E] group-hover:to-[#3530BA] transition-all duration-300"
             >
@@ -57,7 +57,7 @@ export default function ContactHero() {
         </div>
       </motion.div>
 
-      {/* Registered Office Card */}
+      {/* Combined Offices Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -66,54 +66,49 @@ export default function ContactHero() {
         whileHover={{ scale: 1.01 }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[#D33E9E]/5 to-[#3530BA]/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
+
         <div className="relative p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300">
-          <div className="flex items-start gap-4">
+          <div className="flex items-start gap-4 mb-6">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#D33E9E]/20 to-[#3530BA]/20 border border-white/10 flex items-center justify-center shrink-0">
               <Building2 className="w-6 h-6 text-[#D33E9E]" />
             </div>
-            
+
             <div>
               <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-2">
-                Registered Office
+                Our Offices
               </h4>
-              <p className="text-base font-medium text-white mb-1">
+              <p className="text-lg font-semibold text-white">
                 Suronex Cloudsafe Private Limited
-              </p>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                New Delhi, India
               </p>
             </div>
           </div>
-        </div>
-      </motion.div>
 
-      {/* Corporate Office Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        className="group relative"
-        whileHover={{ scale: 1.01 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#D33E9E]/5 to-[#3530BA]/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        <div className="relative p-6 rounded-2xl bg-white/[0.03] backdrop-blur-md border border-white/10 hover:border-white/20 transition-all duration-300">
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#3530BA]/20 to-[#D33E9E]/20 border border-white/10 flex items-center justify-center shrink-0">
-              <MapPin className="w-6 h-6 text-[#3530BA]" />
+          {/* Addresses */}
+          <div className="space-y-4 pl-16">
+            {/* Registered Office */}
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#D33E9E] mt-2 shrink-0" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
+                  Registered Office
+                </p>
+                <p className="text-sm text-gray-300">
+                  New Delhi, India
+                </p>
+              </div>
             </div>
-            
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-2">
-                Corporate Office
-              </h4>
-              <p className="text-base font-medium text-white mb-1">
-                Suronex Cloudsafe Private Limited
-              </p>
-              <p className="text-sm text-gray-400 leading-relaxed">
-                Gurugram, Haryana, India
-              </p>
+
+            {/* Corporate Office */}
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#3530BA] mt-2 shrink-0" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-1">
+                  Corporate Office
+                </p>
+                <p className="text-sm text-gray-300">
+                  Gurugram, Haryana, India
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -123,7 +118,7 @@ export default function ContactHero() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
         className="pt-6 border-t border-white/10"
       >
         <div className="flex items-center justify-between">
@@ -155,3 +150,4 @@ export default function ContactHero() {
     </motion.div>
   )
 }
+

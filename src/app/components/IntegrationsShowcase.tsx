@@ -349,7 +349,7 @@ export function IntegrationsShowcase() {
   const upcomingIntegrations = integrations.filter(i => i.status === "soon")
 
   return (
-    <section className="relative py-32 bg-black overflow-hidden">
+    <section className="relative py-12 bg-black overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0">
         <motion.div
@@ -392,7 +392,7 @@ export function IntegrationsShowcase() {
         {/* Header */}
         <motion.div
           ref={ref}
-          className="text-center mb-20"
+          className="text-center mb-12"
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -441,7 +441,7 @@ export function IntegrationsShowcase() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-20"
+          className="mb-12"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-7xl mx-auto">
             {liveIntegrations.map((integration, index) => (
@@ -461,7 +461,7 @@ export function IntegrationsShowcase() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="max-w-7xl mx-auto"
         >
-          <div className="text-center mb-10">
+          <div className="text-center mb-6">
             <h3 className="text-2xl font-light text-white/70 mb-2">Coming soon</h3>
             <p className="text-sm text-neutral-600">More integrations on the way</p>
           </div>
@@ -482,7 +482,7 @@ export function IntegrationsShowcase() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-20"
+          className="text-center mt-12"
         >
           <p className="text-sm text-neutral-600 mb-6">
             Don't see your tool?{" "}

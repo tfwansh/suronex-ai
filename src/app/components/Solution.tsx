@@ -59,7 +59,7 @@ export default function Solution() {
   const handleMouseLeave = () => setOpacity(0);
 
   return (
-    <section ref={containerRef} className="py-32 bg-transparent px-6 relative overflow-hidden">
+    <section ref={containerRef} className="py-4 bg-transparent px-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3530BA]/10 blur-[120px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D33E9E]/10 blur-[120px] rounded-full pointer-events-none" />
 
@@ -71,8 +71,9 @@ export default function Solution() {
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-6"
         >
+            <div className="h-px w-full bg-gradient-to-r from-transparent via-purple-500/30 to-transparent mb-12"></div>
             <h2 className="text-3xl md:text-6xl font-bold text-white mb-6">
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D33E9E] to-[#3530BA]">
                     Intelligent Solutions

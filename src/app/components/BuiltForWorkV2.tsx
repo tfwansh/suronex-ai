@@ -107,15 +107,15 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
 
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
-  
+
   // Mouse position tracking for magnetic effect
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  
+
   // Spring physics for smooth magnetic pull
   const springX = useSpring(mouseX, { stiffness: 150, damping: 15 })
   const springY = useSpring(mouseY, { stiffness: 150, damping: 15 })
-  
+
   // Transform mouse position to card rotation
   const rotateX = useTransform(springY, [-100, 100], [15, -15])
   const rotateY = useTransform(springX, [-100, 100], [-15, 15])
@@ -229,11 +229,11 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
                 ease: "easeInOut",
               }}
             />
-            
+
             {/* Icon container with smooth lift and tilt */}
             <motion.div
               className="relative w-full h-full border-2 flex items-center justify-center"
-              style={{ 
+              style={{
                 borderColor: capability.color,
                 transformStyle: "preserve-3d",
               }}
@@ -265,13 +265,13 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
                   ease: "easeInOut",
                 }}
               >
-                <Icon 
-                  className="w-8 h-8" 
+                <Icon
+                  className="w-8 h-8"
                   style={{ color: capability.color }}
                   strokeWidth={1.5}
                 />
               </motion.div>
-              
+
               {/* Subtle shine effect on hover */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0"
@@ -318,7 +318,7 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
 
           {/* Description with typewriter reveal */}
           <div className="relative overflow-hidden">
-            <motion.p 
+            <motion.p
               className="text-sm text-neutral-400 font-light"
               initial={{ y: 20, opacity: 0 }}
               animate={inView ? {
@@ -366,9 +366,9 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
 
 // Main component with scroll-based reveal
 export function BuiltForWorkV2() {
-  const [ref, inView] = useInView({ 
-    triggerOnce: true, 
-    threshold: 0.05 
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.05
   })
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -389,7 +389,7 @@ export function BuiltForWorkV2() {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen py-32 bg-neutral-950 relative overflow-hidden"
+      className="py-12 bg-neutral-950 relative overflow-hidden"
     >
       {/* Animated grid background */}
       <div className="absolute inset-0">
@@ -401,25 +401,60 @@ export function BuiltForWorkV2() {
         />
       </div>
 
+      {/* Elegant divider line with gradient */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-px overflow-hidden"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+      >
+        <motion.div
+          className="h-full bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
+          animate={{
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      </motion.div>
+
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
+
+        {/* Content transition - bridges the story */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="pt-2 pb-8 text-center max-w-3xl mx-auto"
+        >
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl font-light text-white/60 leading-relaxed"
+          >
+            Every one of these challenges disappears with{" "}
+            <span className="text-white font-normal">Suronex</span> —
+            a unified platform that turns compliance chaos into continuous confidence.
+          </motion.p>
+        </motion.div>
+
         {/* Header with scroll-triggered reveal */}
         <motion.div
           ref={ref}
-          className="mb-24 text-center"
+          className="mb-16 text-center"
         >
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, type: "spring", stiffness: 50 }}
           >
-            <div className="inline-block mb-6">
-              <div className="px-4 py-1 border border-white/20 bg-white/5 backdrop-blur-sm">
-                <span className="text-xs uppercase tracking-[0.3em] text-white/60 font-medium">
-                  Platform
-                </span>
-              </div>
-            </div>
-
             <h2 className="text-6xl lg:text-8xl font-light tracking-tight text-white mb-6 leading-[1.05]">
               Built for{" "}
               <motion.span
@@ -464,25 +499,39 @@ export function BuiltForWorkV2() {
           ))}
         </div>
 
-        {/* Floating CTA with magnetic effect */}
+        {/* Floating CTA with purple gradient */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-24 text-center"
+          className="mt-16 text-center"
         >
           <motion.button
             className="relative px-12 py-5 border border-white/20 bg-white/5 backdrop-blur-sm text-white text-sm uppercase tracking-[0.2em] font-medium overflow-hidden group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* Animated background on hover */}
+            {/* Purple gradient background on hover */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 opacity-0 group-hover:opacity-100"
+              transition={{ duration: 0.3 }}
             />
+
+            {/* Animated shine effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              initial={{ x: "-100%" }}
+              animate={{
+                x: "100%",
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatDelay: 1,
+                ease: "easeInOut"
+              }}
+            />
+
             <span className="relative z-10">See it in action</span>
           </motion.button>
         </motion.div>
@@ -490,3 +539,4 @@ export function BuiltForWorkV2() {
     </section>
   )
 }
+

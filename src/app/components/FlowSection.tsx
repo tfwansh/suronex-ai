@@ -43,7 +43,7 @@ const FlowSection = () => {
     ];
 
     return (
-        <section className="bg-transparent text-white py-24">
+        <section className="bg-transparent text-white py-8">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header Section */}
                 <div className="grid grid-cols-5 max-w-5xl">
@@ -313,7 +313,7 @@ const FlowSection = () => {
                 </div>
 
                 {/* CTA Button */}
-                <div className="mt-24 md:mt-36 flex justify-center">
+                <div className="mt-8 md:mt-12 flex justify-center">
                     <Link href="/contact">
                         <motion.button
                             initial={{ scale: 0, opacity: 0 }}
