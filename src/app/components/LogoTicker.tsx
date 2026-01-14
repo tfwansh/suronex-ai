@@ -10,13 +10,13 @@ const complianceFrameworks = [
   { name: "SOC 2 Type II", logo: "/png format/soc2 logo.png", filter: "none" },
   { name: "GDPR", logo: "/png format/gdpr logo.png", filter: "brightness" },
   { name: "HIPAA", logo: "/png format/HIPAA-logo.png", filter: "none" },
-  { name: "NIST CSF", logo: "/png format/NIST logo.png", filter: "invert" }, // Fixed dark logo
+  { name: "NIST CSF", logo: "/png format/NIST logo.png", filter: "invert" },
   { name: "FedRAMP", logo: "/png format/fedramp logo.png", filter: "none" },
   { name: "CIS Benchmarks", logo: "/png format/CIS-logo.png", filter: "none" },
   { name: "Mitre ATT&CK", logo: "/png format/mitre attck logo.png", filter: "brightness" },
   { name: "CCPA", logo: "/png format/CCPA-logo.png", filter: "none" },
   { name: "PCI-DSS", logo: "/png format/PCI-logo.png", filter: "brightness" },
-  { name: "RBI Cyber Security", logo: "/png format/RBI cyber security framework.png", filter: "invert" }, // Fixed dark logo
+  { name: "RBI Cyber Security", logo: "/png format/RBI cyber security framework.png", filter: "invert" },
   { name: "APRA CPS 234", logo: "/png format/APRA-logo.png", filter: "brightness" },
   { name: "SEBI CSCRF", logo: "/png format/SEBI - CSCRF logo 1.png", filter: "brightness" },
   { name: "DORA", logo: "/png format/DORA-logo.png", filter: "none" },
@@ -53,20 +53,20 @@ const filterStyles = {
 // Logo component with proper filters
 function ComplianceLogo({ item, index }: { item: typeof complianceFrameworks[0]; index: number }) {
   const baseFilter = filterStyles[item.filter as keyof typeof filterStyles] || filterStyles.brightness;
-  
+
   return (
     <motion.div
       className="group relative flex-shrink-0 cursor-pointer px-6"
       whileHover={{ scale: 1.1, y: -6 }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 17 
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 17
       }}
     >
       {/* Hover background glow */}
       <div className="absolute inset-0 -m-4 bg-gradient-to-br from-[#D33E9E]/10 via-transparent to-[#3530BA]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
-      
+
       {/* Logo container with consistent sizing */}
       <div className="relative w-32 h-20 md:w-40 md:h-24 flex items-center justify-center">
         <Image
@@ -88,7 +88,7 @@ function ComplianceLogo({ item, index }: { item: typeof complianceFrameworks[0];
 export default function ComplianceCoverage() {
   return (
     <section className="py-8 md:py-12 overflow-hidden bg-gradient-to-b from-black via-black/95 to-black border-y border-white/5 backdrop-blur-sm relative">
-      
+
       {/* Refined background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#3530BA] opacity-5 blur-[120px] rounded-full pointer-events-none" />
@@ -131,18 +131,18 @@ export default function ComplianceCoverage() {
             <motion.div
               className="flex items-center"
               animate={{
-                x: [0, -1920], // Adjust based on content width
+                x: [0, -2880],
               }}
               transition={{
                 x: {
-                  duration: 40,
+                  duration: 30,
                   repeat: Infinity,
                   ease: "linear",
                 },
               }}
             >
-              {/* Triple repetition for seamless loop */}
-              {[...row1, ...row1, ...row1].map((item, index) => (
+              {/* Quadruple repetition for seamless loop */}
+              {[...row1, ...row1, ...row1, ...row1].map((item, index) => (
                 <ComplianceLogo key={`row1-${index}`} item={item} index={index} />
               ))}
             </motion.div>
@@ -153,18 +153,18 @@ export default function ComplianceCoverage() {
             <motion.div
               className="flex items-center"
               animate={{
-                x: [-1920, 0], // Opposite direction
+                x: [-2880, 0],
               }}
               transition={{
                 x: {
-                  duration: 45,
+                  duration: 33.75,
                   repeat: Infinity,
                   ease: "linear",
                 },
               }}
             >
-              {/* Triple repetition for seamless loop */}
-              {[...row2, ...row2, ...row2].map((item, index) => (
+              {/* Quadruple repetition for seamless loop */}
+              {[...row2, ...row2, ...row2, ...row2].map((item, index) => (
                 <ComplianceLogo key={`row2-${index}`} item={item} index={index} />
               ))}
             </motion.div>
@@ -203,7 +203,7 @@ export default function ComplianceCoverage() {
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                 initial={{ x: "-100%" }}
-                whileHover={{ 
+                whileHover={{
                   x: "100%",
                   transition: { duration: 0.6 }
                 }}

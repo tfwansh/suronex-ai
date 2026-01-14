@@ -6,82 +6,118 @@ import { useRef, useState } from "react"
 import Image from "next/image"
 import { Check, Clock, Sparkles } from "lucide-react"
 
-// Integration data from your images
+// Integration data - Updated with correct services
 const integrations = [
-  // Live integrations (from your first two images)
-  { 
-    name: "AWS", 
-    logo: "/integrations/aws.svg", 
+  // Live integrations (from your screenshots)
+  {
+    name: "Microsoft Teams",
+    logo: "/integrations/teams.svg",
+    status: "live",
+    category: "Collaboration"
+  },
+  {
+    name: "Terraform",
+    logo: "/integrations/terraform.svg",
+    status: "live",
+    category: "IaC"
+  },
+  {
+    name: "Google Cloud",
+    logo: "/integrations/gcp.svg",
     status: "live",
     category: "Cloud"
   },
-  { 
-    name: "GitHub", 
-    logo: "/integrations/github.svg", 
+  {
+    name: "Kubernetes",
+    logo: "/integrations/kubernetes.svg",
+    status: "live",
+    category: "Orchestration"
+  },
+  {
+    name: "ServiceNow",
+    logo: "/integrations/servicenow.svg",
+    status: "live",
+    category: "ITSM"
+  },
+  {
+    name: "AWS",
+    logo: "/integrations/aws.svg",
+    status: "live",
+    category: "Cloud"
+  },
+  {
+    name: "GitHub",
+    logo: "/integrations/github.svg",
     status: "live",
     category: "DevOps"
   },
-  { 
-    name: "Azure", 
-    logo: "/integrations/azure.svg", 
+  {
+    name: "Azure",
+    logo: "/integrations/azure.svg",
     status: "live",
     category: "Cloud"
   },
-  { 
-    name: "Slack", 
-    logo: "/integrations/slack.svg", 
+  {
+    name: "Slack",
+    logo: "/integrations/slack.svg",
     status: "live",
     category: "Collaboration"
   },
-  { 
-    name: "Confluence", 
-    logo: "/integrations/confluence.svg", 
+  {
+    name: "Confluence",
+    logo: "/integrations/confluence.svg",
     status: "live",
     category: "Documentation"
   },
-  { 
-    name: "Jira", 
-    logo: "/integrations/jira.svg", 
+  {
+    name: "Jira",
+    logo: "/integrations/jira.svg",
     status: "live",
     category: "Project Management"
   },
-  
-  // Coming soon (from your third image)
-  { 
-    name: "Microsoft Teams", 
-    logo: "/integrations/teams.svg", 
-    status: "soon",
-    category: "Collaboration"
+  {
+    name: "Microsoft 365",
+    logo: "/integrations/microsoft365.svg",
+    status: "live",
+    category: "Productivity"
   },
-  { 
-    name: "Google Cloud", 
-    logo: "/integrations/gcp.svg", 
+
+  // Coming soon
+  {
+    name: "Okta",
+    logo: "/integrations/okta.svg",
+    status: "soon",
+    category: "Identity"
+  },
+  {
+    name: "HubSpot",
+    logo: "/integrations/hubspot.svg",
+    status: "soon",
+    category: "CRM"
+  },
+  {
+    name: "Salesforce",
+    logo: "/integrations/salesforce.svg",
+    status: "soon",
+    category: "CRM"
+  },
+  {
+    name: "Oracle Cloud",
+    logo: "/integrations/oracle.svg",
     status: "soon",
     category: "Cloud"
   },
-  { 
-    name: "ServiceNow", 
-    logo: "/integrations/servicenow.svg", 
+  {
+    name: "Alibaba Cloud",
+    logo: "/integrations/alibaba.svg",
     status: "soon",
-    category: "ITSM"
+    category: "Cloud"
   },
-  { 
-    name: "Kubernetes", 
-    logo: "/integrations/kubernetes.svg", 
+  {
+    name: "Splunk",
+    logo: "/integrations/splunk.svg",
     status: "soon",
-    category: "Orchestration"
-  },
-  { 
-    name: "Terraform", 
-    logo: "/integrations/terraform.svg", 
-    status: "soon",
-    category: "IaC"
-  },
-  { 
-    name: "Okta", 
-    logo: "/integrations/okta.svg", 
-    status: "soon",
-    category: "Identity"
+    category: "Analytics"
   },
 ]
 
