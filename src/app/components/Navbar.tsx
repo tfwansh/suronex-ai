@@ -158,21 +158,6 @@ export default function Navbar() {
 
           {/* DESKTOP BUTTONS */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/signin">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="
-                  px-6 py-2.5 rounded-full text-gray-700 text-sm font-semibold
-                  border border-gray-300 hover:border-gray-400
-                  hover:bg-gray-50
-                  transition-all duration-300
-                "
-              >
-                Sign In
-              </motion.button>
-            </Link>
-
             <Link href="/contact">
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(211,62,158,0.6)" }}
@@ -185,6 +170,21 @@ export default function Navbar() {
                 "
               >
                 Book a Demo
+              </motion.button>
+            </Link>
+
+            <Link href="/signin">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="
+                  px-6 py-2.5 rounded-full text-gray-700 text-sm font-semibold
+                  border border-gray-300 hover:border-gray-400
+                  hover:bg-gray-50
+                  transition-all duration-300
+                "
+              >
+                Sign In
               </motion.button>
             </Link>
           </div>
@@ -303,20 +303,6 @@ export default function Navbar() {
                 {/* Mobile CTA Buttons */}
                 <div className="mt-8 space-y-3">
                   <Link
-                    href="/signin"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="
-                      block w-full px-6 py-3 rounded-full text-center
-                      text-gray-700 font-semibold
-                      border border-gray-300
-                      hover:bg-gray-50
-                      transition-all duration-300
-                    "
-                  >
-                    Sign In
-                  </Link>
-
-                  <Link
                     href="/contact"
                     onClick={() => setMobileMenuOpen(false)}
                     className="
@@ -329,6 +315,20 @@ export default function Navbar() {
                     "
                   >
                     Book a Demo
+                  </Link>
+
+                  <Link
+                    href="/signin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="
+                      block w-full px-6 py-3 rounded-full text-center
+                      text-gray-700 font-semibold
+                      border border-gray-300
+                      hover:bg-gray-50
+                      transition-all duration-300
+                    "
+                  >
+                    Sign In
                   </Link>
                 </div>
               </div>
