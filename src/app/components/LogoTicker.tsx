@@ -21,43 +21,31 @@ const complianceFrameworks = [
   { name: "SEBI CSCRF", logo: "/png format/SEBI - CSCRF logo 1.png", needsInvert: false, needsBackground: true },
   { name: "DORA", logo: "/png format/DORA-logo.png", needsInvert: false, needsBackground: false },
   { name: "ENISA NIS 2", logo: "/png format/ENISA_NIS-2_logo.png", needsInvert: false, needsBackground: false },
-  //{ name: "C5", logo: "/png format/C5-logo.png", needsInvert: false, needsBackground: false },
-  //{ name: "ENS", logo: "/png format/ens-logo.png", needsInvert: false, needsBackground: false },
-  //{ name: "COPPA", logo: "/png format/COPPA logo.jpg", needsInvert: false, needsBackground: false },
-  //{ name: "ISO 27001:2013", logo: "/png format/ISO-2013-logo.png", needsInvert: false, needsBackground: false },
   { name: "IRDAI Guidelines", logo: "/png format/IRDAI - ICSG logo 2 1.png", needsInvert: false, needsBackground: true },
   { name: "MAS TRM", logo: "/png format/mas.png", needsInvert: false, needsBackground: false },
   { name: "CISA Cyber Essentials", logo: "/png format/CISA Cyber Essentials.png", needsInvert: false, needsBackground: false },
-  //{ name: "Korea ISMS-P", logo: "/png format/kisa isms p 2023.png", needsInvert: false, needsBackground: true },
   { name: "GxP FDA 21 CFR Part 11", logo: "/png format/Gxp 21 cfr part 11.png", needsInvert: false, needsBackground: true },
   { name: "Essential 8", logo: "/png format/essential_8-logo.png", needsInvert: false, needsBackground: false },
-  //{ name: "LGPD", logo: "/png format/LGPD logo.png", needsInvert: false, needsBackground: false },
-  //{ name: "ISM", logo: "/png format/Information-Security_Manual-_ISM_logo.png", needsInvert: false, needsBackground: false },
   { name: "FFIEC", logo: "/png format/Ffiec logo.png", needsInvert: true, needsBackground: true },
-  //{ name: "BAIT & VAIT", logo: "/png format/BAIT & VAIT logo.png", needsInvert: false, needsBackground: true },
-  //{ name: "Common Cloud Controls", logo: "/png format/Common Cloud Controls Catalog (CCC)-logo.png", needsInvert: false, needsBackground: false },
 ];
 
 // Split into two rows
 const row1 = complianceFrameworks.slice(0, 15);
 const row2 = complianceFrameworks.slice(15);
 
-// Enhanced logo component with better visibility
+// Enhanced logo component
 function ComplianceLogo({ item }: { item: typeof complianceFrameworks[0] }) {
-  const filterClass = item.needsInvert
-    ? "invert brightness-[0.9]"
-    : "";
+  const filterClass = item.needsInvert ? "invert brightness-[0.9]" : "";
 
   return (
-    <div className="flex-shrink-0 px-6 md:px-8">
-      {/* Larger logo container with optional background */}
-      <motion.div 
+    <div className="flex-shrink-0 px-6 md:px-8 group">
+      {/* Logo container – no enlarge animation */}
+      <motion.div
         className={`relative w-40 h-28 md:w-48 md:h-32 flex items-center justify-center rounded-xl transition-all duration-300 ${
-          item.needsBackground 
-            ? 'bg-white/95 p-4 shadow-lg hover:shadow-xl hover:bg-white' 
-            : 'hover:scale-105'
+          item.needsBackground
+            ? "bg-white/95 p-4 shadow-lg group-hover:shadow-xl group-hover:bg-white"
+            : ""
         }`}
-        whileHover={{ y: -2 }}
         transition={{ duration: 0.2 }}
       >
         <div className="relative w-full h-full">
@@ -67,34 +55,45 @@ function ComplianceLogo({ item }: { item: typeof complianceFrameworks[0] }) {
             fill
             sizes="(max-width: 768px) 160px, 192px"
             className={`object-contain transition-all duration-300 ${filterClass} ${
-              item.needsBackground ? 'opacity-100' : 'opacity-80 hover:opacity-100'
+              item.needsBackground ? "opacity-100" : "opacity-80 group-hover:opacity-100"
             }`}
             loading="lazy"
           />
         </div>
-        
+
         {/* Subtle glow effect on hover for non-background logos */}
         {!item.needsBackground && (
           <motion.div
-            className="absolute inset-0 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{
-              background: 'radial-gradient(circle at center, rgba(211, 62, 158, 0.1) 0%, transparent 70%)',
+              background:
+                "radial-gradient(circle at center, rgba(211, 62, 158, 0.1) 0%, transparent 70%)",
             }}
           />
         )}
       </motion.div>
-      
-      {/* Optional: Tooltip with framework name on hover */}
-      <div className="text-center mt-2 opacity-0 hover:opacity-100 transition-opacity duration-300">
-        <span className="text-xs text-gray-500 font-medium">{item.name}</span>
+
+      {/* Framework name with purple gradient on hover */}
+      <div className="text-center mt-3">
+        <motion.span
+          className="inline-block text-sm md:text-base font-semibold
+                     text-gray-300
+                     bg-gradient-to-r from-[#D33E9E] via-[#8B4FB8] to-[#3530BA]
+                     bg-clip-text text-transparent
+                     transition-all duration-500 ease-out
+                     group-hover:text-transparent group-hover:[background-position:100%_0%]"
+          style={{ backgroundPosition: "0% 0%" }}
+        >
+          {item.name}
+        </motion.span>
       </div>
     </div>
   );
 }
 
 export default function ComplianceCoverage() {
-  // Calculate animation distance based on number of logos (adjusted for larger size)
-  const row1Distance = row1.length * 200; // Increased from 160px
+  // Calculate animation distance based on number of logos
+  const row1Distance = row1.length * 200;
   const row2Distance = row2.length * 200;
 
   return (
@@ -130,9 +129,9 @@ export default function ComplianceCoverage() {
           </motion.p>
         </div>
 
-        {/* Scrolling logos - optimized for performance */}
+        {/* Scrolling logos */}
         <div className="relative space-y-10 md:space-y-14">
-          {/* Enhanced fade masks */}
+          {/* Fade masks */}
           <div className="absolute inset-y-0 left-0 w-32 md:w-48 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
           <div className="absolute inset-y-0 right-0 w-32 md:w-48 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
 
@@ -213,7 +212,7 @@ export default function ComplianceCoverage() {
                 initial={{ x: "-100%" }}
                 whileHover={{
                   x: "100%",
-                  transition: { duration: 0.6 }
+                  transition: { duration: 0.6 },
                 }}
                 style={{ skewX: -20 }}
               />

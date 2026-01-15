@@ -77,18 +77,15 @@ export function Footer() {
     offset: ["start end", "end end"]
   })
 
-  // Giant text rises from line as you scroll - ORIGINAL WORKING ANIMATION
   const textY = useTransform(scrollYProgress, [0, 1], [100, -50])
   const textOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 0.3, 1])
 
   return (
     <footer ref={containerRef} className="bg-black border-t border-white/5 text-gray-300 relative overflow-hidden">
 
-      {/* Ambient glow effects */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#D33E9E]/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#3530BA]/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Giant rising text - Original Runway style */}
       <div className="relative h-32 border-b border-white/5">
         <motion.div
           style={{ y: textY, opacity: textOpacity }}
@@ -107,11 +104,9 @@ export function Footer() {
         </motion.div>
       </div>
 
-      {/* Main footer content */}
       <div className="container mx-auto px-6 lg:px-12 py-12 md:py-20 relative z-10">
         <div className="grid lg:grid-cols-4 gap-12 lg:gap-16 mb-12">
 
-          {/* Brand section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +116,6 @@ export function Footer() {
           >
             <Link href="/" className="inline-block mb-6 group">
               <div className="flex items-center gap-3">
-                {/* Logo */}
                 <motion.div
                   className="relative w-12 h-12"
                   whileHover={{ rotate: [0, -10, 10, 0] }}
@@ -147,7 +141,6 @@ export function Footer() {
               AI-powered cloud compliance platform. Automate security posture management across AWS, Azure, and GCP.
             </p>
 
-            {/* Social Links - Facebook, X, YouTube, LinkedIn */}
             <div className="flex gap-3">
               {socialLinks.map((social, i) => {
                 const IconComponent = social.icon
@@ -170,7 +163,6 @@ export function Footer() {
                     `}
                     aria-label={social.label}
                   >
-                    {/* Glow effect on hover */}
                     <motion.div
                       className="absolute inset-0 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       style={{ backgroundColor: `${social.color}40` }}
@@ -180,7 +172,6 @@ export function Footer() {
                       className="relative w-5 h-5 text-gray-400 group-hover:text-white transition-colors duration-300"
                     />
 
-                    {/* Animated underline */}
                     <motion.div
                       className="absolute -bottom-1 left-1/2 h-0.5 w-0 group-hover:w-8 transition-all duration-300"
                       style={{
@@ -195,7 +186,6 @@ export function Footer() {
             </div>
           </motion.div>
 
-          {/* Products */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -224,7 +214,6 @@ export function Footer() {
             </ul>
           </motion.div>
 
-          {/* Company */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -253,7 +242,6 @@ export function Footer() {
             </ul>
           </motion.div>
 
-          {/* Resources */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -283,7 +271,81 @@ export function Footer() {
           </motion.div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Trust Badges - Clean minimal style */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mt-16 mb-12"
+        >
+          <div className="text-center mb-10">
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, delay: 0.4 }}
+              className="inline-block mb-4"
+            >
+              <div className="px-4 py-1.5 bg-gradient-to-r from-[#D33E9E]/20 to-[#3530BA]/20 border border-white/20 rounded-full">
+                <span className="text-xs uppercase tracking-[0.3em] bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-transparent bg-clip-text font-bold">
+                  Certified Partners
+                </span>
+              </div>
+            </motion.div>
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">
+              Trusted by Industry Leaders
+            </h3>
+            <p className="text-gray-500 text-sm font-light">Recognized partnerships driving cloud security excellence</p>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
+            {/* AWS */}
+            <motion.div
+              whileHover={{ y: -5, scale: 1.05 }}
+              className="group relative"
+            >
+              <div className="relative w-40 h-28 md:w-48 md:h-32">
+                <Image
+                  src="/aws-partner.png"
+                  alt="AWS Partner"
+                  fill
+                  className="object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </motion.div>
+
+            {/* NVIDIA */}
+            <motion.div
+              whileHover={{ y: -5, scale: 1.05 }}
+              className="group relative"
+            >
+              <div className="relative w-52 h-28 md:w-60 md:h-32">
+                <Image
+                  src="/nvidia.png"
+                  alt="NVIDIA Inception"
+                  fill
+                  className="object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </motion.div>
+
+            {/* NCOE */}
+            <motion.div
+              whileHover={{ y: -5, scale: 1.05 }}
+              className="group relative"
+            >
+              <div className="relative w-52 h-28 md:w-60 md:h-32">
+                <Image
+                  src="/ncoe.svg"
+                  alt="NCOE"
+                  fill
+                  className="object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -291,7 +353,6 @@ export function Footer() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="relative"
         >
-          {/* Gradient divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
 
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -321,4 +382,3 @@ export function Footer() {
     </footer>
   )
 }
-
