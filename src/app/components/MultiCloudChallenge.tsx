@@ -81,10 +81,10 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
       transition={{ duration: 0.6, delay: index * 0.05, ease: [0.21, 0.45, 0.27, 0.9] }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative h-[380px]"
+      className="group relative h-[420px]"
     >
-      <div className="relative h-full rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-950/50 via-neutral-950/30 to-neutral-950/50 backdrop-blur-xl border border-white/[0.02] hover:border-white/[0.05] transition-all duration-700">
-        
+      <div className="relative h-full rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-950/50 via-neutral-950/30 to-neutral-950/50 backdrop-blur-xl border border-white/[0.05] hover:border-white/[0.1] transition-all duration-700">
+
         {/* Gradient border effect */}
         <motion.div
           className="absolute inset-0 rounded-3xl"
@@ -99,7 +99,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 
         {/* Left accent line */}
         <motion.div
-          className={`absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b ${challenge.gradient}`}
+          className={`absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b ${challenge.gradient}`}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{
             scaleY: isHovered ? 1 : 0,
@@ -111,7 +111,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 
         {/* Content container */}
         <div className="relative h-full p-8 flex flex-col">
-          
+
           {/* Top section */}
           <div className="flex items-start justify-between mb-6">
             <motion.div
@@ -120,26 +120,26 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
               }}
               transition={{ duration: 0.3 }}
             >
-              <span className="text-[10px] font-mono text-neutral-600 tracking-[0.2em] uppercase">
+              <span className="text-xs font-mono text-neutral-500 tracking-[0.2em] uppercase">
                 Problem {String(index + 1).padStart(2, '0')}
               </span>
             </motion.div>
-            
+
             <motion.div
-              className="w-8 h-8 rounded-lg bg-white/[0.02] flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-white/[0.03] flex items-center justify-center"
               animate={{
-                backgroundColor: isHovered ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 0.02)",
+                backgroundColor: isHovered ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.03)",
               }}
               transition={{ duration: 0.5 }}
             >
               <motion.svg
-                className="w-4 h-4 text-neutral-600"
+                className="w-5 h-5 text-neutral-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 animate={{
                   rotate: isHovered ? 90 : 0,
-                  color: isHovered ? "rgb(168, 85, 247)" : "rgb(82, 82, 82)",
+                  color: isHovered ? "rgb(168, 85, 247)" : "rgb(115, 115, 115)",
                 }}
                 transition={{ duration: 0.5 }}
               >
@@ -160,17 +160,17 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
                 }}
                 transition={{ duration: 0.4 }}
               >
-                <h3 className="text-xl font-normal text-white leading-[1.3] mb-4 tracking-tight">
+                <h3 className="text-2xl font-medium text-white leading-tight mb-5 tracking-tight">
                   {challenge.pain}
                 </h3>
-                <p className="text-sm text-neutral-500 leading-relaxed font-light">
+                <p className="text-base text-neutral-300 leading-relaxed">
                   {challenge.painDetail}
                 </p>
               </motion.div>
 
               {/* Solution Content */}
               <motion.div
-                className="space-y-4"
+                className="space-y-5"
                 animate={{
                   opacity: isHovered ? 1 : 0,
                   y: isHovered ? 0 : 10,
@@ -178,24 +178,24 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
                 transition={{ duration: 0.4, delay: isHovered ? 0.1 : 0 }}
                 style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <motion.div
-                    className={`h-px flex-1 bg-gradient-to-r ${challenge.gradient}`}
+                    className={`h-[2px] flex-1 bg-gradient-to-r ${challenge.gradient}`}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     style={{ transformOrigin: "left" }}
                   />
-                  <span className="text-[10px] font-mono text-neutral-600 tracking-[0.2em] uppercase">
+                  <span className="text-xs font-mono text-neutral-400 tracking-[0.2em] uppercase">
                     Solution
                   </span>
                 </div>
-                
-                <h3 className={`text-2xl font-normal bg-gradient-to-r ${challenge.gradient} bg-clip-text text-transparent leading-[1.3] tracking-tight`}>
+
+                <h3 className={`text-3xl font-semibold bg-gradient-to-r ${challenge.gradient} bg-clip-text text-transparent leading-tight tracking-tight`}>
                   {challenge.solution}
                 </h3>
-                
-                <p className="text-sm text-neutral-400 leading-relaxed font-light">
+
+                <p className="text-base text-white leading-relaxed">
                   {challenge.solutionDetail}
                 </p>
               </motion.div>
@@ -205,21 +205,16 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
             <motion.div
               className="flex items-center gap-3 mt-6"
               animate={{
-                opacity: isHovered ? 0 : 0.5,
+                opacity: isHovered ? 0 : 0.6,
               }}
               transition={{ duration: 0.3 }}
             >
-              <motion.div
-                className="flex gap-1"
-                animate={{
-                  gap: isHovered ? "6px" : "4px",
-                }}
-              >
-                <div className="w-1 h-1 rounded-full bg-neutral-700" />
-                <div className="w-1 h-1 rounded-full bg-neutral-800" />
-                <div className="w-1 h-1 rounded-full bg-neutral-900" />
-              </motion.div>
-              <span className="text-[10px] text-neutral-700 font-light tracking-wider">
+              <div className="flex gap-1.5">
+                <div className="w-1.5 h-1.5 rounded-full bg-neutral-600" />
+                <div className="w-1.5 h-1.5 rounded-full bg-neutral-700" />
+                <div className="w-1.5 h-1.5 rounded-full bg-neutral-800" />
+              </div>
+              <span className="text-xs text-neutral-600 tracking-wider">
                 Hover to reveal
               </span>
             </motion.div>
@@ -242,7 +237,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 export default function MultiCloudChallenge() {
   return (
     <section className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden">
-      
+
       {/* Minimal ambient effects */}
       <div className="absolute inset-0">
         <motion.div
@@ -272,44 +267,44 @@ export default function MultiCloudChallenge() {
       </div>
 
       <div className="relative max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-12 z-10">
-        
-{/* Header */}
-<motion.div
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7 }}
-  className="text-center mb-16 md:mb-24"
->
-  <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7, delay: 0.1 }}
-  >
-    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
-      <span className="text-white">Why Cloud Governance </span>
-      <br className="hidden sm:block" />
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-500">
-        Breaks Without Us
-      </span>
-    </h2>
-  </motion.div>
 
-  <motion.p
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7, delay: 0.2 }}
-    className="mt-6 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-400 leading-relaxed px-4"
-  >
-    Every security gap, manual process, and reactive incident costs you time, money, and trust.{" "}
-    <span className="text-white font-semibold">Hover each card to discover our AI-powered solutions.</span>
-  </motion.p>
-</motion.div>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16 md:mb-24"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
+              <span className="text-white">Why Cloud Governance </span>
+              <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-500">
+                Breaks Without Us
+              </span>
+            </h2>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-6 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-400 leading-relaxed px-4"
+          >
+            Every security gap, manual process, and reactive incident costs you time, money, and trust.{" "}
+            <span className="text-white font-semibold">Hover each card to discover our AI-powered solutions.</span>
+          </motion.p>
+        </motion.div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
           {challenges.map((challenge, index) => (
             <ChallengeCard key={challenge.id} challenge={challenge} index={index} />
           ))}
@@ -328,29 +323,13 @@ export default function MultiCloudChallenge() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {/* Gradient glow on hover */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-            />
-            
+            <motion.div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
             <span className="relative flex items-center gap-3">
               See Suronex in Action
-              <motion.svg
-                className="w-4 h-4"
-                animate={{
-                  x: [0, 3, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </motion.svg>
+              </svg>
             </span>
           </motion.button>
         </motion.div>

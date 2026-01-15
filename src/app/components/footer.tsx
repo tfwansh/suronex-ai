@@ -8,11 +8,13 @@ import { Facebook, Youtube, Linkedin } from "lucide-react"
 
 const footerLinks = {
   products: [
-    { label: "Cloud Compliance", href: "/products/cloud-compliance" },
-    { label: "Cloud Security", href: "/products/cloud-security" },
-    { label: "Inventory Management", href: "/products/inventory-management" },
-  ],
-  company: [
+  { label: "Cloud Security", href: "/products/cloud-security" },
+  { label: "Cloud Compliance", href: "/products/cloud-compliance" },
+  { label: "Cloud Native Compliance", href: "/products/cloud-native-compliance" },
+  { label: "Cloud Inventory", href: "/products/cloud-inventory" },
+  { label: "SaaS Security", href: "/products/saas-security" },
+],
+company: [
     { label: "About us", href: "/about-us" },
     { label: "Contact Us", href: "/contact" },
   ],
