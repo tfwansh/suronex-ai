@@ -510,18 +510,22 @@ export function IntegrationsShowcase() {
           </div>
         </motion.div>
 
-        {/* Optional CTA */}
+        {/* CTA and Legal Disclaimer */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-center mt-12"
         >
-          <p className="text-sm text-neutral-600 mb-6">
+          <p className="text-sm text-neutral-600 mb-2">
             Don't see your tool?{" "}
-            <a href="#" className="text-white/70 hover:text-white underline underline-offset-4 transition-colors">
+            <a href="/contact" className="text-white/70 hover:text-white underline underline-offset-4 transition-colors">
               Request an integration
             </a>
+          </p>
+          
+          <p className="text-xs text-neutral-700 mt-6 max-w-2xl mx-auto">
+            All product names, logos, and brands are property of their respective owners. All company, product, and service names used in this website are for identification purposes only.
           </p>
         </motion.div>
       </div>
