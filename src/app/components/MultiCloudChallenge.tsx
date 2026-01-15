@@ -18,8 +18,8 @@ const challenges = [
     id: 1,
     pain: "No Unified View of Cloud Risk",
     painDetail: "Operating across multi-cloud, cloud-native applications, and SaaS environments without a centralized control plane results in fragmented visibility.",
-    solution: "Single Pane of Glass",
-    solutionDetail: "Unified dashboard aggregating security posture across AWS, Azure, GCP, and 100+ SaaS apps—providing complete visibility and eliminating blind spots.",
+    solution: "Unified Visibility Across Your Entire Cloud Stack",
+    solutionDetail: "Centralize risk and compliance across AWS, Azure, GCP, cloud-native workloads, and SaaS applications in a single control plane.",
     gradient: "from-pink-500 via-purple-500 to-indigo-500",
     icon: Shield,
     staticImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
@@ -29,8 +29,8 @@ const challenges = [
     id: 2,
     pain: "Manual Compliance in Dynamic Cloud Environments",
     painDetail: "Cloud infrastructure changes continuously, but compliance processes remain static. Teams rely on spreadsheets and periodic checks that quickly become outdated.",
-    solution: "Continuous Automated Compliance",
-    solutionDetail: "Real-time control monitoring that adapts to infrastructure changes automatically—replacing manual tracking with intelligent, always-current compliance validation.",
+    solution: "Continuous, Automated Compliance for Dynamic Cloud",
+    solutionDetail: "Replace manual checklists with continuous compliance automation. As your cloud changes, controls are evaluated in real time, evidence is collected automatically, and compliance posture stays current.",
     gradient: "from-violet-500 via-fuchsia-500 to-pink-500",
     icon: FileCheck,
     staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
@@ -40,8 +40,8 @@ const challenges = [
     id: 3,
     pain: "Audit Readiness Is Always a Fire Drill",
     painDetail: "Without continuous control validation, audits for ISO 27001, SOC 2, PCI DSS, or GDPR require weeks of manual preparation—draining resources and increasing gaps.",
-    solution: "Audit-Ready Evidence 24/7",
-    solutionDetail: "Pre-mapped controls with automated evidence collection across 35+ frameworks—turning weeks of prep into instant compliance reporting.",
+    solution: "Always-On Audit Readiness",
+    solutionDetail: "Stay audit-ready at all times, not just during audit season. Controls are continuously validated and mapped across frameworks like ISO 27001, SOC 2, PCI DSS, and GDPR—so audits become a reporting exercise, not a scramble.",
     gradient: "from-blue-500 via-purple-500 to-pink-500",
     icon: AlertTriangle,
     staticImage: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
@@ -52,7 +52,7 @@ const challenges = [
     pain: "Risk Is Discovered Too Late",
     painDetail: "Lacking real-time monitoring, control failures and misconfigurations are identified only after incidents occur, forcing teams into reactive remediation.",
     solution: "Proactive Risk Detection",
-    solutionDetail: "AI-powered continuous monitoring that identifies and alerts on control failures instantly—before they escalate into security incidents.",
+    solutionDetail: "Identify and prioritize risk before it becomes an incident. Real-time monitoring and intelligent correlation surface misconfigurations and control failures early, enabling faster remediation and reducing business impact.",
     gradient: "from-cyan-500 via-blue-500 to-purple-500",
     icon: Radar,
     staticImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
@@ -62,8 +62,8 @@ const challenges = [
     id: 5,
     pain: "Cloud Scale Outpaces Governance",
     painDetail: "As cloud adoption accelerates, traditional tools and manual workflows fail to scale. Governance becomes inconsistent and compliance posture erodes.",
-    solution: "Governance at Cloud Speed",
-    solutionDetail: "Automated policy enforcement that scales with your infrastructure—maintaining consistent governance no matter how fast you grow.",
+    solution: "Governance That Scales with Cloud Growth",
+    solutionDetail: "Scale compliance and governance automatically as your cloud footprint grows. Standardized policies, inherited controls, and centralized reporting ensure consistent governance—without adding operational overhead or slowing innovation.",
     gradient: "from-indigo-500 via-purple-500 to-pink-500",
     icon: Zap,
     staticImage: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600&h=400&fit=crop",
@@ -73,8 +73,8 @@ const challenges = [
     id: 6,
     pain: "No Real-Time Risk Context for Executive Decisions",
     painDetail: "Without normalized risk scoring across cloud and SaaS environments, leaders lack understanding of what matters most. Security decisions are made on incomplete information.",
-    solution: "Executive Risk Intelligence",
-    solutionDetail: "Real-time risk scoring with business context—giving leadership actionable insights to make informed security decisions confidently.",
+    solution: "Executive-Ready Risk Intelligence in Real Time",
+    solutionDetail: "Deliver normalized, AI-driven risk scoring across cloud and SaaS environments. Surface what matters most right now with real-time risk context—so executives can prioritize decisions based on business impact, not raw alerts.",
     gradient: "from-purple-500 via-pink-500 to-rose-500",
     icon: Target,
     staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
@@ -84,8 +84,8 @@ const challenges = [
     id: 7,
     pain: "Inability to Prove Control Effectiveness",
     painDetail: "Policies may exist, but without continuous validation, organizations cannot demonstrate that controls are operating as designed—creating gaps in assurance.",
-    solution: "Continuous Control Validation",
-    solutionDetail: "Automated testing that proves controls work as designed—providing auditable evidence of effectiveness, not just existence.",
+    solution: "Continuous Validation of Control Effectiveness",
+    solutionDetail: "Prove that security and compliance controls work—at any point in time. Automatically validate controls across environments, maintain live evidence, and demonstrate operational effectiveness to auditors, regulators, customers, and the board.",
     gradient: "from-rose-500 via-pink-500 to-purple-500",
     icon: CheckCircle2,
     staticImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
@@ -95,8 +95,8 @@ const challenges = [
     id: 8,
     pain: "Security Data Without Intelligence",
     painDetail: "Cloud platforms generate massive volumes of signals and alerts. Without AI-driven correlation, teams are overwhelmed by noise—while true risk goes unnoticed.",
-    solution: "AI-Driven Risk Prioritization",
-    solutionDetail: "Machine learning that cuts through alert fatigue—surfacing critical risks while filtering noise, so teams focus on what truly matters.",
+    solution: "Turn Security Data into Actionable Intelligence",
+    solutionDetail: "Cut through alert noise with AI-driven correlation and prioritization. Aggregate signals across cloud and SaaS, identify patterns, suppress false positives, and focus teams on the risks that truly require action.",
     gradient: "from-fuchsia-500 via-purple-500 to-indigo-500",
     icon: Brain,
     staticImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
@@ -189,16 +189,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 
           {/* Top section */}
           <div className="flex items-start justify-between mb-6">
-            <motion.div
-              animate={{
-                opacity: isHovered ? 0 : 1,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <span className="text-xs font-mono text-neutral-500 tracking-[0.2em] uppercase">
-                Problem {String(index + 1).padStart(2, '0')}
-              </span>
-            </motion.div>
+          
 
             {/* Icon with clean animation */}
             <motion.div
@@ -450,8 +441,7 @@ export default function MultiCloudChallenge() {
             className="mt-6 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-400 leading-relaxed px-4"
           >
             Every security gap, manual process, and reactive incident costs you time, money, and trust.{" "}
-            <span className="text-white font-semibold">Hover each card to discover our AI-powered solutions.</span>
-          </motion.p>
+                      </motion.p>
         </motion.div>
 
         {/* Cards Grid */}

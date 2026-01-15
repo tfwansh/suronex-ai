@@ -22,7 +22,7 @@ const capabilities = [
     color: "#3b82f6",
     showLogos: true,
     logos: [
-      { src: "/Integrations/AWS.png", alt: "AWS" },
+      { src: "/Integrations/aws-color.png", alt: "AWS" },
       { src: "/Integrations/Azure.png", alt: "Azure" },
       { src: "/Integrations/Googlecloud.png", alt: "Google Cloud" },
       { src: "/Integrations/oracle.png", alt: "Oracle Cloud" },
@@ -52,16 +52,16 @@ const capabilities = [
   },
   {
     icon: Plug,
-    stat: "100+",
+    stat: "10+",
     label: "Integrations On Demand",
-    desc: "Cloud, DevOps & SaaS platforms",
+    desc: "Cloud, Cloud Native & SaaS platforms",
     color: "#8b5cf6",
   },
   {
     icon: FileBarChart,
     stat: "BI",
     label: "Reports On Demand",
-    desc: "In No Time • Export Anywhere",
+    desc: "Generate Reports in No Time • Export in Multiple Formats",
     color: "#10b981",
   },
 ]
@@ -327,18 +327,18 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
           </div>
 
           {/* BOTTOM SECTION - Logos OR Description (SAME HEIGHT) */}
-          <div className="flex-shrink-0 h-[110px] flex items-center justify-center">
+          <div className="flex-shrink-0 h-[120px] flex items-center justify-center">
             {capability.showLogos ? (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: index * 0.08 + 0.4 }}
-                className="flex items-center justify-center gap-4 w-full px-4"
+                className="flex items-center justify-center gap-5 w-full px-6"
               >
                 {capability.logos?.map((logo, i) => (
                   <motion.div
                     key={i}
-                    className="relative w-18 h-18 sm:w-20 sm:h-20 flex-shrink-0"
+                    className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"
                     whileHover={{
                       scale: 1.15,
                     }}
@@ -347,8 +347,8 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
                     <Image
                       src={logo.src}
                       alt={logo.alt}
-                      width={80}
-                      height={80}
+                      width={64}
+                      height={64}
                       className="object-contain w-full h-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                     />
                   </motion.div>
@@ -454,7 +454,7 @@ export function BuiltForWorkV2() {
           transition={{ duration: 0.6 }}
           className="pt-2 pb-6 sm:pb-8 text-center max-w-4xl mx-auto"
         >
-          <motion.p
+	{/*          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -464,8 +464,8 @@ export function BuiltForWorkV2() {
             Every one of these challenges disappears with{" "}
             <span className="text-white font-normal">Suronex</span>—a unified platform that turns compliance chaos into continuous confidence.
           </motion.p>
+*/}
         </motion.div>
-
         {/* Header */}
         <motion.div
           ref={ref}

@@ -9,7 +9,7 @@ import { Check, Clock, Sparkles } from "lucide-react"
 // Integration data - Updated with correct paths and individual sizes
 const integrations = [
   { name: "Microsoft Teams", logo: "/Integrations/microsoftteams.png", status: "live", category: "Collaboration", logoSize: 80 },
-  { name: "Terraform", logo: "/Integrations/terraform.png", status: "live", category: "IaC", logoSize: 85 },
+  { name: "Terraform", logo: "/Integrations/terraform.png", status: "soon", category: "IaC", logoSize: 85 },
   { name: "Google Cloud", logo: "/Integrations/Googlecloud.png", status: "live", category: "Cloud", logoSize: 90 },
   { name: "Kubernetes", logo: "/Integrations/Kubernetes.png", status: "live", category: "Orchestration", logoSize: 85 },
   { name: "ServiceNow", logo: "/Integrations/Servicenow.png", status: "live", category: "ITSM", logoSize: 95 },
@@ -17,13 +17,13 @@ const integrations = [
   { name: "GitHub", logo: "/Integrations/Github.png", status: "live", category: "DevOps", logoSize: 75 },
   { name: "Azure", logo: "/Integrations/Azure.png", status: "live", category: "Cloud", logoSize: 85 },
   { name: "Slack", logo: "/Integrations/slack.png", status: "live", category: "Collaboration", logoSize: 90 },
-  { name: "Confluence", logo: "/Integrations/Confluence.png", status: "live", category: "Documentation", logoSize: 80 },
+  { name: "Confluence", logo: "/Integrations/Confluence.png", status: "soon", category: "Documentation", logoSize: 80 },
   { name: "Jira", logo: "/Integrations/Jira.png", status: "live", category: "Project Management", logoSize: 85 },
   { name: "Microsoft 365", logo: "/Integrations/copilot.png", status: "live", category: "Productivity", logoSize: 90 },
-  { name: "Okta", logo: "/Integrations/Okta.png", status: "soon", category: "Identity", logoSize: 75 },
+  { name: "Okta", logo: "/Integrations/Okta.png", status: "live", category: "Identity", logoSize: 75 },
   { name: "HubSpot", logo: "/Integrations/hubspot.png", status: "soon", category: "CRM", logoSize: 80 },
   { name: "Salesforce", logo: "/Integrations/salesforce.png", status: "soon", category: "CRM", logoSize: 85 },
-  { name: "Oracle Cloud", logo: "/Integrations/oracle.png", status: "soon", category: "Cloud", logoSize: 90 },
+  { name: "Oracle Cloud", logo: "/Integrations/oracle.png", status: "live", category: "Cloud", logoSize: 90 },
   { name: "Alibaba Cloud", logo: "/Integrations/alibaba.png", status: "soon", category: "Cloud", logoSize: 90 },
   { name: "Splunk", logo: "/Integrations/splunk.png", status: "soon", category: "Analytics", logoSize: 85 },
 ]
@@ -398,7 +398,7 @@ export function IntegrationsShowcase() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.6 }} style={{ display: "none" }}
           className="max-w-7xl mx-auto"
         >
           <div className="text-center mb-6">

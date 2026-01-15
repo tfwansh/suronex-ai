@@ -278,7 +278,7 @@ const FlowSection = () => {
                                                 scale: isHovered ? [1, 1.3, 1] : [1, 1.1, 1],
                                             }}
                                             transition={{
-                                                duration: 8,
+                                                duration: 2.5,
                                                 repeat: Infinity,
                                                 ease: "easeInOut"
                                             }}
@@ -303,12 +303,12 @@ const FlowSection = () => {
                                         <motion.div
                                             className="absolute inset-0 flex items-center justify-center"
                                             animate={{
-                                                opacity: isHovered ? 0.08 : 0.04,
-                                                scale: isHovered ? 1.2 : 1,
-                                                rotate: isHovered ? [0, 5, 0] : 0,
+                                                opacity: [0.1, 0.3, 0.1],
+                                                scale: [1, 1.15, 1],
+                                                rotate: [0, 3, -3, 0],
                                             }}
                                             transition={{
-                                                duration: 8,
+                                                duration: 2.5,
                                                 repeat: Infinity,
                                                 ease: "easeInOut"
                                             }}

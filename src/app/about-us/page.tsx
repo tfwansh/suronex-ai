@@ -6,7 +6,7 @@ import { useRef, useState, useEffect } from "react"
 import { Shield, Target, Heart, ArrowRight, Globe, Check, Sparkles, Lock, Zap } from "lucide-react"
 import Navbar from "@/app/components/Navbar";
 import { Footer } from "@/app/components/footer";
-
+import Image from "next/image"
 export default function AboutPage() {
   return (
     <main className="relative bg-black text-white">
@@ -176,8 +176,7 @@ function StoryBlock({ block, index }: any) {
             className="w-full h-full object-cover"
           />
           
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
           <div className="absolute inset-0 flex items-center justify-center p-12">
             <div className="text-center max-w-4xl">
               <motion.div
@@ -481,6 +480,7 @@ function SophisticatedPrinciple({ label, title, content, highlights, index, grad
         }}
         transition={{ duration: 0.3 }}
         style={{
+            filter: isHovered ? 'brightness(1.2) contrast(1.1)' : 'brightness(1.08) contrast(1.03)',
           wordBreak: "normal",
           overflowWrap: "break-word",
           hyphens: "auto"
@@ -590,39 +590,39 @@ function ContainedTeamSection() {
 
   const team = [
     {
-      name: "Rajesh Kumar",
-      role: "Co-Founder & CEO",
+      name: "Manish K Saini",
+      role: "Role",
       location: "New Delhi, India",
-      bio: "20+ years in cybersecurity, former CISO at Fortune 500 companies",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=700&fit=crop&q=80"
+      bio: "detailed Bio",
+      image: "Team/manishksaini.jpg"
     },
     {
-      name: "Priya Sharma",
-      role: "Head of Cloud Security",
+      name: "Prashant Mavinkurve",
+      role: "Role",
       location: "Gurugram, India",
-      bio: "Expert in AWS, Azure, GCP security architectures",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=700&fit=crop&q=80"
+      bio: "detailed Bio",
+      image: "Team/prashant.jpg"
     },
     {
-      name: "Miguel Santos",
-      role: "VP of Engineering",
-      location: "Manila, Philippines",
-      bio: "Built scalable security platforms for 100k+ users",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=700&fit=crop&q=80"
+      name: "Aditi Verma",
+      role: "Chief Product Officer",
+      location: "Gurugram, India",
+      bio: "detailed Bio",
+      image: "Team/aditiverma.png"
     },
     {
-      name: "Ananya Patel",
-      role: "Chief Compliance Officer",
-      location: "Mumbai, India",
-      bio: "Specialist in GDPR, SOC2, ISO 27001 compliance",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=700&fit=crop&q=80"
+      name: "Raian Mondelo",
+      role: "AI Innovation Lead",
+      location: "New Delhi, India",
+      bio: "detailed Bio",
+      image: "Team/raimondelo.jpg"
     },
     {
-      name: "David Chen",
-      role: "Head of Product",
-      location: "Bangalore, India",
-      bio: "Product leadership in enterprise SaaS for 15+ years",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=700&fit=crop&q=80"
+      name: "Manan Tyagi",
+      role: "Engineering Lead",
+      location: "Gurugram, India",
+      bio: "detailed Bio",
+      image: "Team/manantyagi.jpg"
     }
   ]
 
@@ -653,7 +653,7 @@ function ContainedTeamSection() {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-lg text-gray-400 mt-4"
         >
-          Drag to explore our global team
+          Drag to explore our team
         </motion.p>
       </div>
 
@@ -701,22 +701,22 @@ function TeamCard({ member, index }: any) {
         <img
           src={member.image}
           alt={member.name}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+          className="absolute inset-0 w-full h-full object-cover brightness-[1.08] contrast-[1.03] transition-transform duration-700"
           style={{
+            filter: isHovered ? 'brightness(1.2) contrast(1.1)' : 'brightness(1.08) contrast(1.03)',
             transform: isHovered ? 'scale(1.1)' : 'scale(1)'
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
-
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
           <motion.div
             animate={{ y: isHovered ? -20 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-2xl font-bold mb-2 text-white">{member.name}</h3>
-            <p className="text-[#D33E9E] font-semibold text-base mb-2">{member.role}</p>
-            <p className="text-sm text-gray-400 mb-4 flex items-center gap-2">
+            <h3 className="text-3xl font-extrabold mb-2 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,1)]">{member.name}</h3>
+            <p className="text-[#FF4DB8] font-bold text-lg mb-2 drop-shadow-[0_3px_10px_rgba(0,0,0,0.95)]">{member.role}</p>
+            <p className="text-base text-white font-semibold mb-4 flex drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] items-center gap-2">
               <Globe className="w-4 h-4" />
               {member.location}
             </p>
@@ -740,8 +740,9 @@ function TeamCard({ member, index }: any) {
         <div 
           className="absolute inset-0 rounded-3xl transition-all duration-300 pointer-events-none"
           style={{
+            filter: isHovered ? 'brightness(1.2) contrast(1.1)' : 'brightness(1.08) contrast(1.03)',
             boxShadow: isHovered 
-              ? '0 0 0 2px rgba(211, 62, 158, 0.5)' 
+              ? '0 0 0 2px rgba(211, 62, 158, 0.8), 0 0 35px rgba(211, 62, 158, 0.6), 0 0 70px rgba(139, 79, 184, 0.4)' 
               : '0 0 0 0px transparent'
           }}
         />
