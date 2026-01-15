@@ -47,11 +47,8 @@ const FlowSection = () => {
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header Section */}
                 <div className="grid grid-cols-5 max-w-5xl">
-                    <div className="col-span-1 text-end pr-3 font-light text-sm tracking-widest text-neutral-400">
-                        SURONEX 2026
-                    </div>
-                    <div className="col-span-4 md:col-span-4 text-4xl border-l border-white/20 pl-5">
-                        <TypingEffect text="Intelligent. Integrated. Compliant. Suronex unifies your multi-cloud assets, detects what matters, and automates the work that slows you down." />
+                    <div className="col-span-5 text-3xl lg:text-4xl border-l border-white/20 pl-5">
+                        <TypingEffect text="Start Your Cloud Compliance Journey in Four Simple Steps" />
                     </div>
                 </div>
 
