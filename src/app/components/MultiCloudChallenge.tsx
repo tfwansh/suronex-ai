@@ -2,76 +2,111 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { 
+  Shield, 
+  AlertTriangle, 
+  FileCheck, 
+  Radar, 
+  Zap, 
+  Target, 
+  CheckCircle2, 
+  Brain 
+} from "lucide-react";
 
 const challenges = [
   {
     id: 1,
     pain: "No Unified View of Cloud Risk",
-    painDetail: "Operating across multi-cloud, cloud-native applications, and SaaS environments without a centralized control plane results in fragmented visibility. Security and compliance risks remain hidden across accounts, subscriptions, and services.",
+    painDetail: "Operating across multi-cloud, cloud-native applications, and SaaS environments without a centralized control plane results in fragmented visibility.",
     solution: "Single Pane of Glass",
     solutionDetail: "Unified dashboard aggregating security posture across AWS, Azure, GCP, and 100+ SaaS apps—providing complete visibility and eliminating blind spots.",
-    gradient: "from-pink-500 via-purple-500 to-indigo-500"
+    gradient: "from-pink-500 via-purple-500 to-indigo-500",
+    icon: Shield,
+    staticImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTBkN3Z0Y3poMWJhMHFhbWRrZHVtYnl5a2x5ZmJqbTN5YzBvdHUwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlHJGHe3yAMhdQY/giphy.gif",
   },
   {
     id: 2,
     pain: "Manual Compliance in Dynamic Cloud Environments",
-    painDetail: "Cloud infrastructure changes continuously, but compliance processes remain static. Teams rely on spreadsheets, screenshots, and periodic checks that quickly become outdated and inaccurate.",
+    painDetail: "Cloud infrastructure changes continuously, but compliance processes remain static. Teams rely on spreadsheets and periodic checks that quickly become outdated.",
     solution: "Continuous Automated Compliance",
     solutionDetail: "Real-time control monitoring that adapts to infrastructure changes automatically—replacing manual tracking with intelligent, always-current compliance validation.",
-    gradient: "from-violet-500 via-fuchsia-500 to-pink-500"
+    gradient: "from-violet-500 via-fuchsia-500 to-pink-500",
+    icon: FileCheck,
+    staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm9oNWZxcTZvMGF5cjV5cGFpYzBjMWRweTVtaHl0dnFlYWN3N2pwaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9C25UNTwfZuk85WP/giphy.gif",
   },
   {
     id: 3,
     pain: "Audit Readiness Is Always a Fire Drill",
-    painDetail: "Without continuous control validation, audits for ISO 27001, SOC 2, PCI DSS, or GDPR require weeks of manual preparation—draining resources and increasing the likelihood of gaps, delays, and audit findings.",
+    painDetail: "Without continuous control validation, audits for ISO 27001, SOC 2, PCI DSS, or GDPR require weeks of manual preparation—draining resources and increasing gaps.",
     solution: "Audit-Ready Evidence 24/7",
     solutionDetail: "Pre-mapped controls with automated evidence collection across 35+ frameworks—turning weeks of prep into instant compliance reporting.",
-    gradient: "from-blue-500 via-purple-500 to-pink-500"
+    gradient: "from-blue-500 via-purple-500 to-pink-500",
+    icon: AlertTriangle,
+    staticImage: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHprdjNlODRuZGNpZGF1bjR2cGc1aGVqeGU5bTNseGxleGN3OG5hYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qDSOvfaCO9b3MlO/giphy.gif",
   },
   {
     id: 4,
     pain: "Risk Is Discovered Too Late",
-    painDetail: "Lacking real-time and intelligent monitoring, control failures and misconfigurations are identified only after incidents occur, forcing teams into reactive remediation and executive escalation.",
+    painDetail: "Lacking real-time monitoring, control failures and misconfigurations are identified only after incidents occur, forcing teams into reactive remediation.",
     solution: "Proactive Risk Detection",
     solutionDetail: "AI-powered continuous monitoring that identifies and alerts on control failures instantly—before they escalate into security incidents.",
-    gradient: "from-cyan-500 via-blue-500 to-purple-500"
+    gradient: "from-cyan-500 via-blue-500 to-purple-500",
+    icon: Radar,
+    staticImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWp6aGFsMTh0ZHo3c3Rwb3JlYmFzcmg3dTltZWtzb3pqcnVsZWtxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPic2BnoVZkRla8/giphy.gif",
   },
   {
     id: 5,
     pain: "Cloud Scale Outpaces Governance",
-    painDetail: "As cloud adoption accelerates, traditional tools and manual workflows fail to scale. Governance becomes inconsistent, compliance posture erodes, and security teams struggle to keep pace with business growth.",
+    painDetail: "As cloud adoption accelerates, traditional tools and manual workflows fail to scale. Governance becomes inconsistent and compliance posture erodes.",
     solution: "Governance at Cloud Speed",
     solutionDetail: "Automated policy enforcement that scales with your infrastructure—maintaining consistent governance no matter how fast you grow.",
-    gradient: "from-indigo-500 via-purple-500 to-pink-500"
+    gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    icon: Zap,
+    staticImage: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTR3YmZkNWJpM2R0NGh0YWZzcGlpaHJxYmFkM2Y0b3JlNGxueGFqNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlDDyxBfSaPpU88/giphy.gif",
   },
   {
     id: 6,
     pain: "No Real-Time Risk Context for Executive Decisions",
-    painDetail: "Without normalized, intelligent risk scoring across cloud and SaaS environments, leaders lack a clear understanding of what matters most right now. Security decisions are made on incomplete or outdated information, increasing business and regulatory exposure.",
+    painDetail: "Without normalized risk scoring across cloud and SaaS environments, leaders lack understanding of what matters most. Security decisions are made on incomplete information.",
     solution: "Executive Risk Intelligence",
     solutionDetail: "Real-time risk scoring with business context—giving leadership actionable insights to make informed security decisions confidently.",
-    gradient: "from-purple-500 via-pink-500 to-rose-500"
+    gradient: "from-purple-500 via-pink-500 to-rose-500",
+    icon: Target,
+    staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmVyNGp0YjZldnEwcmVybXJnaDF1cmVpYnloOXM0YW9mcXRsbjY1ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9C25UNTwfZuk85WP/giphy.gif",
   },
   {
     id: 7,
     pain: "Inability to Prove Control Effectiveness",
-    painDetail: "Policies may exist, but without continuous validation, organizations cannot confidently demonstrate that controls are operating as designed—creating gaps in assurance for auditors, regulators, customers, and the board.",
+    painDetail: "Policies may exist, but without continuous validation, organizations cannot demonstrate that controls are operating as designed—creating gaps in assurance.",
     solution: "Continuous Control Validation",
     solutionDetail: "Automated testing that proves controls work as designed—providing auditable evidence of effectiveness, not just existence.",
-    gradient: "from-rose-500 via-pink-500 to-purple-500"
+    gradient: "from-rose-500 via-pink-500 to-purple-500",
+    icon: CheckCircle2,
+    staticImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjZ6dGowb21xMnJuMWM1cDJ4YXZtM2ppM2c2bDh5dGI1YmFqbGtzayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26AHPxxnSw1L9T1rW/giphy.gif",
   },
   {
     id: 8,
     pain: "Security Data Without Intelligence",
-    painDetail: "Cloud platforms generate massive volumes of signals and alerts. Without AI-driven correlation and prioritization, teams are overwhelmed by noise—while true risk goes unnoticed.",
+    painDetail: "Cloud platforms generate massive volumes of signals and alerts. Without AI-driven correlation, teams are overwhelmed by noise—while true risk goes unnoticed.",
     solution: "AI-Driven Risk Prioritization",
     solutionDetail: "Machine learning that cuts through alert fatigue—surfacing critical risks while filtering noise, so teams focus on what truly matters.",
-    gradient: "from-fuchsia-500 via-purple-500 to-indigo-500"
+    gradient: "from-fuchsia-500 via-purple-500 to-indigo-500",
+    icon: Brain,
+    staticImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
+    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTZ4aXFrbGU3bDR0dDR3bjdjZWp5YXFqZGJ3NnBvY3ZkYjRuN2NlYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif",
   },
 ];
 
 function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; index: number }) {
   const [isHovered, setIsHovered] = useState(false);
+  const IconComponent = challenge.icon;
 
   return (
     <motion.div
@@ -84,6 +119,46 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
       className="group relative h-[420px]"
     >
       <div className="relative h-full rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-950/50 via-neutral-950/30 to-neutral-950/50 backdrop-blur-xl border border-white/[0.05] hover:border-white/[0.1] transition-all duration-700">
+
+        {/* Background Image/GIF Layer */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <AnimatePresence mode="wait">
+            {!isHovered ? (
+              <motion.div
+                key="static"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0"
+              >
+                <img 
+                  src={challenge.staticImage}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="gif"
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 0.45, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                <img 
+                  src={challenge.hoverGif}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Lighter overlay so images show through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/25 to-black/40 pointer-events-none" />
 
         {/* Gradient border effect */}
         <motion.div
@@ -110,7 +185,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
         />
 
         {/* Content container */}
-        <div className="relative h-full p-8 flex flex-col">
+        <div className="relative h-full p-8 flex flex-col z-10">
 
           {/* Top section */}
           <div className="flex items-start justify-between mb-6">
@@ -125,32 +200,45 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
               </span>
             </motion.div>
 
+            {/* Icon with clean animation */}
             <motion.div
-              className="w-10 h-10 rounded-xl bg-white/[0.03] flex items-center justify-center"
+              className="w-12 h-12 rounded-xl bg-white/[0.03] flex items-center justify-center relative overflow-hidden"
               animate={{
-                backgroundColor: isHovered ? "rgba(255, 255, 255, 0.06)" : "rgba(255, 255, 255, 0.03)",
+                backgroundColor: isHovered ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.03)",
               }}
               transition={{ duration: 0.5 }}
             >
-              <motion.svg
-                className="w-5 h-5 text-neutral-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <motion.div
+                className={`absolute inset-0 bg-gradient-to-br ${challenge.gradient} rounded-xl`}
                 animate={{
-                  rotate: isHovered ? 90 : 0,
-                  color: isHovered ? "rgb(168, 85, 247)" : "rgb(115, 115, 115)",
+                  opacity: isHovered ? 0.2 : 0,
+                  scale: isHovered ? 1 : 0.8,
                 }}
                 transition={{ duration: 0.5 }}
+              />
+
+              <motion.div
+                animate={{
+                  scale: isHovered ? 1.1 : 1,
+                  rotate: isHovered ? 5 : 0,
+                }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="relative z-10"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </motion.svg>
+                <IconComponent 
+                  className="w-6 h-6 transition-colors duration-500"
+                  style={{
+                    color: isHovered ? 'rgb(168, 85, 247)' : 'rgb(115, 115, 115)',
+                  }}
+                  strokeWidth={1.5}
+                />
+              </motion.div>
             </motion.div>
           </div>
 
           {/* Main content */}
           <div className="flex-1 flex flex-col justify-between">
-            <div className="space-y-4 relative">
+            <div className="space-y-4 relative min-h-[200px]">
               {/* Problem Content */}
               <motion.div
                 className="absolute inset-0"
@@ -170,7 +258,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 
               {/* Solution Content */}
               <motion.div
-                className="space-y-5"
+                className="space-y-5 absolute inset-0"
                 animate={{
                   opacity: isHovered ? 1 : 0,
                   y: isHovered ? 0 : 10,
@@ -180,12 +268,24 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
               >
                 <div className="flex items-center gap-3">
                   <motion.div
-                    className={`h-[2px] flex-1 bg-gradient-to-r ${challenge.gradient}`}
+                    className={`h-[2px] flex-1 bg-gradient-to-r ${challenge.gradient} relative overflow-hidden`}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     style={{ transformOrigin: "left" }}
-                  />
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      animate={{
+                        x: isHovered ? ['-100%', '200%'] : '-100%',
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: isHovered ? Infinity : 0,
+                        repeatDelay: 0.5,
+                      }}
+                    />
+                  </motion.div>
                   <span className="text-xs font-mono text-neutral-400 tracking-[0.2em] uppercase">
                     Solution
                   </span>
@@ -201,31 +301,66 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
               </motion.div>
             </div>
 
-            {/* Bottom indicator */}
-            <motion.div
-              className="flex items-center gap-3 mt-6"
-              animate={{
-                opacity: isHovered ? 0 : 0.6,
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="flex gap-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-neutral-600" />
-                <div className="w-1.5 h-1.5 rounded-full bg-neutral-700" />
-                <div className="w-1.5 h-1.5 rounded-full bg-neutral-800" />
-              </div>
-              <span className="text-xs text-neutral-600 tracking-wider">
-                Hover to reveal
-              </span>
-            </motion.div>
+            {/* Bottom indicator - WORKING ON ALL CARDS NOW */}
+            <div className="relative">
+              <motion.div
+                className="flex items-center gap-3 mt-6"
+                animate={{
+                  opacity: isHovered ? 0 : 0.6,
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex gap-1.5">
+                  <motion.div 
+                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.6, 1, 0.6],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: 0,
+                    }}
+                  />
+                  <motion.div 
+                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.4, 0.8, 0.4],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: 0.3,
+                    }}
+                  />
+                  <motion.div 
+                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [0.3, 0.6, 0.3],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: 0.6,
+                    }}
+                  />
+                </div>
+                <span className="text-xs text-neutral-600 tracking-wider">
+                  Hover to reveal
+                </span>
+              </motion.div>
+            </div>
           </div>
         </div>
 
         {/* Ambient glow on hover */}
         <motion.div
-          className={`absolute inset-0 bg-gradient-to-br ${challenge.gradient} opacity-0`}
+          className={`absolute inset-0 bg-gradient-to-br ${challenge.gradient} opacity-0 pointer-events-none`}
           animate={{
-            opacity: isHovered ? 0.03 : 0,
+            opacity: isHovered ? 0.04 : 0,
           }}
           transition={{ duration: 0.7 }}
         />
@@ -238,13 +373,15 @@ export default function MultiCloudChallenge() {
   return (
     <section className="relative py-24 md:py-32 bg-[#0a0a0a] overflow-hidden">
 
-      {/* Minimal ambient effects */}
+      {/* Ambient background effects */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-purple-600/[0.03] rounded-full blur-[120px]"
           animate={{
             scale: [1, 1.1, 1],
             opacity: [0.03, 0.05, 0.03],
+            x: [0, 30, 0],
+            y: [0, -20, 0],
           }}
           transition={{
             duration: 20,
@@ -257,9 +394,23 @@ export default function MultiCloudChallenge() {
           animate={{
             scale: [1, 1.15, 1],
             opacity: [0.02, 0.04, 0.02],
+            x: [0, -30, 0],
+            y: [0, 30, 0],
           }}
           transition={{
             duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-indigo-600/[0.025] rounded-full blur-[100px]"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.025, 0.045, 0.025],
+          }}
+          transition={{
+            duration: 30,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -327,9 +478,16 @@ export default function MultiCloudChallenge() {
 
             <span className="relative flex items-center gap-3">
               See Suronex in Action
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <motion.svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
+              </motion.svg>
             </span>
           </motion.button>
         </motion.div>
