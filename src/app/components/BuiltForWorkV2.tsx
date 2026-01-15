@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import {
   Plug,
   FileBarChart,
@@ -19,11 +20,18 @@ const capabilities = [
     label: "Cloud Providers",
     desc: "AWS • Azure • GCP • Oracle",
     color: "#3b82f6",
+    showLogos: true,
+    logos: [
+      { src: "/Integrations/AWS.png", alt: "AWS" },
+      { src: "/Integrations/Azure.png", alt: "Azure" },
+      { src: "/Integrations/Googlecloud.png", alt: "Google Cloud" },
+      { src: "/Integrations/oracle.png", alt: "Oracle Cloud" },
+    ]
   },
   {
     icon: Shield,
     stat: "50+",
-    label: "Standards & Practices",
+    label: "Standards & Best Practices",
     desc: "ISO 27K • PCI-DSS • HIPAA • GDPR • RBI • Custom Compliance",
     color: "#eab308",
     highlight: "Bring Your Own Compliance",
@@ -32,28 +40,28 @@ const capabilities = [
     icon: Sparkles,
     stat: "AI",
     label: "Enabled Platform",
-    desc: "Context-based analytics • Continuous Monitoring of threat patterns • Guided remediation",
+    desc: "Context-based analytics • Continuous monitoring • Guided remediation",
     color: "#ec4899",
   },
   {
     icon: Zap,
     stat: "5min",
     label: "Setup",
-    desc: "Agentless cloud, SaaS & native providers",
+    desc: "Agentless Cloud, SaaS & Native Providers",
     color: "#06b6d4",
   },
   {
     icon: Plug,
-    stat: "Live",
-    label: "Integrations",
-    desc: "Integrations on demand • Cloud, DevOps & SaaS platforms",
+    stat: "100+",
+    label: "Integrations On Demand",
+    desc: "Cloud, DevOps & SaaS platforms",
     color: "#8b5cf6",
   },
   {
     icon: FileBarChart,
-    stat: "Instant",
-    label: "Reports Generation",
-    desc: "BI Reporting on demand in no time • Export anywhere",
+    stat: "BI",
+    label: "Reports On Demand",
+    desc: "In No Time • Export Anywhere",
     color: "#10b981",
   },
 ]
@@ -234,14 +242,16 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: index * 0.08 + 0.2 }}
           >
-            ✨ Bring Your Own
+            ✨ Bring Your Own Compliance
           </motion.div>
         )}
 
-        <div className="relative p-6 sm:p-8 md:p-10 min-h-[280px] sm:min-h-[300px] md:min-h-[320px] flex flex-col justify-between">
-          {/* Icon with refined hover animation */}
+        {/* FIXED HEIGHT CONTAINER WITH FLEX LAYOUT */}
+        <div className="relative h-[380px] p-8 flex flex-col justify-between">
+          
+          {/* TOP SECTION - Icon */}
           <motion.div
-            className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mb-6 sm:mb-8"
+            className="relative w-16 h-16 flex-shrink-0"
           >
             {/* Pulsing blob background */}
             <motion.div
@@ -265,7 +275,7 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
 
             {/* Icon container */}
             <motion.div
-              className="relative w-full h-full rounded-lg border-2 flex items-center justify-center"
+              className="relative w-full h-full rounded-xl border-2 flex items-center justify-center"
               style={{
                 borderColor: isHighlighted ? "#fbbf24" : capability.color,
               }}
@@ -285,17 +295,17 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
               }}
             >
               <Icon
-                className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8"
+                className="w-8 h-8"
                 style={{ color: isHighlighted ? "#fbbf24" : capability.color }}
                 strokeWidth={1.5}
               />
             </motion.div>
           </motion.div>
 
-          {/* Counter */}
-          <div className="mb-4 sm:mb-6 md:mb-8">
+          {/* MIDDLE SECTION - Counter & Label */}
+          <div className="flex-shrink-0">
             <motion.div
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-2"
+              className="text-7xl md:text-8xl font-bold mb-3"
               style={{ color: isHighlighted ? "#fbbf24" : capability.color }}
               animate={isHovered && !isMobile ? {
                 scale: [1, 1.08, 1],
@@ -311,24 +321,51 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
             >
               {capability.stat}
             </motion.div>
-            <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] text-neutral-500 font-medium">
+            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-medium">
               {capability.label}
             </div>
           </div>
 
-          {/* Description */}
-          <div className="relative">
-            <motion.p
-              className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed"
-              initial={{ y: 20, opacity: 0 }}
-              animate={inView ? {
-                y: 0,
-                opacity: 1,
-                transition: { delay: index * 0.08 + 0.3 }
-              } : {}}
-            >
-              {capability.desc}
-            </motion.p>
+          {/* BOTTOM SECTION - Logos OR Description (SAME HEIGHT) */}
+          <div className="flex-shrink-0 h-[110px] flex items-center justify-center">
+            {capability.showLogos ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.08 + 0.4 }}
+                className="flex items-center justify-center gap-4 w-full px-4"
+              >
+                {capability.logos?.map((logo, i) => (
+                  <motion.div
+                    key={i}
+                    className="relative w-18 h-18 sm:w-20 sm:h-20 flex-shrink-0"
+                    whileHover={{
+                      scale: 1.15,
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={80}
+                      height={80}
+                      className="object-contain w-full h-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.08 + 0.3 }}
+                className="w-full flex items-center justify-center px-2"
+              >
+                <p className="text-base md:text-lg text-neutral-200 leading-relaxed text-center font-light">
+                  {capability.desc}
+                </p>
+              </motion.div>
+            )}
           </div>
 
           {/* Corner accent */}
@@ -374,7 +411,7 @@ export function BuiltForWorkV2() {
   return (
     <section
       ref={containerRef}
-      className="py-16 sm:py-20 md:py-24 bg-black relative overflow-hidden"
+      className="py-8 sm:py-10 md:py-12 bg-black relative overflow-hidden"
     >
       {/* Animated grid background */}
       <div className="absolute inset-0">
@@ -415,7 +452,7 @@ export function BuiltForWorkV2() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="pt-2 pb-8 sm:pb-12 text-center max-w-4xl mx-auto"
+          className="pt-2 pb-6 sm:pb-8 text-center max-w-4xl mx-auto"
         >
           <motion.p
             initial={{ opacity: 0 }}
@@ -432,7 +469,7 @@ export function BuiltForWorkV2() {
         {/* Header */}
         <motion.div
           ref={ref}
-          className="mb-12 sm:mb-16 md:mb-20 text-center px-2"
+          className="mb-8 sm:mb-12 md:mb-16 text-center px-2"
         >
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -482,43 +519,6 @@ export function BuiltForWorkV2() {
             <MagneticCard key={i} capability={item} index={i} />
           ))}
         </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-12 sm:mt-16 md:mt-20 text-center px-4"
-        >
-          <motion.button
-            className="relative px-8 sm:px-10 md:px-12 py-4 sm:py-5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium overflow-hidden group"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {/* Purple gradient background on hover */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 opacity-0 group-hover:opacity-100"
-              transition={{ duration: 0.3 }}
-            />
-
-            {/* Animated shine effect */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-              initial={{ x: "-100%" }}
-              animate={{
-                x: "100%",
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 1,
-                ease: "easeInOut"
-              }}
-            />
-
-            <span className="relative z-10 whitespace-nowrap">See it in action</span>
-          </motion.button>
-        </motion.div>
       </div>
     </section>
   )

@@ -50,7 +50,6 @@ export default function Home() {
 
         {/* Multi-Cloud Challenge */}
         <MultiCloudChallenge />
-        <MultiCloudChallenge2 />
 
         {/* Platform Features */}
         <BuiltForWorkV2 />
@@ -58,10 +57,7 @@ export default function Home() {
 
         {/* Flow Section */}
         <FlowSection />
-        <FlowSection2 />
         
-        {/* Solution */}
-        <Solution />
         {/* Logo Ticker */}
         <LogoTicker />
 <IntegrationsShowcase />

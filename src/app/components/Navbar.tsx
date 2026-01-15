@@ -38,6 +38,12 @@ const productCategories: ProductCategory[] = [
         icon: Cloud
       },
       {
+        name: "Cloud Inventory",
+        description: "Real-time asset discovery and inventory management",
+        link: "/products/cloud-inventory",
+        icon: Package
+      },
+      {
         name: "SaaS Security",
         description: "Security posture for 100+ SaaS applications",
         link: "/products/saas-security",
@@ -49,14 +55,8 @@ const productCategories: ProductCategory[] = [
     title: "Platform",
     items: [
       {
-        name: "Cloud Inventory",
-        description: "Real-time asset discovery and inventory management",
-        link: "/products/cloud-inventory",
-        icon: Package
-      },
-      {
         name: "Frameworks",
-        description: "Support for 35+ compliance frameworks and standards",
+        description: "Support for 50+ compliance frameworks and standards",
         link: "/frameworks",
         icon: FileCheck2
       },
@@ -187,7 +187,7 @@ export default function Navbar() {
                       openDesktopDropdown === "products" ? "rotate-180" : ""
                     }`}
                   />
-                  
+
                   <motion.div
                     className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#3530BA]/5 to-[#D33E9E]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
                     animate={{
@@ -285,7 +285,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* FULL-WIDTH DROPDOWN PANEL - Products */}
+        {/* COMPACT FULL-WIDTH DROPDOWN PANEL - Products */}
         <AnimatePresence>
           {openDesktopDropdown === "products" && (
             <motion.div
@@ -306,81 +306,111 @@ export default function Navbar() {
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
               />
 
-              <div className="max-w-7xl mx-auto px-6 py-8">
-                <div className="grid grid-cols-2 gap-12">
-                  {productCategories.map((category) => (
-                    <div key={category.title}>
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-5 px-2">
-                        {category.title}
-                      </h3>
-                      <div className="space-y-2">
-                        {category.items.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <Link
-                              key={item.name}
-                              href={item.link}
-                              className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-300 relative overflow-hidden"
-                            >
-                              <motion.div
-                                className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D33E9E]/10 to-transparent opacity-0 group-hover/item:opacity-100"
-                                animate={{
-                                  x: ["-100%", "100%"]
-                                }}
-                                transition={{
-                                  duration: 1.5,
-                                  repeat: Infinity,
-                                  ease: "linear"
-                                }}
-                              />
+              <div className="max-w-7xl mx-auto px-6 py-5">
+                <div className="grid grid-cols-2 gap-8">
+                  {/* Left Column - All Products */}
+                  <div>
+                    <div className="space-y-0.5">
+                      {productCategories[0].items.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.name}
+                            href={item.link}
+                            className="group/item flex items-start gap-3 p-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-300 relative overflow-hidden"
+                          >
+                            <motion.div
+                              className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D33E9E]/10 to-transparent opacity-0 group-hover/item:opacity-100"
+                              animate={{
+                                x: ["-100%", "100%"]
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                ease: "linear"
+                              }}
+                            />
 
-                              <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
-                                <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
+                            <div className="relative flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
+                              <Icon className="w-4 h-4 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
+                            </div>
+
+                            <div className="flex-1 min-w-0 relative">
+                              <div className="flex items-center gap-2">
+                                <h4 className="text-sm font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
+                                  {item.name}
+                                </h4>
+                                <ArrowRight className="w-3.5 h-3.5 text-[#D33E9E] opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
                               </div>
-                              
-                              <div className="flex-1 min-w-0 relative">
-                                <div className="flex items-center gap-2">
-                                  <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
+                              <p className="text-xs text-gray-600 mt-0.5 leading-snug">
+                                {item.description}
+                              </p>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Right Column - Enhanced Platform Items */}
+                  <div className="space-y-4">
+                    {productCategories[1].items.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.link}
+                          className="group/featured block p-4 rounded-xl bg-gradient-to-br from-gray-50 to-white border border-gray-100 hover:border-[#D33E9E]/30 hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+                        >
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-br from-[#3530BA]/5 to-[#D33E9E]/5 opacity-0 group-hover/featured:opacity-100"
+                            transition={{ duration: 0.3 }}
+                          />
+
+                          <div className="relative">
+                            <div className="flex items-start gap-3 mb-2">
+                              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3530BA]/10 to-[#D33E9E]/10 flex items-center justify-center group-hover/featured:scale-110 transition-transform duration-300">
+                                <Icon className="w-5 h-5 text-[#3530BA]" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <h4 className="text-base font-bold text-gray-900 group-hover/featured:text-[#3530BA] transition-colors">
                                     {item.name}
                                   </h4>
-                                  <ArrowRight className="w-4 h-4 text-[#D33E9E] opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                                  <ArrowRight className="w-4 h-4 text-[#D33E9E] opacity-0 group-hover/featured:opacity-100 group-hover/featured:translate-x-1 transition-all" />
                                 </div>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                <p className="text-sm text-gray-600 leading-relaxed">
                                   {item.description}
                                 </p>
                               </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
+                            </div>
+                            
+                            {item.name === "Frameworks" && (
+                              <div className="mt-3 pt-3 border-t border-gray-100">
+                                <p className="text-xs text-gray-500 font-medium">
+                                  ISO 27001 • SOC 2 • PCI DSS • HIPAA • GDPR • NIST • CIS • and 43+ more
+                                </p>
+                              </div>
+                            )}
+                            
+                            {item.name === "Integrations" && (
+                              <div className="mt-3 pt-3 border-t border-gray-100">
+                                <p className="text-xs text-gray-500 font-medium">
+                                  AWS • Azure • GCP • GitHub • Slack • Jira • ServiceNow • 100+ tools
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-
-                <motion.div
-                  className="mt-6 bg-gradient-to-r from-[#3530BA]/5 via-[#4C32B8]/5 to-[#D33E9E]/5 rounded-2xl p-4 border border-gray-100"
-                  whileHover={{ backgroundColor: "rgba(211, 62, 158, 0.05)" }}
-                >
-                  <Link
-                    href="/products"
-                    className="flex items-center justify-between group/cta"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3530BA] to-[#D33E9E] flex items-center justify-center">
-                        <Sparkles className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-gray-900">Explore all products</p>
-                        <p className="text-xs text-gray-600">Complete platform overview</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-[#D33E9E] group-hover/cta:translate-x-1 transition-transform" />
-                  </Link>
-                </motion.div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
+
 
         {/* FULL-WIDTH DROPDOWN PANEL - Resources */}
         <AnimatePresence>
@@ -428,7 +458,7 @@ export default function Navbar() {
                         <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
                           <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
                         </div>
-                        
+
                         <div className="flex-1 min-w-0 relative">
                           <div className="flex items-center gap-2">
                             <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
@@ -495,7 +525,7 @@ export default function Navbar() {
                         <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
                           <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
                         </div>
-                        
+
                         <div className="flex-1 min-w-0 relative">
                           <div className="flex items-center gap-2">
                             <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">

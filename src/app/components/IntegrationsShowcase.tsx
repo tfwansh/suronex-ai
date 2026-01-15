@@ -126,7 +126,7 @@ function StatusBadge({ status }: { status: string }) {
   const config = {
     live: {
       icon: Check,
-      label: "Live",
+      label: "",
       color: "#10b981",
       bg: "bg-emerald-500/10",
       border: "border-emerald-500/20"
@@ -263,7 +263,7 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
         }`}>
           {/* Logo with white background */}
           <motion.div
-            className="relative w-28 h-28 mb-6"
+            className="relative w-36 h-36 mb-6"
             animate={isHovered && !isComingSoon ? {
               y: -4,
               scale: 1.05,
@@ -303,8 +303,8 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
               <Image
                 src={integration.logo}
                 alt={integration.name}
-                width={96}
-                height={96}
+                width={128}
+                height={128}
                 className="object-contain"
               />
             </div>
@@ -324,7 +324,7 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
           </motion.h3>
 
           {/* Status badge */}
-          <StatusBadge status={integration.status} />
+          {integration.status !== "live" && <StatusBadge status={integration.status} />}
 
           {/* Category tag (subtle) */}
           <motion.div

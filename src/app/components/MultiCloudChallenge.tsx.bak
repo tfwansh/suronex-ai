@@ -425,7 +425,7 @@ export default function MultiCloudChallenge() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-6 md:mb-8"
+          className="text-center mb-8 md:mb-12"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
