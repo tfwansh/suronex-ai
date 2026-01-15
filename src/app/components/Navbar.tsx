@@ -178,9 +178,9 @@ export default function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="
-                  px-6 py-2.5 rounded-full text-gray-700 text-sm font-semibold
-                  border border-gray-300 hover:border-gray-400
-                  hover:bg-gray-50
+                  px-6 py-2.5 rounded-full text-black text-sm font-bold
+                  border-2 [background:linear-gradient(white,white)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] border-transparent
+                  hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box]
                   transition-all duration-300
                 "
               >
@@ -241,7 +241,7 @@ export default function Navbar() {
                             className="
                               w-full flex items-center justify-between
                               px-4 py-3 rounded-xl text-left
-                              text-gray-800 font-semibold text-base
+                              text-gray-800 font-bold text-base
                               hover:bg-gray-100 transition-colors duration-200
                             "
                           >
@@ -289,7 +289,7 @@ export default function Navbar() {
                           onClick={() => setMobileMenuOpen(false)}
                           className="
                             block px-4 py-3 rounded-xl
-                            text-gray-800 font-semibold text-base
+                            text-gray-800 font-bold text-base
                             hover:bg-gray-100 transition-colors duration-200
                           "
                         >
@@ -322,9 +322,9 @@ export default function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="
                       block w-full px-6 py-3 rounded-full text-center
-                      text-gray-700 font-semibold
+                      text-black font-bold
                       border border-gray-300
-                      hover:bg-gray-50
+                      hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box]
                       transition-all duration-300
                     "
                   >

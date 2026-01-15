@@ -3,12 +3,14 @@ import Hero from "./components/Hero";
 import LogoTicker from "./components/LogoTicker";
 import { BuiltForWorkV2 } from "./components/BuiltForWorkV2";
 import  MultiCloudChallenge  from "./components/MultiCloudChallenge";
+import  MultiCloudChallenge2  from "./components/MultiCloudChallenge2";
 import FlowSection from "./components/FlowSection";
 import Solution from "./components/Solution";
 import CallToAction from "./components/CallToAction";
 import { Footer } from "./components/footer";
 import Image from "next/image";
 import { IntegrationsShowcase } from "./components/IntegrationsShowcase"; 
+import FlowSection2 from "./components/FlowSection2";
 
 export default function Home() {
   return (
@@ -48,6 +50,7 @@ export default function Home() {
 
         {/* Multi-Cloud Challenge */}
         <MultiCloudChallenge />
+        <MultiCloudChallenge2 />
 
         {/* Platform Features */}
         <BuiltForWorkV2 />
@@ -55,7 +58,8 @@ export default function Home() {
 
         {/* Flow Section */}
         <FlowSection />
-
+        <FlowSection2 />
+        
         {/* Solution */}
         <Solution />
         {/* Logo Ticker */}

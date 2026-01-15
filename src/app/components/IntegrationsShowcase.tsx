@@ -6,78 +6,78 @@ import { useRef, useState } from "react"
 import Image from "next/image"
 import { Check, Clock, Sparkles } from "lucide-react"
 
-// Integration data - Updated with correct services
+// Integration data - Updated with correct paths
 const integrations = [
-  // Live integrations (from your screenshots)
+  // Live integrations
   {
     name: "Microsoft Teams",
-    logo: "/integrations/teams.svg",
+    logo: "/Integrations/microsoftteams.png",
     status: "live",
     category: "Collaboration"
   },
   {
     name: "Terraform",
-    logo: "/integrations/terraform.svg",
+    logo: "/Integrations/terraform.png",
     status: "live",
     category: "IaC"
   },
   {
     name: "Google Cloud",
-    logo: "/integrations/gcp.svg",
+    logo: "/Integrations/Googlecloud.png",
     status: "live",
     category: "Cloud"
   },
   {
     name: "Kubernetes",
-    logo: "/integrations/kubernetes.svg",
+    logo: "/Integrations/Kubernetes.png",
     status: "live",
     category: "Orchestration"
   },
   {
     name: "ServiceNow",
-    logo: "/integrations/servicenow.svg",
+    logo: "/Integrations/Servicenow.png",
     status: "live",
     category: "ITSM"
   },
   {
     name: "AWS",
-    logo: "/integrations/aws.svg",
+    logo: "/Integrations/AWS.png",
     status: "live",
     category: "Cloud"
   },
   {
     name: "GitHub",
-    logo: "/integrations/github.svg",
+    logo: "/Integrations/Github.png",
     status: "live",
     category: "DevOps"
   },
   {
     name: "Azure",
-    logo: "/integrations/azure.svg",
+    logo: "/Integrations/Azure.png",
     status: "live",
     category: "Cloud"
   },
   {
     name: "Slack",
-    logo: "/integrations/slack.svg",
+    logo: "/Integrations/slack.png",
     status: "live",
     category: "Collaboration"
   },
   {
     name: "Confluence",
-    logo: "/integrations/confluence.svg",
+    logo: "/Integrations/Confluence.png",
     status: "live",
     category: "Documentation"
   },
   {
     name: "Jira",
-    logo: "/integrations/jira.svg",
+    logo: "/Integrations/Jira.png",
     status: "live",
     category: "Project Management"
   },
   {
     name: "Microsoft 365",
-    logo: "/integrations/microsoft365.svg",
+    logo: "/Integrations/copilot.png",
     status: "live",
     category: "Productivity"
   },
@@ -85,37 +85,37 @@ const integrations = [
   // Coming soon
   {
     name: "Okta",
-    logo: "/integrations/okta.svg",
+    logo: "/Integrations/Okta.png",
     status: "soon",
     category: "Identity"
   },
   {
     name: "HubSpot",
-    logo: "/integrations/hubspot.svg",
+    logo: "/Integrations/hubspot.png",
     status: "soon",
     category: "CRM"
   },
   {
     name: "Salesforce",
-    logo: "/integrations/salesforce.svg",
+    logo: "/Integrations/salesforce.png",
     status: "soon",
     category: "CRM"
   },
   {
     name: "Oracle Cloud",
-    logo: "/integrations/oracle.svg",
+    logo: "/Integrations/oracle.png",
     status: "soon",
     category: "Cloud"
   },
   {
     name: "Alibaba Cloud",
-    logo: "/integrations/alibaba.svg",
+    logo: "/Integrations/alibaba.png",
     status: "soon",
     category: "Cloud"
   },
   {
     name: "Splunk",
-    logo: "/integrations/splunk.svg",
+    logo: "/Integrations/splunk.png",
     status: "soon",
     category: "Analytics"
   },
@@ -219,9 +219,9 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
     >
       <motion.div
         ref={cardRef}
-        className={`relative bg-white/[0.02] border overflow-hidden cursor-pointer group ${
-          isComingSoon 
-            ? 'border-white/5' 
+        className={`relative bg-white/[0.02] border overflow-hidden cursor-pointer group rounded-2xl ${
+          isComingSoon
+            ? 'border-white/5'
             : 'border-white/10 hover:border-white/20'
         }`}
         style={{
@@ -258,12 +258,12 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
         )}
 
         {/* Card content */}
-        <div className={`relative p-8 min-h-[180px] flex flex-col items-center justify-center ${
-          isComingSoon ? 'opacity-50' : ''
+        <div className={`relative p-8 min-h-[240px] flex flex-col items-center justify-center ${
+          isComingSoon ? 'opacity-60' : ''
         }`}>
-          {/* Logo */}
+          {/* Logo with white background */}
           <motion.div
-            className="relative w-16 h-16 mb-6"
+            className="relative w-28 h-28 mb-6"
             animate={isHovered && !isComingSoon ? {
               y: -4,
               scale: 1.05,
@@ -281,7 +281,7 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
             {!isComingSoon && (
               <motion.div
                 className="absolute inset-0 rounded-full blur-2xl"
-                style={{ 
+                style={{
                   background: 'radial-gradient(circle, #D33E9E20 0%, transparent 70%)',
                 }}
                 animate={isHovered ? {
@@ -298,17 +298,14 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
               />
             )}
 
-            <div className="relative w-full h-full flex items-center justify-center">
+            {/* White background container for icon */}
+            <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-br from-white to-gray-50 rounded-2xl p-5 shadow-lg">
               <Image
                 src={integration.logo}
                 alt={integration.name}
-                width={64}
-                height={64}
-                className={`object-contain transition-all duration-300 ${
-                  isComingSoon 
-                    ? 'grayscale opacity-40' 
-                    : 'grayscale-0 opacity-80 group-hover:opacity-100'
-                }`}
+                width={96}
+                height={96}
+                className="object-contain"
               />
             </div>
           </motion.div>
@@ -437,7 +434,7 @@ export function IntegrationsShowcase() {
           >
             {/* Subtle tag */}
             <div className="inline-block mb-8">
-              <div className="px-4 py-1.5 border border-white/10 bg-white/[0.02] backdrop-blur-sm">
+              <div className="px-4 py-1.5 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-full">
                 <span className="text-[10px] uppercase tracking-[0.3em] text-white/50 font-medium">
                   Integrations
                 </span>
