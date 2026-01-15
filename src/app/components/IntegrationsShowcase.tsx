@@ -6,119 +6,26 @@ import { useRef, useState } from "react"
 import Image from "next/image"
 import { Check, Clock, Sparkles } from "lucide-react"
 
-// Integration data - Updated with correct paths
+// Integration data - Updated with correct paths and individual sizes
 const integrations = [
-  // Live integrations
-  {
-    name: "Microsoft Teams",
-    logo: "/Integrations/microsoftteams.png",
-    status: "live",
-    category: "Collaboration"
-  },
-  {
-    name: "Terraform",
-    logo: "/Integrations/terraform.png",
-    status: "live",
-    category: "IaC"
-  },
-  {
-    name: "Google Cloud",
-    logo: "/Integrations/Googlecloud.png",
-    status: "live",
-    category: "Cloud"
-  },
-  {
-    name: "Kubernetes",
-    logo: "/Integrations/Kubernetes.png",
-    status: "live",
-    category: "Orchestration"
-  },
-  {
-    name: "ServiceNow",
-    logo: "/Integrations/Servicenow.png",
-    status: "live",
-    category: "ITSM"
-  },
-  {
-    name: "AWS",
-    logo: "/Integrations/AWS.png",
-    status: "live",
-    category: "Cloud"
-  },
-  {
-    name: "GitHub",
-    logo: "/Integrations/Github.png",
-    status: "live",
-    category: "DevOps"
-  },
-  {
-    name: "Azure",
-    logo: "/Integrations/Azure.png",
-    status: "live",
-    category: "Cloud"
-  },
-  {
-    name: "Slack",
-    logo: "/Integrations/slack.png",
-    status: "live",
-    category: "Collaboration"
-  },
-  {
-    name: "Confluence",
-    logo: "/Integrations/Confluence.png",
-    status: "live",
-    category: "Documentation"
-  },
-  {
-    name: "Jira",
-    logo: "/Integrations/Jira.png",
-    status: "live",
-    category: "Project Management"
-  },
-  {
-    name: "Microsoft 365",
-    logo: "/Integrations/copilot.png",
-    status: "live",
-    category: "Productivity"
-  },
-
-  // Coming soon
-  {
-    name: "Okta",
-    logo: "/Integrations/Okta.png",
-    status: "soon",
-    category: "Identity"
-  },
-  {
-    name: "HubSpot",
-    logo: "/Integrations/hubspot.png",
-    status: "soon",
-    category: "CRM"
-  },
-  {
-    name: "Salesforce",
-    logo: "/Integrations/salesforce.png",
-    status: "soon",
-    category: "CRM"
-  },
-  {
-    name: "Oracle Cloud",
-    logo: "/Integrations/oracle.png",
-    status: "soon",
-    category: "Cloud"
-  },
-  {
-    name: "Alibaba Cloud",
-    logo: "/Integrations/alibaba.png",
-    status: "soon",
-    category: "Cloud"
-  },
-  {
-    name: "Splunk",
-    logo: "/Integrations/splunk.png",
-    status: "soon",
-    category: "Analytics"
-  },
+  { name: "Microsoft Teams", logo: "/Integrations/microsoftteams.png", status: "live", category: "Collaboration", logoSize: 80 },
+  { name: "Terraform", logo: "/Integrations/terraform.png", status: "live", category: "IaC", logoSize: 85 },
+  { name: "Google Cloud", logo: "/Integrations/Googlecloud.png", status: "live", category: "Cloud", logoSize: 90 },
+  { name: "Kubernetes", logo: "/Integrations/Kubernetes.png", status: "live", category: "Orchestration", logoSize: 85 },
+  { name: "ServiceNow", logo: "/Integrations/Servicenow.png", status: "live", category: "ITSM", logoSize: 95 },
+  { name: "AWS", logo: "/Integrations/AWS.png", status: "live", category: "Cloud", logoSize: 90 },
+  { name: "GitHub", logo: "/Integrations/Github.png", status: "live", category: "DevOps", logoSize: 75 },
+  { name: "Azure", logo: "/Integrations/Azure.png", status: "live", category: "Cloud", logoSize: 85 },
+  { name: "Slack", logo: "/Integrations/slack.png", status: "live", category: "Collaboration", logoSize: 90 },
+  { name: "Confluence", logo: "/Integrations/Confluence.png", status: "live", category: "Documentation", logoSize: 80 },
+  { name: "Jira", logo: "/Integrations/Jira.png", status: "live", category: "Project Management", logoSize: 85 },
+  { name: "Microsoft 365", logo: "/Integrations/copilot.png", status: "live", category: "Productivity", logoSize: 90 },
+  { name: "Okta", logo: "/Integrations/Okta.png", status: "soon", category: "Identity", logoSize: 75 },
+  { name: "HubSpot", logo: "/Integrations/hubspot.png", status: "soon", category: "CRM", logoSize: 80 },
+  { name: "Salesforce", logo: "/Integrations/salesforce.png", status: "soon", category: "CRM", logoSize: 85 },
+  { name: "Oracle Cloud", logo: "/Integrations/oracle.png", status: "soon", category: "Cloud", logoSize: 90 },
+  { name: "Alibaba Cloud", logo: "/Integrations/alibaba.png", status: "soon", category: "Cloud", logoSize: 90 },
+  { name: "Splunk", logo: "/Integrations/splunk.png", status: "soon", category: "Analytics", logoSize: 85 },
 ]
 
 // Status badge component
@@ -303,8 +210,8 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
               <Image
                 src={integration.logo}
                 alt={integration.name}
-                width={128}
-                height={128}
+                width={integration.logoSize}
+                height={integration.logoSize}
                 className="object-contain"
               />
             </div>
@@ -323,7 +230,7 @@ function IntegrationCard({ integration, index }: { integration: typeof integrati
             {integration.name}
           </motion.h3>
 
-          {/* Status badge */}
+          {/* Status badge - only show for non-live integrations */}
           {integration.status !== "live" && <StatusBadge status={integration.status} />}
 
           {/* Category tag (subtle) */}
@@ -523,7 +430,7 @@ export function IntegrationsShowcase() {
               Request an integration
             </a>
           </p>
-          
+
           <p className="text-xs text-neutral-700 mt-6 max-w-2xl mx-auto">
             All product names, logos, and brands are property of their respective owners. All company, product, and service names used in this website are for identification purposes only.
           </p>
