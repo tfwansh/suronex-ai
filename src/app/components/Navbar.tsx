@@ -2,58 +2,109 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowRight, Shield, CheckCircle2, Cloud, Package, Lock, FileCheck2, Boxes, Sparkles, BookOpen, FileText, Users, Mail, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface DropdownItem {
-  text: string;
-  link: string;
+interface ProductCategory {
+  title: string;
+  items: {
+    name: string;
+    description: string;
+    link: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }[];
 }
 
-interface Navlink {
-  base: string;
-  href: string;
-  dropdown?: DropdownItem[];
-}
-
-const navlinks: Navlink[] = [
+const productCategories: ProductCategory[] = [
   {
-  base: "Products",
-  href: "/",
-  dropdown: [
-    { text: "Cloud Security", link: "/products/cloud-security" },
-    { text: "Cloud Compliance", link: "/products/cloud-compliance" },
-    { text: "Cloud Native Compliance", link: "/products/cloud-native-compliance" },
-    { text: "Cloud Inventory", link: "/products/cloud-inventory" },
-    { text: "SaaS Security", link: "/products/saas-security" }
-  ]
-},
-{
-    base: "Company",
-    href: "/",
-    dropdown: [
-      { text: "About Us", link: "/about-us" },
-      { text: "Contact Us", link: "/contact" }
+    title: "Security & Compliance",
+    items: [
+      {
+        name: "Cloud Security",
+        description: "Continuous security monitoring across your infrastructure",
+        link: "/products/cloud-security",
+        icon: Shield
+      },
+      {
+        name: "Cloud Compliance",
+        description: "Automated compliance for AWS, Azure, and GCP",
+        link: "/products/cloud-compliance",
+        icon: CheckCircle2
+      },
+      {
+        name: "Cloud Native Compliance",
+        description: "Kubernetes and container security posture management",
+        link: "/products/cloud-native-compliance",
+        icon: Cloud
+      },
+      {
+        name: "SaaS Security",
+        description: "Security posture for 100+ SaaS applications",
+        link: "/products/saas-security",
+        icon: Lock
+      }
     ]
   },
   {
-    base: "Resources",
-    href: "/",
-    dropdown: [
-      { text: "FAQs", link: "/faq" },
-      { text: "Whitepaper", link: "/whitepaper" }
+    title: "Platform",
+    items: [
+      {
+        name: "Cloud Inventory",
+        description: "Real-time asset discovery and inventory management",
+        link: "/products/cloud-inventory",
+        icon: Package
+      },
+      {
+        name: "Frameworks",
+        description: "Support for 35+ compliance frameworks and standards",
+        link: "/frameworks",
+        icon: FileCheck2
+      },
+      {
+        name: "Integrations",
+        description: "Connect your cloud, SaaS, and DevOps tools seamlessly",
+        link: "/integrations",
+        icon: Boxes
+      }
     ]
+  }
+];
+
+const resourcesItems = [
+  {
+    name: "FAQs",
+    description: "Find answers to common questions about Suronex",
+    link: "/faq",
+    icon: BookOpen
   },
   {
-    base: "Suron AI",
-    href: "/suron-ai"
+    name: "Whitepaper",
+    description: "Deep dive into cloud security and compliance best practices",
+    link: "/whitepaper",
+    icon: FileText
+  }
+];
+
+const companyItems = [
+  {
+    name: "About Us",
+    description: "Learn about our mission and team",
+    link: "/about-us",
+    icon: Users
+  },
+  {
+    name: "Contact Us",
+    description: "Get in touch with our team",
+    link: "/contact",
+    icon: Mail
   }
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openDesktopDropdown, setOpenDesktopDropdown] = useState<string | null>(null);
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -61,22 +112,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+        setOpenDesktopDropdown(null);
+      }
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -85,236 +133,589 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full z-[999] transition-all duration-500 ease-out
-          ${
-            scrolled
-              ? "bg-white/98 backdrop-blur-xl border-b border-gray-200 shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
-              : "bg-white/85 backdrop-blur-md border-b border-gray-200/60"
-          }
-        `}
+        className={`fixed top-0 w-full z-[999] transition-all duration-500 ease-out ${
+          scrolled
+            ? "bg-white/98 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+            : "bg-white/85 backdrop-blur-md"
+        }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
-          {/* LOGO */}
-          <Link href="/" className="relative z-[1000]">
-            <motion.div
-              className="relative w-40 h-12 flex items-center cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Image
-                src="/logo.png"
-                alt="Suronex Logo"
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </motion.div>
-          </Link>
+        {/* Top Navbar Bar */}
+        <div className={`border-b border-gray-200 transition-all duration-300 ${openDesktopDropdown ? 'border-gray-200' : scrolled ? 'border-gray-200' : 'border-gray-200/60'}`}>
+          {/* Liquid flow effect on scroll */}
+          <motion.div
+            className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#3530BA] via-[#D33E9E] to-[#3530BA] opacity-0"
+            animate={{
+              opacity: scrolled ? [0, 0.3, 0] : 0,
+              x: scrolled ? ["0%", "100%"] : "0%"
+            }}
+            transition={{
+              opacity: { duration: 2, repeat: Infinity },
+              x: { duration: 3, repeat: Infinity, ease: "linear" }
+            }}
+          />
 
-          {/* DESKTOP NAV LINKS */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            {navlinks.map((item) => (
-              <div key={item.base} className="relative group">
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-300 relative"
-                >
-                  {item.base}
-                  {item.dropdown && (
-                    <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
-                  )}
-                </Link>
-
-                {/* DROPDOWN MENU */}
-                {item.dropdown && (
-                  <div
-                    className="
-                      absolute left-0 top-full mt-2 w-64
-                      rounded-2xl border shadow-2xl
-                      opacity-0 invisible translate-y-2
-                      group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
-                      transition-all duration-300 ease-out
-                      bg-white border-gray-200/50
-                    "
-                  >
-                    <div className="p-2">
-                      {item.dropdown.map((drop) => (
-                        <Link
-                          key={drop.text}
-                          href={drop.link}
-                          className="
-                            block px-4 py-3 rounded-xl text-sm font-medium text-gray-700
-                            hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10
-                            hover:text-black transition-all duration-200
-                          "
-                        >
-                          {drop.text}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* DESKTOP BUTTONS */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(211,62,158,0.6)" }}
-                whileTap={{ scale: 0.95 }}
-                className="
-                  px-8 py-2.5 rounded-full text-white text-sm font-bold
-                  bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E]
-                  shadow-[0_0_20px_rgba(211,62,158,0.4)]
-                  transition-all duration-300
-                "
-              >
-                Book a Demo
-              </motion.button>
-            </Link>
-
-            <Link href="/signin">
-              <motion.button
+          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+            {/* LOGO */}
+            <Link href="/" className="relative z-[1000]">
+              <motion.div
+                className="relative w-40 h-12 flex items-center cursor-pointer"
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="
-                  px-6 py-2.5 rounded-full text-black text-sm font-bold
-                  border-2 [background:linear-gradient(white,white)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] border-transparent
-                  hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box]
-                  transition-all duration-300
-                "
+                transition={{ duration: 0.2 }}
               >
-                Sign In
-              </motion.button>
+                <Image
+                  src="/logo.png"
+                  alt="Suronex Logo"
+                  fill
+                  className="object-contain object-left"
+                  priority
+                />
+              </motion.div>
             </Link>
-          </div>
 
-          {/* MOBILE MENU BUTTON */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-black hover:bg-gray-100 transition-colors duration-300 z-[1000]"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </motion.button>
+            {/* DESKTOP NAV */}
+            <div className="hidden lg:flex items-center space-x-1">
+              {/* Products */}
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenDesktopDropdown("products")}
+                onMouseLeave={() => setOpenDesktopDropdown(null)}
+              >
+                <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-300 relative group">
+                  Products
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      openDesktopDropdown === "products" ? "rotate-180" : ""
+                    }`}
+                  />
+                  
+                  <motion.div
+                    className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#3530BA]/5 to-[#D33E9E]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
+                    animate={{
+                      scale: openDesktopDropdown === "products" ? [1, 1.05, 1] : 1
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </button>
+              </div>
+
+              {/* Resources */}
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenDesktopDropdown("resources")}
+                onMouseLeave={() => setOpenDesktopDropdown(null)}
+              >
+                <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-300">
+                  Resources
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      openDesktopDropdown === "resources" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* Company */}
+              <div
+                className="relative"
+                onMouseEnter={() => setOpenDesktopDropdown("company")}
+                onMouseLeave={() => setOpenDesktopDropdown(null)}
+              >
+                <button className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-300">
+                  Company
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      openDesktopDropdown === "company" ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* Suron AI */}
+              <Link
+                href="/suron-ai"
+                className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-semibold text-gray-700 hover:text-black hover:bg-gray-100 transition-all duration-300 relative"
+              >
+                Suron AI
+              </Link>
+            </div>
+
+            {/* DESKTOP BUTTONS */}
+            <div className="hidden lg:flex items-center gap-3">
+              <Link href="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(211,62,158,0.6)" }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-2.5 rounded-full text-white text-sm font-bold bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E] shadow-[0_0_20px_rgba(211,62,158,0.4)] transition-all duration-300 relative overflow-hidden group"
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                    animate={{
+                      x: ["-100%", "100%"]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                  <span className="relative">Book a Demo</span>
+                </motion.button>
+              </Link>
+
+              <Link href="/signin">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-6 py-2.5 rounded-full text-black text-sm font-bold border-2 [background:linear-gradient(white,white)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] border-transparent hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] transition-all duration-300"
+                >
+                  Sign In
+                </motion.button>
+              </Link>
+            </div>
+
+            {/* MOBILE MENU BUTTON */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg text-black hover:bg-gray-100 transition-colors duration-300 z-[1000]"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </motion.button>
+          </div>
         </div>
+
+        {/* FULL-WIDTH DROPDOWN PANEL - Products */}
+        <AnimatePresence>
+          {openDesktopDropdown === "products" && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.21, 0.45, 0.27, 0.9] }}
+              className="w-full border-b border-gray-200 bg-white/98 backdrop-blur-xl overflow-hidden"
+              onMouseEnter={() => setOpenDesktopDropdown("products")}
+              onMouseLeave={() => setOpenDesktopDropdown(null)}
+            >
+              <motion.div
+                className="h-[2px] bg-gradient-to-r from-[#3530BA] via-[#D33E9E] to-[#3530BA]"
+                style={{ backgroundSize: "200% 100%" }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 0%"]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+
+              <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="grid grid-cols-2 gap-12">
+                  {productCategories.map((category) => (
+                    <div key={category.title}>
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-5 px-2">
+                        {category.title}
+                      </h3>
+                      <div className="space-y-2">
+                        {category.items.map((item) => {
+                          const Icon = item.icon;
+                          return (
+                            <Link
+                              key={item.name}
+                              href={item.link}
+                              className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-300 relative overflow-hidden"
+                            >
+                              <motion.div
+                                className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D33E9E]/10 to-transparent opacity-0 group-hover/item:opacity-100"
+                                animate={{
+                                  x: ["-100%", "100%"]
+                                }}
+                                transition={{
+                                  duration: 1.5,
+                                  repeat: Infinity,
+                                  ease: "linear"
+                                }}
+                              />
+
+                              <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
+                                <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
+                              </div>
+                              
+                              <div className="flex-1 min-w-0 relative">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
+                                    {item.name}
+                                  </h4>
+                                  <ArrowRight className="w-4 h-4 text-[#D33E9E] opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                                </div>
+                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                  {item.description}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <motion.div
+                  className="mt-6 bg-gradient-to-r from-[#3530BA]/5 via-[#4C32B8]/5 to-[#D33E9E]/5 rounded-2xl p-4 border border-gray-100"
+                  whileHover={{ backgroundColor: "rgba(211, 62, 158, 0.05)" }}
+                >
+                  <Link
+                    href="/products"
+                    className="flex items-center justify-between group/cta"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3530BA] to-[#D33E9E] flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-900">Explore all products</p>
+                        <p className="text-xs text-gray-600">Complete platform overview</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-[#D33E9E] group-hover/cta:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* FULL-WIDTH DROPDOWN PANEL - Resources */}
+        <AnimatePresence>
+          {openDesktopDropdown === "resources" && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.21, 0.45, 0.27, 0.9] }}
+              className="w-full border-b border-gray-200 bg-white/98 backdrop-blur-xl overflow-hidden"
+              onMouseEnter={() => setOpenDesktopDropdown("resources")}
+              onMouseLeave={() => setOpenDesktopDropdown(null)}
+            >
+              <motion.div
+                className="h-[2px] bg-gradient-to-r from-[#3530BA] via-[#D33E9E] to-[#3530BA]"
+                style={{ backgroundSize: "200% 100%" }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 0%"]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+
+              <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="max-w-2xl space-y-2">
+                  {resourcesItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.link}
+                        className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-300 relative overflow-hidden"
+                      >
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D33E9E]/10 to-transparent opacity-0 group-hover/item:opacity-100"
+                          animate={{
+                            x: ["-100%", "100%"]
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
+
+                        <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
+                          <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
+                        </div>
+                        
+                        <div className="flex-1 min-w-0 relative">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
+                              {item.name}
+                            </h4>
+                            <ArrowRight className="w-4 h-4 text-[#D33E9E] opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* FULL-WIDTH DROPDOWN PANEL - Company */}
+        <AnimatePresence>
+          {openDesktopDropdown === "company" && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.21, 0.45, 0.27, 0.9] }}
+              className="w-full border-b border-gray-200 bg-white/98 backdrop-blur-xl overflow-hidden"
+              onMouseEnter={() => setOpenDesktopDropdown("company")}
+              onMouseLeave={() => setOpenDesktopDropdown(null)}
+            >
+              <motion.div
+                className="h-[2px] bg-gradient-to-r from-[#3530BA] via-[#D33E9E] to-[#3530BA]"
+                style={{ backgroundSize: "200% 100%" }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 0%"]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+
+              <div className="max-w-7xl mx-auto px-6 py-8">
+                <div className="max-w-2xl space-y-2">
+                  {companyItems.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.link}
+                        className="group/item flex items-start gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-300 relative overflow-hidden"
+                      >
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-[#D33E9E]/10 to-transparent opacity-0 group-hover/item:opacity-100"
+                          animate={{
+                            x: ["-100%", "100%"]
+                          }}
+                          transition={{
+                            duration: 1.5,
+                            repeat: Infinity,
+                            ease: "linear"
+                          }}
+                        />
+
+                        <div className="relative flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center group-hover/item:from-[#3530BA]/10 group-hover/item:to-[#D33E9E]/10 transition-all duration-300">
+                          <Icon className="w-6 h-6 text-gray-600 group-hover/item:text-[#3530BA] transition-colors" />
+                        </div>
+                        
+                        <div className="flex-1 min-w-0 relative">
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-base font-semibold text-gray-900 group-hover/item:text-[#3530BA] transition-colors">
+                              {item.name}
+                            </h4>
+                            <ArrowRight className="w-4 h-4 text-[#D33E9E] opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all" />
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE MENU - Same as before */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[998] lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Menu Panel */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="
-                fixed top-0 right-0 h-full w-[85%] max-w-sm
-                bg-white shadow-2xl z-[999]
-                overflow-y-auto
-              "
+              className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white shadow-2xl z-[999] overflow-y-auto"
             >
               <div className="p-6 pt-24">
-                {/* Mobile Nav Links */}
-                <div className="space-y-1">
-                  {navlinks.map((item) => (
-                    <div key={item.base}>
-                      {item.dropdown ? (
-                        <>
-                          <button
-                            onClick={() =>
-                              setOpenDropdown(openDropdown === item.base ? null : item.base)
-                            }
-                            className="
-                              w-full flex items-center justify-between
-                              px-4 py-3 rounded-xl text-left
-                              text-gray-800 font-bold text-base
-                              hover:bg-gray-100 transition-colors duration-200
-                            "
-                          >
-                            {item.base}
-                            <ChevronDown
-                              className={`w-5 h-5 transition-transform duration-300 ${
-                                openDropdown === item.base ? "rotate-180" : ""
-                              }`}
-                            />
-                          </button>
+                <div>
+                  <button
+                    onClick={() =>
+                      setOpenMobileDropdown(openMobileDropdown === "products" ? null : "products")
+                    }
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    Products
+                    <ChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${
+                        openMobileDropdown === "products" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
 
-                          <AnimatePresence>
-                            {openDropdown === item.base && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="pl-4 pt-2 space-y-1">
-                                  {item.dropdown.map((drop) => (
+                  <AnimatePresence>
+                    {openMobileDropdown === "products" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 pt-2 space-y-4">
+                          {productCategories.map((category) => (
+                            <div key={category.title}>
+                              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 px-2">
+                                {category.title}
+                              </h4>
+                              <div className="space-y-1">
+                                {category.items.map((item) => {
+                                  const Icon = item.icon;
+                                  return (
                                     <Link
-                                      key={drop.text}
-                                      href={drop.link}
+                                      key={item.name}
+                                      href={item.link}
                                       onClick={() => setMobileMenuOpen(false)}
-                                      className="
-                                        block px-4 py-2.5 rounded-lg
-                                        text-gray-600 text-sm font-medium
-                                        hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10
-                                        hover:text-black transition-all duration-200
-                                      "
+                                      className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
                                     >
-                                      {drop.text}
+                                      <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                      <div className="flex-1 min-w-0">
+                                        <div className="text-sm font-medium text-gray-900">
+                                          {item.name}
+                                        </div>
+                                        <div className="text-xs text-gray-600 mt-0.5">
+                                          {item.description}
+                                        </div>
+                                      </div>
                                     </Link>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </>
-                      ) : (
-                        <Link
-                          href={item.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="
-                            block px-4 py-3 rounded-xl
-                            text-gray-800 font-bold text-base
-                            hover:bg-gray-100 transition-colors duration-200
-                          "
-                        >
-                          {item.base}
-                        </Link>
-                      )}
-                    </div>
-                  ))}
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                {/* Mobile CTA Buttons */}
+                <div>
+                  <button
+                    onClick={() =>
+                      setOpenMobileDropdown(openMobileDropdown === "resources" ? null : "resources")
+                    }
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    Resources
+                    <ChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${
+                        openMobileDropdown === "resources" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {openMobileDropdown === "resources" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 pt-2 space-y-1">
+                          {resourcesItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                              <Link
+                                key={item.name}
+                                href={item.link}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
+                              >
+                                <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {item.name}
+                                  </div>
+                                  <div className="text-xs text-gray-600 mt-0.5">
+                                    {item.description}
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <div>
+                  <button
+                    onClick={() =>
+                      setOpenMobileDropdown(openMobileDropdown === "company" ? null : "company")
+                    }
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    Company
+                    <ChevronDown
+                      className={`w-5 h-5 transition-transform duration-300 ${
+                        openMobileDropdown === "company" ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {openMobileDropdown === "company" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 pt-2 space-y-1">
+                          {companyItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                              <Link
+                                key={item.name}
+                                href={item.link}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
+                              >
+                                <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {item.name}
+                                  </div>
+                                  <div className="text-xs text-gray-600 mt-0.5">
+                                    {item.description}
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <Link
+                  href="/suron-ai"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 rounded-xl text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                >
+                  Suron AI
+                </Link>
+
                 <div className="mt-8 space-y-3">
                   <Link
                     href="/contact"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="
-                      block w-full px-6 py-3 rounded-full text-center
-                      text-white font-bold
-                      bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E]
-                      shadow-[0_0_20px_rgba(211,62,158,0.4)]
-                      hover:shadow-[0_0_30px_rgba(211,62,158,0.6)]
-                      transition-all duration-300
-                    "
+                    className="block w-full px-6 py-3 rounded-full text-center text-white font-bold bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E] shadow-[0_0_20px_rgba(211,62,158,0.4)] hover:shadow-[0_0_30px_rgba(211,62,158,0.6)] transition-all duration-300"
                   >
                     Book a Demo
                   </Link>
@@ -322,13 +723,7 @@ export default function Navbar() {
                   <Link
                     href="/signin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="
-                      block w-full px-6 py-3 rounded-full text-center
-                      text-black font-bold
-                      border border-gray-300
-                      hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box]
-                      transition-all duration-300
-                    "
+                    className="block w-full px-6 py-3 rounded-full text-center text-black font-bold border border-gray-300 hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] transition-all duration-300"
                   >
                     Sign In
                   </Link>
