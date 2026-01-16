@@ -2,15 +2,16 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { 
-  Shield, 
-  AlertTriangle, 
-  FileCheck, 
-  Radar, 
-  Zap, 
-  Target, 
-  CheckCircle2, 
-  Brain 
+import Image from "next/image";
+import {
+  Shield,
+  AlertTriangle,
+  FileCheck,
+  Radar,
+  Zap,
+  Target,
+  CheckCircle2,
+  Brain
 } from "lucide-react";
 
 const challenges = [
@@ -22,8 +23,6 @@ const challenges = [
     solutionDetail: "Centralize risk and compliance across AWS, Azure, GCP, cloud-native workloads, and SaaS applications in a single control plane.",
     gradient: "from-pink-500 via-purple-500 to-indigo-500",
     icon: Shield,
-    staticImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTBkN3Z0Y3poMWJhMHFhbWRrZHVtYnl5a2x5ZmJqbTN5YzBvdHUwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlHJGHe3yAMhdQY/giphy.gif",
   },
   {
     id: 2,
@@ -33,8 +32,6 @@ const challenges = [
     solutionDetail: "Replace manual checklists with continuous compliance automation. As your cloud changes, controls are evaluated in real time, evidence is collected automatically, and compliance posture stays current.",
     gradient: "from-violet-500 via-fuchsia-500 to-pink-500",
     icon: FileCheck,
-    staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm9oNWZxcTZvMGF5cjV5cGFpYzBjMWRweTVtaHl0dnFlYWN3N2pwaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9C25UNTwfZuk85WP/giphy.gif",
   },
   {
     id: 3,
@@ -44,8 +41,6 @@ const challenges = [
     solutionDetail: "Stay audit-ready at all times, not just during audit season. Controls are continuously validated and mapped across frameworks like ISO 27001, SOC 2, PCI DSS, and GDPR—so audits become a reporting exercise, not a scramble.",
     gradient: "from-blue-500 via-purple-500 to-pink-500",
     icon: AlertTriangle,
-    staticImage: "https://images.unsplash.com/photo-1568667256549-094345857637?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHprdjNlODRuZGNpZGF1bjR2cGc1aGVqeGU5bTNseGxleGN3OG5hYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qDSOvfaCO9b3MlO/giphy.gif",
   },
   {
     id: 4,
@@ -55,8 +50,6 @@ const challenges = [
     solutionDetail: "Identify and prioritize risk before it becomes an incident. Real-time monitoring and intelligent correlation surface misconfigurations and control failures early, enabling faster remediation and reducing business impact.",
     gradient: "from-cyan-500 via-blue-500 to-purple-500",
     icon: Radar,
-    staticImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWp6aGFsMTh0ZHo3c3Rwb3JlYmFzcmg3dTltZWtzb3pqcnVsZWtxayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPic2BnoVZkRla8/giphy.gif",
   },
   {
     id: 5,
@@ -66,8 +59,6 @@ const challenges = [
     solutionDetail: "Scale compliance and governance automatically as your cloud footprint grows. Standardized policies, inherited controls, and centralized reporting ensure consistent governance—without adding operational overhead or slowing innovation.",
     gradient: "from-indigo-500 via-purple-500 to-pink-500",
     icon: Zap,
-    staticImage: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZTR3YmZkNWJpM2R0NGh0YWZzcGlpaHJxYmFkM2Y0b3JlNGxueGFqNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0HlDDyxBfSaPpU88/giphy.gif",
   },
   {
     id: 6,
@@ -77,8 +68,6 @@ const challenges = [
     solutionDetail: "Deliver normalized, AI-driven risk scoring across cloud and SaaS environments. Surface what matters most right now with real-time risk context—so executives can prioritize decisions based on business impact, not raw alerts.",
     gradient: "from-purple-500 via-pink-500 to-rose-500",
     icon: Target,
-    staticImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmVyNGp0YjZldnEwcmVybXJnaDF1cmVpYnloOXM0YW9mcXRsbjY1ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9C25UNTwfZuk85WP/giphy.gif",
   },
   {
     id: 7,
@@ -88,8 +77,6 @@ const challenges = [
     solutionDetail: "Prove that security and compliance controls work—at any point in time. Automatically validate controls across environments, maintain live evidence, and demonstrate operational effectiveness to auditors, regulators, customers, and the board.",
     gradient: "from-rose-500 via-pink-500 to-purple-500",
     icon: CheckCircle2,
-    staticImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYjZ6dGowb21xMnJuMWM1cDJ4YXZtM2ppM2c2bDh5dGI1YmFqbGtzayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26AHPxxnSw1L9T1rW/giphy.gif",
   },
   {
     id: 8,
@@ -99,8 +86,6 @@ const challenges = [
     solutionDetail: "Cut through alert noise with AI-driven correlation and prioritization. Aggregate signals across cloud and SaaS, identify patterns, suppress false positives, and focus teams on the risks that truly require action.",
     gradient: "from-fuchsia-500 via-purple-500 to-indigo-500",
     icon: Brain,
-    staticImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
-    hoverGif: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaTZ4aXFrbGU3bDR0dDR3bjdjZWp5YXFqZGJ3NnBvY3ZkYjRuN2NlYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif",
   },
 ];
 
@@ -116,53 +101,13 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
       transition={{ duration: 0.6, delay: index * 0.05, ease: [0.21, 0.45, 0.27, 0.9] }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative h-[420px]"
+      className="group relative h-[240px] sm:h-[260px] md:h-[280px]"
     >
-      <div className="relative h-full rounded-3xl overflow-hidden bg-gradient-to-br from-neutral-950/50 via-neutral-950/30 to-neutral-950/50 backdrop-blur-xl border border-white/[0.05] hover:border-white/[0.1] transition-all duration-700">
-
-        {/* Background Image/GIF Layer */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <AnimatePresence mode="wait">
-            {!isHovered ? (
-              <motion.div
-                key="static"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-0"
-              >
-                <img 
-                  src={challenge.staticImage}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="gif"
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 0, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0"
-              >
-                <img 
-                  src={challenge.hoverGif}
-                  alt=""
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Lighter overlay so images show through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/25 to-black/40 pointer-events-none" />
+      <div className="relative h-full rounded-2xl overflow-hidden bg-gradient-to-br from-neutral-950/50 via-neutral-950/30 to-neutral-950/50 backdrop-blur-xl border border-white/[0.05] hover:border-white/[0.1] transition-all duration-700">
 
         {/* Gradient border effect */}
         <motion.div
-          className="absolute inset-0 rounded-3xl"
+          className="absolute inset-0 rounded-2xl"
           style={{
             background: `linear-gradient(to bottom right, transparent 30%, ${isHovered ? 'rgba(168, 85, 247, 0.1)' : 'transparent'} 100%)`,
           }}
@@ -185,15 +130,12 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
         />
 
         {/* Content container */}
-        <div className="relative h-full p-4 flex flex-col z-10">
+        <div className="relative h-full p-3 sm:p-4 flex flex-col z-10">
 
-          {/* Top section */}
-          <div className="flex items-start justify-between mb-6">
-          
-
-            {/* Icon with clean animation */}
+          {/* Top section with icon */}
+          <div className="flex items-start justify-between mb-3 flex-shrink-0">
             <motion.div
-              className="w-12 h-12 rounded-xl bg-white/[0.03] flex items-center justify-center relative overflow-hidden"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/[0.03] flex items-center justify-center relative overflow-hidden"
               animate={{
                 backgroundColor: isHovered ? "rgba(255, 255, 255, 0.08)" : "rgba(255, 255, 255, 0.03)",
               }}
@@ -216,8 +158,8 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="relative z-10"
               >
-                <IconComponent 
-                  className="w-6 h-6 transition-colors duration-500"
+                <IconComponent
+                  className="w-5 h-5 transition-colors duration-500"
                   style={{
                     color: isHovered ? 'rgb(168, 85, 247)' : 'rgb(115, 115, 115)',
                   }}
@@ -227,131 +169,135 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
             </motion.div>
           </div>
 
-          {/* Main content */}
-          <div className="flex-1 flex flex-col justify-between">
-            <div className="space-y-4 relative min-h-[200px]">
-              {/* Problem Content */}
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  opacity: isHovered ? 0 : 1,
-                  y: isHovered ? -10 : 0,
-                }}
-                transition={{ duration: 0.4 }}
-              >
-                <h3 className="text-2xl font-medium text-white leading-tight mb-5 tracking-tight">
-                  {challenge.pain}
-                </h3>
-                <p className="text-base text-neutral-300 leading-relaxed">
-                  {challenge.painDetail}
-                </p>
-              </motion.div>
+          {/* Main scrollable content area */}
+          <div className="flex-1 min-h-0 relative mb-2">
+            {/* Problem Content */}
+            <motion.div
+              className="h-full overflow-y-auto custom-scrollbar pr-1"
+              animate={{
+                opacity: isHovered ? 0 : 1,
+                pointerEvents: isHovered ? 'none' : 'auto',
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 className="text-base sm:text-lg md:text-xl font-medium text-white leading-tight mb-2 sm:mb-3 tracking-tight">
+                {challenge.pain}
+              </h3>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                {challenge.painDetail}
+              </p>
+            </motion.div>
 
-              {/* Solution Content */}
-              <motion.div
-                className="space-y-5 absolute inset-0"
-                animate={{
-                  opacity: isHovered ? 1 : 0,
-                  y: isHovered ? 0 : 10,
-                }}
-                transition={{ duration: 0.4, delay: isHovered ? 0.1 : 0 }}
-                style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
-              >
-                <div className="flex items-center gap-3">
+            {/* Solution Content */}
+            <motion.div
+              className="absolute inset-0 h-full overflow-y-auto custom-scrollbar pr-1"
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                pointerEvents: isHovered ? 'auto' : 'none',
+              }}
+              transition={{ duration: 0.3, delay: isHovered ? 0.1 : 0 }}
+            >
+              <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <motion.div
+                  className={`h-[2px] flex-1 bg-gradient-to-r ${challenge.gradient} relative overflow-hidden`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: isHovered ? 1 : 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{ transformOrigin: "left" }}
+                >
                   <motion.div
-                    className={`h-[2px] flex-1 bg-gradient-to-r ${challenge.gradient} relative overflow-hidden`}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    style={{ transformOrigin: "left" }}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                      animate={{
-                        x: isHovered ? ['-100%', '200%'] : '-100%',
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: isHovered ? Infinity : 0,
-                        repeatDelay: 0.5,
-                      }}
-                    />
-                  </motion.div>
-                  <span className="text-xs font-mono text-neutral-400 tracking-[0.2em] uppercase">
-                    Solution
-                  </span>
-                </div>
-
-                <h3 className={`text-3xl font-semibold bg-gradient-to-r ${challenge.gradient} bg-clip-text text-transparent leading-tight tracking-tight`}>
-                  {challenge.solution}
-                </h3>
-
-                <p className="text-base text-white leading-relaxed">
-                  {challenge.solutionDetail}
-                </p>
-              </motion.div>
-            </div>
-
-            {/* Bottom indicator - WORKING ON ALL CARDS NOW */}
-            <div className="relative">
-              <motion.div
-                className="flex items-center gap-3 mt-6"
-                animate={{
-                  opacity: isHovered ? 0 : 0.6,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="flex gap-1.5">
-                  <motion.div 
-                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
                     animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.6, 1, 0.6],
+                      x: isHovered ? ['-100%', '200%'] : '-100%',
                     }}
                     transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 0,
+                      duration: 1.5,
+                      repeat: isHovered ? Infinity : 0,
+                      repeatDelay: 0.5,
                     }}
                   />
-                  <motion.div 
-                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.4, 0.8, 0.4],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 0.3,
-                    }}
-                  />
-                  <motion.div 
-                    className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${challenge.gradient}`}
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.3, 0.6, 0.3],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: 0.6,
-                    }}
-                  />
-                </div>
-                <span className="text-xs text-neutral-600 tracking-wider">
-                  Hover to reveal
+                </motion.div>
+                <span className="text-[9px] sm:text-[10px] font-mono text-neutral-400 tracking-[0.2em] uppercase flex-shrink-0">
+                  Solution
                 </span>
-              </motion.div>
-            </div>
+              </div>
+
+              <h3 className={`text-sm sm:text-base md:text-lg font-semibold bg-gradient-to-r ${challenge.gradient} bg-clip-text text-transparent leading-tight tracking-tight mb-2 sm:mb-3`}>
+                {challenge.solution}
+              </h3>
+
+              <p className="text-xs sm:text-sm text-white/90 leading-relaxed">
+                {challenge.solutionDetail}
+              </p>
+            </motion.div>
           </div>
+
+          {/* Bottom indicator with logo */}
+          <motion.div
+            className="flex items-center gap-2 flex-shrink-0 pt-2"
+            animate={{
+              opacity: isHovered ? 0 : 0.6,
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex gap-1">
+              <motion.div
+                className={`w-1 h-1 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.6, 1, 0.6],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0,
+                }}
+              />
+              <motion.div
+                className={`w-1 h-1 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0.3,
+                }}
+              />
+              <motion.div
+                className={`w-1 h-1 rounded-full bg-gradient-to-r ${challenge.gradient}`}
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0.6,
+                }}
+              />
+            </div>
+            <span className="text-[9px] sm:text-[10px] text-neutral-500 tracking-wide flex items-center gap-1.5">
+              Hover to Reveal Solution by
+              <span className="inline-flex items-center px-2 py-0.5 ml-0.5 bg-white rounded-md shadow-[0_0_20px_rgba(168,85,247,0.6)]">
+                <Image
+                  src="/logo.png"
+                  alt="Suronex"
+                  width={40}
+                  height={12}
+                  className="inline-block"
+                />
+              </span>
+            </span>
+          </motion.div>
         </div>
 
         {/* Ambient glow on hover */}
         <motion.div
-          className={`absolute inset-0 bg-gradient-to-br ${challenge.gradient} opacity-0 pointer-events-none`}
+          className={`absolute inset-0 bg-gradient-to-br ${challenge.gradient} opacity-0 pointer-events-none rounded-2xl`}
           animate={{
-            opacity: isHovered ? 0.04 : 0,
+            opacity: isHovered ? 0.03 : 0,
           }}
           transition={{ duration: 0.7 }}
         />
@@ -362,7 +308,7 @@ function ChallengeCard({ challenge, index }: { challenge: typeof challenges[0]; 
 
 export default function MultiCloudChallenge() {
   return (
-    <section className="relative py-6 md:py-8 bg-[#0a0a0a] overflow-hidden">
+    <section className="relative py-8 sm:py-12 md:py-16 bg-[#0a0a0a] overflow-hidden">
 
       {/* Ambient background effects */}
       <div className="absolute inset-0">
@@ -416,7 +362,7 @@ export default function MultiCloudChallenge() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-6 md:mb-8"
+          className="text-center mb-6 sm:mb-8 md:mb-10"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -424,7 +370,7 @@ export default function MultiCloudChallenge() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.08] mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] mb-4">
               <span className="text-white">Why Cloud Governance </span>
               <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-500">
@@ -438,14 +384,14 @@ export default function MultiCloudChallenge() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-3xl mx-auto text-base sm:text-lg md:text-xl text-neutral-400 leading-relaxed px-4"
+            className="mt-3 sm:mt-4 max-w-3xl mx-auto text-sm sm:text-base md:text-lg text-neutral-400 leading-relaxed px-4"
           >
-            Every security gap, manual process, and reactive incident costs you time, money, and trust.{" "}
-                      </motion.p>
+            Every security gap, manual process, and reactive incident costs you time, money, and trust.
+          </motion.p>
         </motion.div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {challenges.map((challenge, index) => (
             <ChallengeCard key={challenge.id} challenge={challenge} index={index} />
           ))}

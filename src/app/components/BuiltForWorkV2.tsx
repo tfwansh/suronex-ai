@@ -66,22 +66,25 @@ const capabilities = [
   },
 ]
 
-// Particle system for each card
-function ParticleField({ color, isHovered }: { color: string; isHovered: boolean }) {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
+// Optimized particle system with reduced particles for mobile
+function ParticleField({ color, isHovered, isMobile }: { color: string; isHovered: boolean; isMobile: boolean }) {
+  const particleCount = isMobile ? 10 : 15 // Reduced for mobile performance
+  const particles = Array.from({ length: particleCount }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    speed: Math.random() * 2 + 1,
+    size: Math.random() * 2 + 1,
+    speed: Math.random() * 1.5 + 1,
   }))
+
+  if (isMobile && !isHovered) return null // Don't render on mobile unless active
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full"
+          className="absolute rounded-full will-change-transform"
           style={{
             backgroundColor: color,
             width: p.size,
@@ -90,8 +93,8 @@ function ParticleField({ color, isHovered }: { color: string; isHovered: boolean
             top: `${p.y}%`,
           }}
           animate={isHovered ? {
-            y: [0, -100 - p.speed * 50],
-            opacity: [0, 1, 0],
+            y: [0, -80 - p.speed * 30],
+            opacity: [0, 0.8, 0],
           } : {
             y: 0,
             opacity: 0,
@@ -107,14 +110,14 @@ function ParticleField({ color, isHovered }: { color: string; isHovered: boolean
   )
 }
 
-// Magnetic hover effect card - Mobile optimized
+// Mobile optimized magnetic card with touch support
 function MagneticCard({ capability, index }: { capability: typeof capabilities[0]; index: number }) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
-  const [isHovered, setIsHovered] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -134,8 +137,8 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
   const springY = useSpring(mouseY, { stiffness: 150, damping: 15 })
 
   // Transform mouse position to card rotation
-  const rotateX = useTransform(springY, [-100, 100], [8, -8])
-  const rotateY = useTransform(springX, [-100, 100], [-8, 8])
+  const rotateX = useTransform(springY, [-100, 100], [5, -5])
+  const rotateY = useTransform(springX, [-100, 100], [-5, 5])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isMobile || !cardRef.current) return
@@ -147,9 +150,19 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
   }
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
-    mouseX.set(0)
-    mouseY.set(0)
+    if (!isMobile) {
+      setIsActive(false)
+      mouseX.set(0)
+      mouseY.set(0)
+    }
+  }
+
+  // Mobile touch handler
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation()
+    setIsActive(!isActive)
+    // Auto-deactivate after animation completes
+    setTimeout(() => setIsActive(false), 3000)
   }
 
   const Icon = capability.icon
@@ -167,14 +180,14 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
           type: "spring",
           stiffness: 100,
           damping: 15,
-          delay: index * 0.08,
+          delay: index * 0.06,
         }
       } : {}}
       className="w-full"
     >
       <motion.div
         ref={cardRef}
-        className={`relative overflow-hidden cursor-pointer group rounded-2xl border transition-all ${
+        className={`relative overflow-hidden cursor-pointer group rounded-xl sm:rounded-2xl border transition-all will-change-transform ${
           isHighlighted
             ? 'bg-gradient-to-br from-yellow-500/10 via-black/50 to-black border-yellow-500/30 shadow-lg shadow-yellow-500/20'
             : 'bg-black/50 backdrop-blur-sm border-white/10'
@@ -185,8 +198,9 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
           transformStyle: "preserve-3d",
         }}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => !isMobile && setIsHovered(true)}
+        onMouseEnter={() => !isMobile && setIsActive(true)}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={isMobile ? handleTouchStart : undefined}
         whileHover={isMobile ? {} : {
           borderColor: isHighlighted ? "#fbbf24" : capability.color,
           transition: { duration: 0.3 }
@@ -194,41 +208,39 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
         whileTap={isMobile ? { scale: 0.98 } : {}}
       >
         {/* Particle system */}
-        {!isMobile && <ParticleField color={capability.color} isHovered={isHovered} />}
+        <ParticleField color={capability.color} isHovered={isActive} isMobile={isMobile} />
 
-        {/* Gradient glow on hover */}
+        {/* Gradient glow on hover/active */}
         <motion.div
-          className="absolute inset-0 opacity-0"
+          className="absolute inset-0 opacity-0 will-change-transform"
           style={{
             background: isHighlighted
               ? `radial-gradient(circle at center, #fbbf2420 0%, transparent 70%)`
               : `radial-gradient(circle at center, ${capability.color}20 0%, transparent 70%)`,
           }}
           animate={{
-            opacity: isHovered ? 1 : 0,
-            scale: isHovered ? 1.5 : 1,
+            opacity: isActive ? 1 : 0,
+            scale: isActive ? 1.5 : 1,
           }}
           transition={{ duration: 0.6 }}
         />
 
-        {/* Scanning line effect - desktop only */}
-        {!isMobile && (
+        {/* Scanning line effect */}
+        {isActive && (
           <motion.div
-            className="absolute inset-x-0 h-px"
+            className="absolute inset-x-0 h-px will-change-transform"
             style={{
               background: isHighlighted
                 ? `linear-gradient(90deg, transparent, #fbbf24, transparent)`
                 : `linear-gradient(90deg, transparent, ${capability.color}, transparent)`,
-              boxShadow: isHighlighted ? `0 0 20px #fbbf24` : `0 0 20px ${capability.color}`,
+              boxShadow: isHighlighted ? `0 0 15px #fbbf24` : `0 0 15px ${capability.color}`,
             }}
-            animate={isHovered ? {
+            animate={{
               top: ["0%", "100%"],
-            } : {
-              top: "0%"
             }}
             transition={{
-              duration: 2,
-              repeat: isHovered ? Infinity : 0,
+              duration: 1.5,
+              repeat: 2,
               ease: "linear",
             }}
           />
@@ -237,52 +249,52 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
         {/* "Bring Your Own" Badge */}
         {isHighlighted && (
           <motion.div
-            className="absolute -top-1 right-4 px-3 py-1 bg-yellow-500/20 border border-yellow-500/50 rounded-full text-yellow-400 text-[10px] sm:text-xs font-semibold uppercase tracking-wider"
+            className="absolute -top-1 right-3 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-yellow-500/20 border border-yellow-500/50 rounded-full text-yellow-400 text-[9px] sm:text-[10px] md:text-xs font-semibold uppercase tracking-wider"
             initial={{ opacity: 0, y: -10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: index * 0.08 + 0.2 }}
+            transition={{ delay: index * 0.06 + 0.2 }}
           >
-            ✨ Bring Your Own Compliance
+            ✨ Bring Your Own
           </motion.div>
         )}
 
-        {/* FIXED HEIGHT CONTAINER WITH FLEX LAYOUT */}
-        <div className="relative h-[380px] p-8 flex flex-col justify-between">
-          
+        {/* COMPACT HEIGHT CONTAINER */}
+        <div className="relative h-[260px] sm:h-[280px] md:h-[300px] p-4 sm:p-5 md:p-6 flex flex-col justify-between">
+
           {/* TOP SECTION - Icon */}
           <motion.div
-            className="relative w-16 h-16 flex-shrink-0"
+            className="relative w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0"
           >
             {/* Pulsing blob background */}
             <motion.div
-              className="absolute inset-0 rounded-full blur-xl"
+              className="absolute inset-0 rounded-full blur-lg sm:blur-xl will-change-transform"
               style={{
                 backgroundColor: isHighlighted ? "#fbbf24" : capability.color,
               }}
-              animate={isHovered ? {
-                scale: [1, 1.3, 1],
-                opacity: [0.2, 0.4, 0.2],
+              animate={isActive ? {
+                scale: [1, 1.2, 1],
+                opacity: [0.15, 0.3, 0.15],
               } : {
                 scale: 1,
-                opacity: 0.15,
+                opacity: 0.1,
               }}
               transition={{
-                duration: 2,
-                repeat: isHovered ? Infinity : 0,
+                duration: 1.5,
+                repeat: isActive ? 2 : 0,
                 ease: "easeInOut",
               }}
             />
 
             {/* Icon container */}
             <motion.div
-              className="relative w-full h-full rounded-xl border-2 flex items-center justify-center"
+              className="relative w-full h-full rounded-lg sm:rounded-xl border-2 flex items-center justify-center will-change-transform"
               style={{
                 borderColor: isHighlighted ? "#fbbf24" : capability.color,
               }}
-              animate={isHovered && !isMobile ? {
-                y: -8,
-                rotateY: 15,
-                rotateX: -5,
+              animate={isActive ? {
+                y: -6,
+                rotateY: isMobile ? 0 : 12,
+                rotateX: isMobile ? 0 : -4,
               } : {
                 y: 0,
                 rotateY: 0,
@@ -290,66 +302,68 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
               }}
               transition={{
                 type: "spring",
-                stiffness: 300,
-                damping: 20,
+                stiffness: 250,
+                damping: 18,
               }}
             >
               <Icon
-                className="w-8 h-8"
+                className="w-6 h-6 sm:w-7 sm:h-7"
                 style={{ color: isHighlighted ? "#fbbf24" : capability.color }}
                 strokeWidth={1.5}
               />
             </motion.div>
           </motion.div>
 
-          {/* MIDDLE SECTION - Counter & Label */}
+          {/* MIDDLE SECTION - Compact Counter & Label */}
           <div className="flex-shrink-0">
             <motion.div
-              className="text-7xl md:text-8xl font-bold mb-3"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-1 sm:mb-2 will-change-transform"
               style={{ color: isHighlighted ? "#fbbf24" : capability.color }}
-              animate={isHovered && !isMobile ? {
-                scale: [1, 1.08, 1],
+              animate={isActive ? {
+                scale: [1, 1.05, 1],
               } : {
                 scale: 1,
               }}
               transition={{
-                duration: 0.6,
-                repeat: isHovered ? Infinity : 0,
-                repeatDelay: 1.5,
+                duration: 0.5,
+                repeat: isActive ? 2 : 0,
                 ease: "easeOut",
               }}
             >
               {capability.stat}
             </motion.div>
-            <div className="text-xs uppercase tracking-[0.2em] text-neutral-400 font-medium">
+            <div className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] text-neutral-400 font-medium">
               {capability.label}
             </div>
           </div>
 
-          {/* BOTTOM SECTION - Logos OR Description (SAME HEIGHT) */}
-          <div className="flex-shrink-0 h-[120px] flex items-center justify-center">
+          {/* BOTTOM SECTION - Compact Logos OR Description */}
+          <div className="flex-shrink-0 h-[80px] sm:h-[90px] flex items-center justify-center">
             {capability.showLogos ? (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.08 + 0.4 }}
-                className="flex items-center justify-center gap-5 w-full px-6"
+                transition={{ delay: index * 0.06 + 0.3 }}
+                className="flex items-center justify-center gap-3 sm:gap-4 w-full px-2"
               >
                 {capability.logos?.map((logo, i) => (
                   <motion.div
                     key={i}
-                    className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"
-                    whileHover={{
-                      scale: 1.15,
-                    }}
+                    className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
+                    whileHover={!isMobile ? {
+                      scale: 1.1,
+                    } : {}}
+                    whileTap={isMobile ? {
+                      scale: 0.95,
+                    } : {}}
                     transition={{ duration: 0.2 }}
                   >
                     <Image
                       src={logo.src}
                       alt={logo.alt}
-                      width={64}
-                      height={64}
-                      className="object-contain w-full h-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                      width={48}
+                      height={48}
+                      className="object-contain w-full h-full grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                     />
                   </motion.div>
                 ))}
@@ -358,10 +372,10 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.08 + 0.3 }}
-                className="w-full flex items-center justify-center px-2"
+                transition={{ delay: index * 0.06 + 0.25 }}
+                className="w-full flex items-center justify-center px-1 sm:px-2"
               >
-                <p className="text-base md:text-lg text-neutral-200 leading-relaxed text-center font-light">
+                <p className="text-xs sm:text-sm md:text-base text-neutral-200 leading-relaxed text-center font-light">
                   {capability.desc}
                 </p>
               </motion.div>
@@ -370,14 +384,14 @@ function MagneticCard({ capability, index }: { capability: typeof capabilities[0
 
           {/* Corner accent */}
           <motion.div
-            className="absolute top-0 right-0 w-2 h-2 rounded-bl-lg"
+            className="absolute top-0 right-0 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-bl-lg"
             style={{ backgroundColor: isHighlighted ? "#fbbf24" : capability.color }}
             animate={{
-              opacity: isHovered ? [0.4, 1, 0.4] : 0.3,
+              opacity: isActive ? [0.3, 0.8, 0.3] : 0.25,
             }}
             transition={{
-              duration: 1,
-              repeat: isHovered ? Infinity : 0,
+              duration: 0.8,
+              repeat: isActive ? 2 : 0,
             }}
           />
         </div>
@@ -404,7 +418,7 @@ export function BuiltForWorkV2() {
       setScrollProgress(progress)
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -416,9 +430,9 @@ export function BuiltForWorkV2() {
       {/* Animated grid background */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:2rem_2rem] sm:bg-[size:3rem_3rem] md:bg-[size:4rem_4rem]"
+          className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] sm:bg-[size:2rem_2rem] md:bg-[size:3rem_3rem]"
           style={{
-            opacity: scrollProgress * 0.5,
+            opacity: scrollProgress * 0.4,
           }}
         />
       </div>
@@ -429,57 +443,37 @@ export function BuiltForWorkV2() {
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.2, ease: "easeInOut" }}
+        transition={{ duration: 1, ease: "easeInOut" }}
       >
         <motion.div
           className="h-full bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"
           animate={{
-            opacity: [0.3, 0.6, 0.3],
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            duration: 3,
+            duration: 2.5,
             repeat: Infinity,
             ease: "easeInOut"
           }}
         />
       </motion.div>
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
 
-        {/* Bridge paragraph */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="pt-2 pb-6 sm:pb-8 text-center max-w-4xl mx-auto"
-        >
-	{/*          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/60 leading-relaxed px-2"
-          >
-            Every one of these challenges disappears with{" "}
-            <span className="text-white font-normal">Suronex</span>—a unified platform that turns compliance chaos into continuous confidence.
-          </motion.p>
-*/}
-        </motion.div>
         {/* Header */}
         <motion.div
           ref={ref}
-          className="mb-8 sm:mb-12 md:mb-16 text-center px-2"
+          className="mb-6 sm:mb-8 md:mb-10 text-center px-2"
         >
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, type: "spring", stiffness: 50 }}
+            transition={{ duration: 0.7, type: "spring", stiffness: 60 }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight text-white mb-4 sm:mb-6 leading-[1.1]">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light tracking-tight text-white mb-3 sm:mb-4 leading-[1.1]">
               Beyond Checklists.{" "}
               <motion.span
-                className="block sm:inline-block mt-2 sm:mt-0"
+                className="block sm:inline-block mt-1 sm:mt-0"
                 animate={{
                   backgroundImage: [
                     "linear-gradient(45deg, #3b82f6, #ec4899)",
@@ -488,7 +482,7 @@ export function BuiltForWorkV2() {
                   ],
                 }}
                 transition={{
-                  duration: 5,
+                  duration: 4,
                   repeat: Infinity,
                   ease: "linear",
                 }}
@@ -505,8 +499,8 @@ export function BuiltForWorkV2() {
             <motion.p
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-neutral-400 font-light max-w-3xl mx-auto px-2"
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-xs sm:text-sm md:text-base lg:text-lg text-neutral-400 font-light max-w-2xl mx-auto px-2"
             >
               Automated compliance and security for dynamic cloud environments
             </motion.p>
@@ -514,7 +508,7 @@ export function BuiltForWorkV2() {
         </motion.div>
 
         {/* Cards grid - Mobile optimized */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5 max-w-7xl mx-auto">
           {capabilities.map((item, i) => (
             <MagneticCard key={i} capability={item} index={i} />
           ))}
