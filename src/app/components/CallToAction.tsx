@@ -6,13 +6,8 @@ import {
   useMotionTemplate,
   useMotionValue,
 } from "framer-motion";
-import { useRef, useState, MouseEvent } from "react";
-import {
-  Mail,
-  ArrowRight,
-  CheckCircle2,
-  Calendar,
-} from "lucide-react";
+import { useRef, MouseEvent } from "react";
+import { Calendar, ArrowRight } from "lucide-react";
 
 export default function CallToAction() {
   const containerRef = useRef(null);
@@ -23,20 +18,6 @@ export default function CallToAction() {
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-
-  // === FORM STATE ===
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStatus("loading");
-    setTimeout(() => {
-      setStatus("success");
-      setEmail("");
-    }, 1500);
-  };
 
   // === SPOTLIGHT LOGIC ===
   const mouseX = useMotionValue(0);
@@ -59,11 +40,10 @@ export default function CallToAction() {
       >
         {/* Wrapper for the CARD */}
         <div className="relative group">
-
           {/* THE GLOWING BACKGROUND BLOBS */}
           <div className="absolute -inset-1 bg-gradient-to-r from-[#3530BA] via-[#D33E9E] to-[#4C32B8] rounded-[2.5rem] blur-xl opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:blur-2xl" />
 
-          {/* === MAIN GLASS CARD (The Spotlight Area) === */}
+          {/* === MAIN GLASS CARD === */}
           <div
             className="relative rounded-[2rem] bg-black/60 backdrop-blur-xl border border-white/10 p-10 md:p-16 text-center overflow-hidden"
             onMouseMove={handleMouseMove}
@@ -92,74 +72,22 @@ export default function CallToAction() {
               </span>
             </h2>
 
-            <p className="relative z-10 text-base md:text-lg text-gray-400 max-w-xl mx-auto mb-8">
+            <p className="relative z-10 text-base md:text-lg text-gray-400 max-w-xl mx-auto mb-12">
               Join the forward-thinking companies that trust Suronex to automate
               governance and eliminate blind spots.
             </p>
 
-            {/* === ACTIONS SECTION === */}
-            <div className="relative z-10 flex flex-col items-center gap-5">
-              {/* 1. EMAIL FORM */}
-              <form
-                onSubmit={handleSubmit}
-                className="relative group/input w-full max-w-md"
-              >
-                <div className="relative flex items-center bg-[#0A0A0A] border border-white/20 rounded-full p-1.5 pl-5 shadow-2xl transition-all duration-300 hover:border-white/30 focus-within:border-[#D33E9E]/50 focus-within:shadow-[0_0_20px_rgba(211,62,158,0.3)]">
-                  <Mail className="text-gray-500 w-5 h-5 mr-3 group-focus-within/input:text-[#D33E9E] transition-colors shrink-0" />
-
-                  <input
-                    type="email"
-                    placeholder="Enter work email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    disabled={status === "success" || status === "loading"}
-                    className="bg-transparent border-none outline-none text-white placeholder:text-gray-600 w-full text-base py-2 min-w-0"
-                  />
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={status === "success" || status === "loading"}
-                    className={`
-                      h-11 px-6 rounded-full font-bold text-sm transition-all duration-300 flex items-center gap-2 shrink-0 ml-2
-                      ${
-                        status === "success"
-                          ? "bg-green-500/20 text-green-400 cursor-default"
-                          : "bg-white text-black hover:bg-gradient-to-r hover:from-[#D33E9E] hover:to-[#3530BA] hover:text-white hover:scale-105 shadow-lg"
-                      }
-                    `}
-                  >
-                    {status === "loading" ? (
-                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                    ) : status === "success" ? (
-                      <>
-                        <CheckCircle2 size={18} />
-                        <span>Joined</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Contact Us</span>
-                        <ArrowRight size={18} />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-
-              <div className="flex items-center gap-4 w-full justify-center">
-                <div className="h-px bg-white/10 w-12" />
-                <span className="text-gray-500 text-xs uppercase tracking-widest">
-                  OR
-                </span>
-                <div className="h-px bg-white/10 w-12" />
-              </div>
-
-              {/* 2. BOOK DEMO BUTTON */}
-              <button className="flex items-center gap-2 px-8 py-3 rounded-full border border-white/10 bg-white/5 text-white font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-300 group/btn">
-                <Calendar className="w-4 h-4 text-gray-400 group-hover/btn:text-[#D33E9E] transition-colors" />
-                <span>Book a Live Demo</span>
-              </button>
-            </div>
+            {/* === BOOK A DEMO BUTTON === */}
+            <a
+              href="https://meetings-na2.hubspot.com/ansh-jaiswal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 inline-flex items-center gap-3 px-10 py-4 rounded-full border border-white/10 bg-white/5 text-white font-bold text-lg hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_30px_rgba(211,62,158,0.4)] transition-all duration-300 group/btn hover:scale-105"
+            >
+              <Calendar className="w-5 h-5 group-hover/btn:text-[#D33E9E] transition-colors" />
+              <span>Book a Live Demo</span>
+              <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+            </a>
           </div>
         </div>
       </motion.div>

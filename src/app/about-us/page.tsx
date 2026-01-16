@@ -10,16 +10,18 @@ import Image from "next/image"
 
 export default function AboutPage() {
   return (
-    <main className="relative bg-black text-white font-light">
+    <main className="relative bg-black text-white font-light overflow-x-hidden w-full">
       <div className="fixed inset-0 bg-gradient-to-br from-purple-900/10 via-black to-pink-900/10 pointer-events-none" />
-      <Navbar />
-      <HeroSection />
-      <StorySection />
-      <RefinedMissionVisionValues />
-      <ContainedTeamSection />
-      <AdvisorsSection />
-      <CTASection />
-      <Footer />
+      <div className="w-full overflow-x-hidden">
+        <Navbar />
+        <HeroSection />
+        <StorySection />
+        <RefinedMissionVisionValues />
+        <ContainedTeamSection />
+        <AdvisorsSection />
+        <CTASection />
+        <Footer />
+      </div>
     </main>
   )
 }

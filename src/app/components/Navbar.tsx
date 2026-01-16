@@ -154,11 +154,11 @@ export default function Navbar() {
             }}
           />
 
-          <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 sm:h-20">
             {/* LOGO */}
-            <Link href="/" className="relative z-[1000]">
+            <Link href="/" className="relative z-[1000] flex-shrink-0">
               <motion.div
-                className="relative w-40 h-12 flex items-center cursor-pointer"
+                className="relative w-32 sm:w-40 h-10 sm:h-12 flex items-center cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
@@ -273,11 +273,11 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* MOBILE MENU BUTTON */}
+            {/* MOBILE MENU BUTTON - Fixed positioning */}
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-black hover:bg-gray-100 transition-colors duration-300 z-[1000]"
+              className="lg:hidden p-2 rounded-lg text-black hover:bg-gray-100 transition-colors duration-300 z-[1000] flex-shrink-0"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -384,7 +384,7 @@ export default function Navbar() {
                                 </p>
                               </div>
                             </div>
-                            
+
                             {item.name === "Frameworks" && (
                               <div className="mt-3 pt-3 border-t border-gray-100">
                                 <p className="text-xs text-gray-500 font-medium">
@@ -392,7 +392,7 @@ export default function Navbar() {
                                 </p>
                               </div>
                             )}
-                            
+
                             {item.name === "Integrations" && (
                               <div className="mt-3 pt-3 border-t border-gray-100">
                                 <p className="text-xs text-gray-500 font-medium">
@@ -547,7 +547,7 @@ export default function Navbar() {
         </AnimatePresence>
       </nav>
 
-      {/* MOBILE MENU - Same as before */}
+      {/* MOBILE MENU - Fixed width and positioning */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -565,19 +565,19 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white shadow-2xl z-[999] overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-[85vw] max-w-sm bg-white shadow-2xl z-[999] overflow-y-auto"
             >
-              <div className="p-6 pt-24">
-                <div>
+              <div className="p-4 sm:p-6 pt-20 sm:pt-24">
+                <div className="space-y-2">
                   <button
                     onClick={() =>
                       setOpenMobileDropdown(openMobileDropdown === "products" ? null : "products")
                     }
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                    className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-left text-gray-800 font-bold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200"
                   >
                     Products
                     <ChevronDown
-                      className={`w-5 h-5 transition-transform duration-300 ${
+                      className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
                         openMobileDropdown === "products" ? "rotate-180" : ""
                       }`}
                     />
@@ -592,7 +592,7 @@ export default function Navbar() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="pl-4 pt-2 space-y-4">
+                        <div className="pl-3 sm:pl-4 pt-2 space-y-4">
                           {productCategories.map((category) => (
                             <div key={category.title}>
                               <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 px-2">
@@ -606,11 +606,11 @@ export default function Navbar() {
                                       key={item.name}
                                       href={item.link}
                                       onClick={() => setMobileMenuOpen(false)}
-                                      className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
+                                      className="flex items-start gap-2.5 sm:gap-3 px-2 py-2 sm:py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
                                     >
-                                      <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                      <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 flex-shrink-0 mt-0.5" />
                                       <div className="flex-1 min-w-0">
-                                        <div className="text-sm font-medium text-gray-900">
+                                        <div className="text-xs sm:text-sm font-medium text-gray-900">
                                           {item.name}
                                         </div>
                                         <div className="text-xs text-gray-600 mt-0.5">
@@ -634,11 +634,11 @@ export default function Navbar() {
                     onClick={() =>
                       setOpenMobileDropdown(openMobileDropdown === "resources" ? null : "resources")
                     }
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                    className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-left text-gray-800 font-bold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200"
                   >
                     Resources
                     <ChevronDown
-                      className={`w-5 h-5 transition-transform duration-300 ${
+                      className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
                         openMobileDropdown === "resources" ? "rotate-180" : ""
                       }`}
                     />
@@ -653,7 +653,7 @@ export default function Navbar() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="pl-4 pt-2 space-y-1">
+                        <div className="pl-3 sm:pl-4 pt-2 space-y-1">
                           {resourcesItems.map((item) => {
                             const Icon = item.icon;
                             return (
@@ -661,11 +661,11 @@ export default function Navbar() {
                                 key={item.name}
                                 href={item.link}
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
+                                className="flex items-start gap-2.5 sm:gap-3 px-2 py-2 sm:py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
                               >
-                                <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 flex-shrink-0 mt-0.5" />
                                 <div className="flex-1 min-w-0">
-                                  <div className="text-sm font-medium text-gray-900">
+                                  <div className="text-xs sm:text-sm font-medium text-gray-900">
                                     {item.name}
                                   </div>
                                   <div className="text-xs text-gray-600 mt-0.5">
@@ -686,11 +686,11 @@ export default function Navbar() {
                     onClick={() =>
                       setOpenMobileDropdown(openMobileDropdown === "company" ? null : "company")
                     }
-                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-left text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                    className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-left text-gray-800 font-bold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200"
                   >
                     Company
                     <ChevronDown
-                      className={`w-5 h-5 transition-transform duration-300 ${
+                      className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
                         openMobileDropdown === "company" ? "rotate-180" : ""
                       }`}
                     />
@@ -705,7 +705,7 @@ export default function Navbar() {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="pl-4 pt-2 space-y-1">
+                        <div className="pl-3 sm:pl-4 pt-2 space-y-1">
                           {companyItems.map((item) => {
                             const Icon = item.icon;
                             return (
@@ -713,11 +713,11 @@ export default function Navbar() {
                                 key={item.name}
                                 href={item.link}
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="flex items-start gap-3 px-2 py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
+                                className="flex items-start gap-2.5 sm:gap-3 px-2 py-2 sm:py-2.5 rounded-lg hover:bg-gradient-to-r hover:from-[#D33E9E]/10 hover:to-[#3530BA]/10 transition-all duration-200"
                               >
-                                <Icon className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+                                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 flex-shrink-0 mt-0.5" />
                                 <div className="flex-1 min-w-0">
-                                  <div className="text-sm font-medium text-gray-900">
+                                  <div className="text-xs sm:text-sm font-medium text-gray-900">
                                     {item.name}
                                   </div>
                                   <div className="text-xs text-gray-600 mt-0.5">
@@ -736,16 +736,16 @@ export default function Navbar() {
                 <Link
                   href="/suron-ai"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-gray-800 font-bold text-base hover:bg-gray-100 transition-colors duration-200"
+                  className="block px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-gray-800 font-bold text-sm sm:text-base hover:bg-gray-100 transition-colors duration-200"
                 >
                   Suron AI
                 </Link>
 
-                <div className="mt-8 space-y-3">
+                <div className="mt-6 sm:mt-8 space-y-2.5 sm:space-y-3">
                   <Link
                     href="/contact"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block w-full px-6 py-3 rounded-full text-center text-white font-bold bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E] shadow-[0_0_20px_rgba(211,62,158,0.4)] hover:shadow-[0_0_30px_rgba(211,62,158,0.6)] transition-all duration-300"
+                    className="block w-full px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-center text-white text-sm sm:text-base font-bold bg-gradient-to-r from-[#3530BA] via-[#4C32B8] to-[#D33E9E] shadow-[0_0_20px_rgba(211,62,158,0.4)] hover:shadow-[0_0_30px_rgba(211,62,158,0.6)] transition-all duration-300"
                   >
                     Book a Demo
                   </Link>
@@ -753,7 +753,7 @@ export default function Navbar() {
                   <Link
                     href="/signin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block w-full px-6 py-3 rounded-full text-center text-black font-bold border border-gray-300 hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] transition-all duration-300"
+                    className="block w-full px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-center text-black text-sm sm:text-base font-bold border border-gray-300 hover:text-white hover:[background:linear-gradient(black,black)_padding-box,linear-gradient(to_right,#D33E9E,#3530BA)_border-box] transition-all duration-300"
                   >
                     Sign In
                   </Link>
@@ -766,4 +766,3 @@ export default function Navbar() {
     </>
   );
 }
-
