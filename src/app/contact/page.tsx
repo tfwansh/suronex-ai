@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import ContactHero from "./components/ContactHero";
@@ -9,13 +9,11 @@ import Navbar from "../components/Navbar";
 import { Footer } from "../components/footer";
 
 export default function ContactPage() {
-
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-     
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
@@ -24,7 +22,6 @@ export default function ContactPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
- 
   const spotlightBackground = useMotionTemplate`
     radial-gradient(
       600px circle at ${mouseX}px ${mouseY}px,
@@ -35,20 +32,16 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-[#030014] text-white selection:bg-[#D33E9E]/30 relative font-sans overflow-hidden">
-      
-    
+      {/* Mouse-following spotlight */}
       <motion.div
-        className="fixed inset-0 z-[1] pointer-events-none"
+        className="fixed inset-0 z-0 pointer-events-none"
         style={{ background: spotlightBackground }}
       />
 
-     
+      {/* Animated background with shield and glows */}
       <div className="fixed inset-0 z-0 flex items-center justify-center pointer-events-none">
-        
-        
+        {/* Central shield animation */}
         <div className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center">
-          
-          
           <motion.div
             animate={{
               scale: [0.8, 1.2, 0.8],
@@ -59,11 +52,10 @@ export default function ContactPage() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute w-4/5 h-4/5 rounded-full bg-gradient-radial from-[#D33E9E]/60 via-[#3530BA]/30 to-transparent blur-[70px] -z-10"
+            className="absolute w-4/5 h-4/5 rounded-full bg-gradient-to-br from-[#D33E9E]/60 via-[#3530BA]/30 to-transparent blur-[70px]"
           />
 
-         
-          <motion.div 
+          <motion.div
             animate={{
               opacity: [0.15, 0.5, 0.15],
             }}
@@ -84,32 +76,31 @@ export default function ContactPage() {
           </motion.div>
         </div>
 
-        
+        {/* Floating gradient blobs */}
         <div className="absolute inset-0 overflow-hidden font-sans z-[-2]">
-          <motion.div 
+          <motion.div
             animate={{ x: [0, 50, 0], y: [0, -30, 0] }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3530BA]/10 rounded-full blur-[150px]" 
+            className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#3530BA]/10 rounded-full blur-[150px]"
           />
-          <motion.div 
+          <motion.div
             animate={{ x: [0, -50, 0], y: [0, 50, 0] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear", delay: 2 }}
-            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D33E9E]/10 rounded-full blur-[150px]" 
+            className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#D33E9E]/10 rounded-full blur-[150px]"
           />
         </div>
-        
-       
+
+        {/* Grid background */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-10"></div>
       </div>
 
-     
-      <div className="relative z-10 flex flex-col min-h-screen">
+      {/* Main content */}
+      <div className="relative z-20 flex flex-col min-h-screen">
         <Navbar />
 
         <main className="flex-grow pt-32 md:pt-48 pb-20 px-6">
           <div className="max-w-7xl mx-auto">
-            
-          
+            {/* Header section */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -137,42 +128,46 @@ export default function ContactPage() {
               </h1>
 
               <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Whether you&apos;re a growing startup or a global enterprise, Suronex helps you simplify compliance, 
+                Whether you&apos;re a growing startup or a global enterprise, Suronex helps you simplify compliance,
                 strengthen cloud security, and stay ahead of risk — without slowing innovation.
               </p>
             </motion.div>
 
-            
+            {/* Two-column grid: Contact form + Booking */}
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start relative">
-              
-              
-              <div className="relative">
+              {/* Left: Contact Form */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative"
+              >
                 <ContactHero />
-              </div>
+              </motion.div>
 
-              
+              {/* Right: Booking Section */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 className="relative rounded-3xl p-1 border border-white/10 bg-white/[0.02] backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.3)]"
               >
                 <div className="rounded-[22px] bg-black/20 overflow-hidden">
-                   <BookingSection />
+                  <BookingSection />
                 </div>
               </motion.div>
-
             </div>
-
           </div>
         </main>
-        
-   
-        <div className="relative w-full border-t border-white/10 bg-[#030014]/60 backdrop-blur-xl [&_footer]:!bg-transparent [&_section]:!bg-transparent [&_div]:!bg-transparent">
+
+        {/* Footer */}
+        <div className="relative w-full border-t border-white/10 bg-[#030014]/60 backdrop-blur-xl">
           <Footer />
         </div>
       </div>
     </div>
   );
 }
+
