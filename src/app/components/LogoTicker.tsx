@@ -1,11 +1,11 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon } from "./Icons";
 import { useState, useEffect } from "react";
 
-// Consolidated frameworks list with visibility settings
+// Consolidated frameworks list
 const complianceFrameworks = [
   { name: "ISO 27001:2022", logo: "/png format/ISO-2022-logo.png", needsInvert: false, needsBackground: false },
   { name: "SOC 2 Type II", logo: "/png format/soc2 logo.png", needsInvert: false, needsBackground: false },
@@ -30,115 +30,100 @@ const complianceFrameworks = [
   { name: "FFIEC", logo: "/png format/Ffiec logo.png", needsInvert: true, needsBackground: true },
 ];
 
-// Split into two rows
-const row1 = complianceFrameworks.slice(0, 11);
-const row2 = complianceFrameworks.slice(11);
-
-// Enhanced logo component with mobile optimization
-function ComplianceLogo({ item, isMobile }: { item: typeof complianceFrameworks[0]; isMobile: boolean }) {
-  const [isHovered, setIsHovered] = useState(false);
+// Static logo component for mobile
+function StaticLogo({ item }: { item: typeof complianceFrameworks[0] }) {
   const filterClass = item.needsInvert ? "invert brightness-[0.9]" : "";
 
   return (
-    <div 
-      className="flex-shrink-0 px-4 sm:px-5 md:px-6 group"
-      onMouseEnter={() => !isMobile && setIsHovered(true)}
-      onMouseLeave={() => !isMobile && setIsHovered(false)}
-    >
-      {/* Logo container */}
-      <motion.div
-        className={`relative w-28 h-20 sm:w-32 sm:h-24 md:w-36 md:h-26 flex items-center justify-center rounded-lg transition-all duration-300 ${
-          item.needsBackground
-            ? "bg-white/95 p-3 shadow-lg group-hover:shadow-xl group-hover:bg-white"
-            : ""
+    <div className="flex flex-col items-center">
+      <div
+        className={`relative w-24 h-18 flex items-center justify-center rounded-lg ${
+          item.needsBackground ? "bg-white/95 p-2 shadow-md" : ""
         }`}
-        animate={!isMobile && isHovered ? {
-          scale: 1.05,
-          y: -4,
-        } : {
-          scale: 1,
-          y: 0,
-        }}
-        transition={{ duration: 0.2 }}
       >
         <div className="relative w-full h-full">
           <Image
             src={item.logo}
             alt={item.name}
             fill
-            sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 144px"
-            className={`object-contain transition-all duration-300 ${filterClass} ${
-              item.needsBackground ? "opacity-100" : "opacity-70 group-hover:opacity-100"
+            sizes="96px"
+            className={`object-contain ${filterClass} ${
+              item.needsBackground ? "opacity-100" : "opacity-75"
             }`}
             loading="lazy"
           />
         </div>
-
-        {/* Enhanced glow effect on hover */}
-        {!item.needsBackground && (
-          <motion.div
-            className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{
-              background:
-                "radial-gradient(circle at center, rgba(211, 62, 158, 0.15) 0%, transparent 70%)",
-            }}
-          />
-        )}
-      </motion.div>
-
-      {/* Framework name with enhanced gradient */}
-      <div className="text-center mt-2 sm:mt-2.5">
-        <motion.span
-          className="inline-block text-xs sm:text-sm md:text-base font-semibold
-                     text-white/80
-                     bg-gradient-to-r from-[#D33E9E] via-[#8B4FB8] to-[#3530BA]
-                     bg-clip-text
-                     transition-all duration-300 ease-out
-                     group-hover:text-transparent"
-          animate={!isMobile && isHovered ? {
-            scale: 1.05,
-          } : {
-            scale: 1,
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          {item.name}
-        </motion.span>
       </div>
+      <span className="text-xs font-medium text-white/70 mt-2 text-center">
+        {item.name}
+      </span>
+    </div>
+  );
+}
+
+// Optimized scrolling logo for desktop
+function ScrollingLogo({ item }: { item: typeof complianceFrameworks[0] }) {
+  const filterClass = item.needsInvert ? "invert brightness-[0.9]" : "";
+
+  return (
+    <div className="flex-shrink-0 px-6 flex flex-col items-center">
+      <div
+        className={`relative w-32 h-24 flex items-center justify-center rounded-lg transition-all duration-300 ${
+          item.needsBackground
+            ? "bg-white/95 p-3 shadow-lg"
+            : ""
+        }`}
+      >
+        <div className="relative w-full h-full">
+          <Image
+            src={item.logo}
+            alt={item.name}
+            fill
+            sizes="128px"
+            className={`object-contain ${filterClass} ${
+              item.needsBackground ? "opacity-100" : "opacity-70"
+            }`}
+            loading="lazy"
+          />
+        </div>
+      </div>
+      <span className="text-sm font-semibold text-white/80 mt-2 text-center">
+        {item.name}
+      </span>
     </div>
   );
 }
 
 export default function ComplianceCoverage() {
   const [isMobile, setIsMobile] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Calculate animation distance based on number of logos
-  const row1Distance = row1.length * (isMobile ? 140 : 180);
-  const row2Distance = row2.length * (isMobile ? 140 : 180);
+  // Split for desktop scrolling
+  const row1 = complianceFrameworks.slice(0, 11);
+  const row2 = complianceFrameworks.slice(11);
 
   return (
-    <section className="py-10 sm:py-12 md:py-14 overflow-hidden bg-gradient-to-b from-black via-black/95 to-black border-y border-white/5 relative">
+    <section className="py-12 md:py-16 overflow-hidden bg-gradient-to-b from-black via-black/95 to-black border-y border-white/5 relative">
       {/* Background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/10 via-transparent to-transparent" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-[#3530BA] opacity-5 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#3530BA] opacity-5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-12 md:mb-14 px-4">
+        <div className="text-center mb-10 md:mb-14 px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight mb-3 sm:mb-4"
+            className="text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight mb-4"
           >
             Enterprise Compliance{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D33E9E] to-[#3530BA] font-normal">
@@ -151,140 +136,128 @@ export default function ComplianceCoverage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-white/70 text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto font-light"
+            className="text-white/70 text-base md:text-lg lg:text-xl max-w-3xl mx-auto font-light"
           >
             Consistent control mapping across 50+ standards and best practices.
           </motion.p>
         </div>
 
-        {/* Scrolling logos */}
-        <div 
-          className="relative space-y-6 sm:space-y-8 md:space-y-10"
-          onMouseEnter={() => !isMobile && setIsPaused(true)}
-          onMouseLeave={() => !isMobile && setIsPaused(false)}
-        >
-          {/* Enhanced fade masks */}
-          <div className="absolute inset-y-0 left-0 w-20 sm:w-28 md:w-40 bg-gradient-to-r from-black via-black/90 to-transparent z-10 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-20 sm:w-28 md:w-40 bg-gradient-to-l from-black via-black/90 to-transparent z-10 pointer-events-none" />
-
-          {/* Row 1: Right to Left */}
-          <div className="overflow-hidden">
-            <motion.div
-              className="flex items-center will-change-transform"
-              animate={{
-                x: [0, -row1Distance],
-              }}
-              transition={{
-                x: {
-                  duration: isMobile ? 30 : 35,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-              }}
-            >
-              {[...row1, ...row1, ...row1].map((item, index) => (
-                <ComplianceLogo key={`row1-${index}`} item={item} isMobile={isMobile} />
+        {/* MOBILE: Static Grid View */}
+        {isMobile ? (
+          <div className="px-4">
+            <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+              {complianceFrameworks.slice(0, 12).map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                >
+                  <StaticLogo item={item} />
+                </motion.div>
               ))}
-            </motion.div>
+            </div>
+            
+            {/* Show more hint */}
+            <p className="text-center text-sm text-white/50 mt-6">
+              + 50 more frameworks
+            </p>
           </div>
+        ) : (
+          /* DESKTOP: Optimized Infinite Scroll with CSS Animation */
+          <div className="relative">
+            {/* Fade masks */}
+            <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-black via-black/90 to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-black via-black/90 to-transparent z-10 pointer-events-none" />
 
-          {/* Row 2: Left to Right */}
-          <div className="overflow-hidden">
-            <motion.div
-              className="flex items-center will-change-transform"
-              animate={{
-                x: [0, -row1Distance],
-              }}
-              transition={{
-                x: {
-                  duration: isMobile ? 32 : 37,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-              }}
-            >
-              {[...row2, ...row2, ...row2].map((item, index) => (
-                <ComplianceLogo key={`row2-${index}`} item={item} isMobile={isMobile} />
-              ))}
-            </motion.div>
+            <div className="space-y-8">
+              {/* Row 1 */}
+              <div className="overflow-hidden">
+                <div 
+                  className="flex animate-scroll-right"
+                  style={{
+                    width: 'fit-content',
+                  }}
+                >
+                  {[...row1, ...row1].map((item, index) => (
+                    <ScrollingLogo key={`r1-${index}`} item={item} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Row 2 */}
+              <div className="overflow-hidden">
+                <div 
+                  className="flex animate-scroll-left"
+                  style={{
+                    width: 'fit-content',
+                  }}
+                >
+                  {[...row2, ...row2].map((item, index) => (
+                    <ScrollingLogo key={`r2-${index}`} item={item} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* CTA Button with enhanced interactivity */}
+        {/* CTA Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="flex justify-center mt-10 sm:mt-12 md:mt-14 px-4"
+          className="flex justify-center mt-12 md:mt-14 px-4"
         >
           <Link href="/frameworks">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
-              className="group relative overflow-hidden px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5 rounded-full bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-white font-semibold text-sm sm:text-base md:text-lg shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300"
+              className="group relative overflow-hidden px-8 py-4 md:px-10 md:py-5 rounded-full bg-gradient-to-r from-[#D33E9E] to-[#3530BA] text-white font-semibold text-base md:text-lg shadow-2xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-300"
             >
-              <span className="relative flex items-center gap-2 sm:gap-3">
+              <span className="relative flex items-center gap-3">
                 View All Frameworks
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{
-                    duration: 1.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                </motion.span>
+                <ArrowRightIcon className="w-5 h-5" />
               </span>
-
-              {/* Enhanced shine effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                initial={{ x: "-100%" }}
-                whileHover={{
-                  x: "100%",
-                  transition: { duration: 0.5 },
-                }}
-                style={{ skewX: -20 }}
-              />
-
-              {/* Pulsing glow */}
-              <motion.div
-                className="absolute inset-0 bg-white/10 rounded-full"
-                animate={{
-                  opacity: [0, 0.2, 0],
-                  scale: [0.95, 1.05, 0.95],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
             </motion.button>
           </Link>
         </motion.div>
-
-        {/* Mobile tap hint */}
-        {isMobile && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
-            className="text-center text-xs text-white/40 mt-6"
-          >
-            Tap logos to explore frameworks
-          </motion.p>
-        )}
       </div>
 
-      {/* Reduced motion support */}
+      {/* CSS-based smooth animations for desktop */}
       <style jsx global>{`
+        @keyframes scroll-right {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scroll-left {
+          from {
+            transform: translateX(-50%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        .animate-scroll-right {
+          animation: scroll-right 40s linear infinite;
+        }
+
+        .animate-scroll-left {
+          animation: scroll-left 45s linear infinite;
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
+          .animate-scroll-right,
+          .animate-scroll-left {
+            animation: none;
           }
         }
       `}</style>

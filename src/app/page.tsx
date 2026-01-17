@@ -11,6 +11,8 @@ import { Footer } from "./components/footer";
 import Image from "next/image";
 import { IntegrationsShowcase } from "./components/IntegrationsShowcase"; 
 import FlowSection2 from "./components/FlowSection2";
+import RiskMap from "./components/RiskMap";
+import LayerpathTour from "./components/LayerpathTour"
 
 export default function Home() {
   return (
@@ -47,14 +49,20 @@ export default function Home() {
 
         {/* Hero Section */}
         <Hero />
+	<LayerpathTour 
+  tourId="cmki0mxkl0003jj04zahxx1g2"
+  title="Product Tour"
+  description="Explore Suronex's cloud security platform in action"
+/>
 
+  <RiskMap />
         {/* Multi-Cloud Challenge */}
         <MultiCloudChallenge />
 
         {/* Platform Features */}
         <BuiltForWorkV2 />
 
-
+	
         {/* Flow Section */}
         <FlowSection />
         
