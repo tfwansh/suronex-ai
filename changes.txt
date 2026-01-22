@@ -1,0 +1,17 @@
+1. Why cloud governance on landing page - No justify and still in some sections text are on scroll
+2. All over website, mention 40+ Compliances - (Found on cloud compliance page as 40+)
+3. Disclaimer of logos should come in bottom of landing page
+4. Suronex. AI should be only suroNEX at the bottom of landing page - One colour for entire word
+5. Cloud Security section - Font size should be same as like other pages - -Rework on text and pictures (May be more specific pictures from platform)
+6. Cloud Compliance - Underline text is looking weird 
+7. Spacing should be consistent across all pages 
+8. Incorrect picture under problem statement (Should be a scroller under solution section)
+9. Continuous compliance - Underline? More pictures for perspective
+10. One platform for security & Compliance - Picture issue
+11. Underline issue at complete page
+12. About Us (Top line is missing like present in all other pages) : tag line font size issue - Too much spacing in different sections, pictures not there
+13. Contact Us: Tag line size issue, follow us coming twice on same page
+14. FAQ to be updated
+15. Policies to be discussed, link of other policies in specific policies are not working
+16. Comprehensive Compliance coverage - Tag line font issue
+17. Summary of each standard to be provided, validate standards supported by platform

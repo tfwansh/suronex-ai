@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+/* === GLOBAL SMOOTHNESS SETTINGS === */
+html {
+  scroll-behavior: smooth;
+  background: #000; /* Essential: Prevents white flashes during scroll/load */
+}
+
+/* Premium Text Selection Color */
+::selection {
+  background: #D33E9E;
+  color: white;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: black;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; /* Makes text look sharper */
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 1. THE GLASS EFFECT UTILITY */
+.glass-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 2. THE BUTTON SHIMMER ANIMATION */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #3530BA 0%, #D33E9E 50%, #3530BA 100%);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+/* 3. FLOATING ORBS ANIMATION */
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-20px, 20px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* --- THE CYBER GRID BACKGROUND --- */
+.bg-grid-white {
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Animation to make the grid drift slowly */
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+.animate-grid {
+  animation: grid-drift 20s linear infinite;
+}
+
+/* Optimize heavy elements for smoother GPU rendering */
+.optimize-gpu {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgb(168, 85, 247), rgb(236, 72, 153));
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgb(192, 132, 252), rgb(244, 114, 182));
+}
+
+/* Firefox scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(168, 85, 247) rgba(255, 255, 255, 0.05);
+}
