@@ -27,7 +27,7 @@ const productCategories: ProductCategory[] = [
       },
       {
         name: "Cloud Compliance",
-        description: "Automated compliance for AWS, Azure, and GCP",
+        description: "Automated Compliance for Multi Cloud Environment",
         link: "/products/cloud-compliance",
         icon: CheckCircle2
       },
