@@ -45,7 +45,7 @@ const productCategories: ProductCategory[] = [
       },
       {
         name: "SaaS Security",
-        description: "Security posture for 100+ SaaS applications",
+        description: "Security Posture for SaaS Applications",
         link: "/products/saas-security",
         icon: Lock
       }
