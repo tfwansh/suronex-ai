@@ -11,7 +11,6 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Suronex",
   description: "Secure your Cloud Future.",
-  icons: { icon: '/favicon.ico', },
 };
 
 export default function RootLayout({
