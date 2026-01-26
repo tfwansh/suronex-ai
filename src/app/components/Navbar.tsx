@@ -34,7 +34,7 @@ const productCategories: ProductCategory[] = [
       {
         name: "Cloud Native Compliance",
         description: "Kubernetes and container security posture management",
-        link: "/#",
+        link: "/products/cloud-native-compliance",
         icon: Cloud
       },
       {
