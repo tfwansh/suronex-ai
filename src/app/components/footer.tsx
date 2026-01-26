@@ -10,7 +10,7 @@ const footerLinks = {
   products: [
     { label: "Cloud Security", href: "/products/cloud-security" },
     { label: "Cloud Compliance", href: "/products/cloud-compliance" },
-    { label: "Cloud Native Compliance", href: "/#", disabled: true },
+    { label: "Cloud Native Compliance", href: "/cloud-native-compliance" },
     { label: "Cloud Inventory", href: "/products/cloud-inventory" },
     { label: "SaaS Security", href: "/products/saas-security" },
   ],
