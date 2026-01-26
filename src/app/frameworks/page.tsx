@@ -1,315 +1,333 @@
 "use client"
-import React from "react"  // ADD THIS LINE
+import React from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import Image from "next/image" // Added import
+import Image from "next/image"
 import Navbar from "@/app/components/Navbar"
 import { Footer } from "@/app/components/footer"
 
 const PLATFORM_LOGOS = {
   AWS: '/Integrations/aws-color.png',
   Azure: '/Integrations/Azure.png',
-  GCP: '/Integrations/Googlecloud.png',
-  Kubernetes: '/Integrations/Kubernetes.png',
+Kubernetes: '/Integrations/Kubernetes.png',
+  Office365: '/Integrations/copilot.png',  GCP: '/Integrations/Googlecloud.png',
 }
 
-// FRAMEWORK DATA (keep your existing data)
+// FRAMEWORK DATA
 const frameworks = [
-  {
-    id: 'cisa-cyber-essentials',
-    name: 'CISA Cyber Essentials',
-    category: 'Security',
-    description: 'Cybersecurity and Infrastructure Security Agency essential practices for protecting against common cyber threats.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'ens-rd-2022',
-    name: 'ENS RD 2022 – ALTA',
-    category: 'Regional',
-    description: 'Spanish National Security Scheme for high-level security requirements.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'fedramp-low',
-    name: 'FedRAMP Low Version 4',
-    category: 'Security',
-    description: 'Federal Risk and Authorization Management Program for low-impact cloud systems.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'fedramp-moderate',
-    name: 'FedRAMP Moderate Version 4',
-    category: 'Security',
-    description: 'Federal Risk and Authorization Management Program for moderate-impact cloud systems.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'ffiec',
-    name: 'Federal Financial Institutions Examination Council (FFIEC)',
-    category: 'Industry',
-    description: 'Information security standards for financial institutions in the United States.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'gdpr',
-    name: 'EU General Data Protection Regulation (GDPR)',
-    category: 'Regional',
-    description: 'European Union regulation on data protection and privacy for individuals.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'hipaa',
-    name: 'The Health Insurance Portability and Accountability Act (HIPAA)',
-    category: 'Industry',
-    description: 'US legislation providing data privacy and security provisions for safeguarding medical information.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'iso27001-2022',
-    name: 'ISO/IEC 27001:2022',
-    category: 'Security',
-    description: 'Latest international standard for information security management systems (ISMS).',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'iso27001-2013',
-    name: 'ISO/IEC 27001:2013',
-    category: 'Security',
-    description: 'Previous version of the international standard for information security management systems.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'mitre-attack',
-    name: 'Mitre Attack Framework',
-    category: 'Security',
-    description: 'Globally-accessible knowledge base of adversary tactics and techniques based on real-world observations.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'nist-800-171',
-    name: 'NIST 800-171 Revision 2',
-    category: 'Security',
-    description: 'Protecting Controlled Unclassified Information in nonfederal systems and organizations.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'nist-800-53-r4',
-    name: 'NIST 800-53 Revision 4',
-    category: 'Security',
-    description: 'Security and Privacy Controls for Information Systems and Organizations.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'nist-800-53-r5',
-    name: 'NIST 800-53 Revision 5',
-    category: 'Security',
-    description: 'Latest version of Security and Privacy Controls for Information Systems.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'nist-csf',
-    name: 'NIST Cyber Security Framework (CSF) Version 1.1',
-    category: 'Security',
-    description: 'Framework for improving critical infrastructure cybersecurity.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'pci-dss-3.2.1',
-    name: 'PCI DSS Version 3.2.1',
-    category: 'Industry',
-    description: 'Payment Card Industry Data Security Standard for organizations handling card payments.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'pci-dss-4.0',
-    name: 'PCI DSS Version 4.0',
-    category: 'Industry',
-    description: 'Latest Payment Card Industry Data Security Standard with enhanced security requirements.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'rbi-csf',
-    name: 'RBI Cyber Security Framework',
-    category: 'Regional',
-    description: 'Reserve Bank of India cybersecurity framework for financial institutions.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'soc2',
-    name: 'AICPA – SOC 2',
-    category: 'Security',
-    description: 'Service Organization Control 2 for service providers storing customer data in the cloud.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'apra-cps234',
-    name: 'APRA CPS 234',
-    category: 'Regional',
-    description: 'Australian Prudential Regulation Authority Information Security standard.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'sebi-cscrf',
-    name: 'SEBI Cybersecurity and Cyber Resilience Framework (CSCRF)',
-    category: 'Regional',
-    description: 'Securities and Exchange Board of India cybersecurity framework.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'irdai',
-    name: 'IRDAI Information & Cyber Security Guidelines',
-    category: 'Regional',
-    description: 'Insurance Regulatory and Development Authority of India security guidelines.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'mas-trm',
-    name: 'Technology Risk Management (MAS)',
-    category: 'Regional',
-    description: 'Monetary Authority of Singapore technology risk management guidelines.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-v2',
-    name: 'CIS Benchmark Version 2.0',
-    category: 'Cloud-native',
-    description: 'Center for Internet Security benchmark for secure cloud configuration.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
-  },
-  {
-    id: 'cis-v3',
-    name: 'CIS Benchmark Version 3.0',
-    category: 'Cloud-native',
-    description: 'Latest CIS benchmark for cloud security best practices.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
-  },
-  {
-    id: 'cis-v4',
-    name: 'CIS Benchmark Version 4.0',
-    category: 'Cloud-native',
-    description: 'Enhanced CIS benchmark with advanced security controls.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
-  },
-  {
-    id: 'nis2',
-    name: 'EU Network and Information Systems Directive 2 (NIS 2)',
-    category: 'Regional',
-    description: 'European Union directive on cybersecurity for critical infrastructure.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
-  },
-  {
-    id: 'aws-waf-reliability',
-    name: 'AWS Well Architected Framework – Reliability Pillar',
-    category: 'Cloud-native',
-    description: 'AWS best practices for building reliable and resilient systems.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'aws-waf-security',
-    name: 'AWS Well Architected Framework – Security Pillar',
-    category: 'Cloud-native',
-    description: 'AWS security best practices and design principles.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-k8s-1.4',
-    name: 'CIS Benchmark Version 1.4',
-    category: 'Cloud-native',
-    description: 'CIS Kubernetes benchmark for container orchestration security.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-azure-2.1',
-    name: 'CIS Benchmark Version 2.1',
-    category: 'Cloud-native',
-    description: 'CIS benchmark specific to Microsoft Azure security.',
-    platforms: { AWS: 'full', Azure: 'full', GCP: 'none', Kubernetes: 'none' },
-  },
+  // AWS-Specific Standards (1-6)
   {
     id: 'aws-onboarding',
     name: 'AWS Account Onboarding Best Practices',
-    category: 'Cloud-native',
-    description: 'Best practices for securely setting up new AWS accounts.',
+    category: 'Best Practice',
+    description: 'To establish a secure, scalable, and well-governed cloud foundation, AWS account onboarding should follow structured best practices. This includes setting up identity and access management (IAM), enabling security and monitoring services, applying tagging standards, and configuring guardrails through AWS Organizations and Service Control Policies (SCPs).',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
     id: 'aws-control-tower',
     name: 'AWS Control Tower Guardrails',
-    category: 'Cloud-native',
-    description: 'AWS Control Tower governance and compliance guardrails.',
+    category: 'Best Practice',
+    description: 'AWS Control Tower guardrails are preconfigured policies that help enforce governance, security, and compliance across AWS accounts. Best practices include enabling both preventive (Service Control Policies) and detective (AWS Config Rules) guardrails, aligning them with organizational compliance needs, and regularly reviewing their applicability as workloads evolve.',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
     id: 'aws-foundational-security',
     name: 'AWS Foundational Security Best Practices',
-    category: 'Cloud-native',
-    description: 'AWS Security Hub foundational security controls.',
+    category: 'Best Practice',
+    description: 'AWS Foundational Security Best Practices provide a curated set of automated security controls across key AWS services to help organizations identify and remediate common security risks. These best practices focus on enforcing least privilege, enabling logging and monitoring, securing data at rest and in transit, and ensuring service configurations align with industry standards.',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
     id: 'aws-ftr',
     name: 'AWS Foundational Technical Review',
-    category: 'Cloud-native',
-    description: 'Technical review framework for AWS workloads.',
+    category: 'Best Practice',
+    description: 'The AWS Foundational Technical Review (FTR) is a structured assessment that helps ensure your workloads meet AWS best practices for security, reliability, and operational excellence before scaling or going to market. Guided by the AWS Well-Architected Framework, the FTR identifies potential risks and offers actionable recommendations to improve architecture quality.',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
-    id: 'cis-aws-1.5',
-    name: 'CIS Benchmark Version 1.5',
-    category: 'Cloud-native',
-    description: 'Latest CIS AWS Foundations Benchmark.',
+    id: 'aws-waf-reliability',
+    name: 'AWS Well Architected Framework - Reliability Pillar',
+    category: 'Best Practice',
+    description: 'The Reliability Pillar of the AWS Well-Architected Framework focuses on ensuring a system can recover from failures, meet demands, and evolve over time. It emphasizes designing distributed systems with fault tolerance, automated recovery, scalable infrastructure, and robust monitoring.',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
-    id: 'cis-k8s-1.10',
-    name: 'CIS Benchmark Version 1.10',
-    category: 'Cloud-native',
-    description: 'CIS Kubernetes security benchmark version 1.10.',
-    platforms: { AWS: 'none', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-k8s-1.11',
-    name: 'CIS Benchmark Version 1.11',
-    category: 'Cloud-native',
-    description: 'Latest CIS Kubernetes security benchmark.',
-    platforms: { AWS: 'none', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-k8s-1.8',
-    name: 'CIS Benchmark Version 1.8',
-    category: 'Cloud-native',
-    description: 'CIS Kubernetes security benchmark version 1.8.',
-    platforms: { AWS: 'none', Azure: 'none', GCP: 'none', Kubernetes: 'full' },
-  },
-  {
-    id: 'cis-aws-5.0',
-    name: 'CIS Benchmark Version 5.0',
-    category: 'Cloud-native',
-    description: 'Enhanced CIS AWS benchmark with latest controls.',
+    id: 'aws-waf-security',
+    name: 'AWS Well Architected Framework - Security Pillar',
+    category: 'Best Practice',
+    description: 'The Security Pillar of the AWS Well-Architected Framework focuses on protecting data, systems, and assets through risk management and mitigation strategies. It emphasizes key areas such as identity and access management, data protection, infrastructure security, threat detection, and incident response.',
     platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+
+  // CIS Benchmarks - Special grouped card (7-12)
+{
+  id: 'cis-benchmarks',
+  name: 'CIS Benchmarks',
+  category: 'Best Practice',
+  description: 'The CIS (Center for Internet Security) Benchmarks are industry-recognized best-practice configuration guidelines designed to harden operating systems, applications, cloud environments, and network devices—helping organizations defend against cyberattacks.',
+  platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'full', Office365: 'full' },
+  hasDetailsPage: true,
+  isGrouped: true,
+  versions: [
+    { id: 'cis-1.4', name: 'Version 1.4' },
+    { id: 'cis-1.5', name: 'Version 1.5' },
+    { id: 'cis-2.0', name: 'Version 2.0' },
+    { id: 'cis-3.0', name: 'Version 3.0' },
+    { id: 'cis-4.0', name: 'Version 4.0' },
+    { id: 'cis-5.0', name: 'Version 5.0' },
+  ],
+  versionCount: '20+',  // Changed from 6 to '20+'
+},
+
+  // Multi-platform Standards (13-42)
+  {
+    id: 'cisa-cyber-essentials',
+    name: 'CISA Cyber Essentials',
+    category: 'Best Practice',
+    description: 'CISA Cyber Essentials is a guide developed by the Cybersecurity and Infrastructure Security Agency to help businesses establish basic cybersecurity practices. It focuses on six key areas: asset management, device and software security, controlled access, secure configurations, data protection, and incident response.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'fedramp-low',
+    name: 'FedRAMP Low Version 4',
+    category: 'Regulatory',
+    description: 'FedRAMP Low V4 outlines standardized security requirements for cloud service providers handling low-impact federal data, such as publicly available or non-sensitive information. The goal is to ensure secure, compliant cloud services for federal use while streamlining authorization for systems with minimal risk profiles.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'fedramp-moderate',
+    name: 'FedRAMP Moderate Version 4',
+    category: 'Regulatory',
+    description: 'FedRAMP Moderate V4 defines standardized security controls for cloud systems handling Controlled Unclassified Information (CUI) and moderately sensitive federal data. It ensures protection through rigorous requirements across access control, incident response, and risk management, enabling secure cloud adoption for federal agencies.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'ffiec',
+    name: 'Federal Financial Institutions Examination Council (FFIEC)',
+    category: 'Regulatory',
+    description: 'The Federal Financial Institutions Examination Council (FFIEC) sets uniform standards for evaluating the safety, soundness, and cybersecurity of financial institutions in the U.S. It provides guidance, assessments, and best practices to help institutions manage risks and ensure regulatory compliance across the banking sector.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'gdpr',
+    name: 'EU General Data Protection Regulation',
+    category: 'Regulatory',
+    description: 'The EU General Data Protection Regulation (GDPR) is a comprehensive data privacy law that governs how organizations collect, process, and protect personal data of individuals within the European Union. It emphasizes user consent, data minimization, transparency, and grants individuals greater control over their personal information.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
     id: 'gxp-fda',
     name: 'GxP (FDA 21 CFR Part 11)',
-    category: 'Industry',
-    description: 'FDA regulations for electronic records and signatures in life sciences.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    category: 'Regulatory',
+    description: 'GxP refers to "Good Practice" guidelines (e.g., GMP, GLP, GCP) ensuring product quality and regulatory compliance in life sciences. FDA 21 CFR Part 11 specifically governs electronic records and signatures, requiring systems to be secure, validated, and auditable to ensure data integrity in regulated environments.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
     id: 'gxp-eu',
     name: 'GxP EU Annex 11',
-    category: 'Industry',
-    description: 'European Medicines Agency computerized systems guidelines.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    category: 'Regulatory',
+    description: 'EU Annex 11 is a guideline under the EU GMP framework that outlines requirements for computerized systems used in regulated GxP environments. It emphasizes system validation, data integrity, access control, and audit trails to ensure electronic records are reliable and compliant with Good Manufacturing Practices.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
   {
-    id: 'korea-isms',
-    name: 'Korea ISMS-P 2023',
-    category: 'Regional',
-    description: 'Korean Information Security Management System and Personal Information Protection.',
-    platforms: { AWS: 'full', Azure: 'none', GCP: 'none', Kubernetes: 'none' },
+    id: 'hipaa',
+    name: 'The Health Insurance Portability and Accountability Act',
+    category: 'Regulatory',
+    description: 'The Health Insurance Portability and Accountability Act (HIPAA) is a U.S. regulation that sets standards for protecting sensitive patient health information, focusing on privacy, security, and breach notification for healthcare providers and their partners.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'iso27001-2022',
+    name: 'ISO/IEC 27001:2022',
+    category: 'Certification',
+    description: 'ISO 27001:2022 is the latest version of the international standard for Information Security Management Systems (ISMS), emphasizing risk-based thinking, updated control sets (aligned with ISO 27002:2022), and continuous improvement in managing information security.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'mitre-attack',
+    name: 'Mitre Attack Framework',
+    category: 'Best Practice',
+    description: 'MITRE ATT&CK stands for "Adversarial Tactics, Techniques, and Common Knowledge." It is a knowledge base developed by MITRE Corporation that documents how real-world cyber attackers behave — step-by-step — during intrusions.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nist-800-171',
+    name: 'NIST 800-171 Revision 2',
+    category: 'Best Practice',
+    description: 'NIST 800-171 Rev. 2 provides guidelines to protect Controlled Unclassified Information (CUI) in non-federal systems. It outlines 14 families of security requirements aimed at ensuring confidentiality through access control, incident response, and risk management.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nist-800-53-r4',
+    name: 'NIST 800-53 Revision 4',
+    category: 'Best Practice',
+    description: 'NIST 800-53 Rev. 4 defines a comprehensive catalog of security and privacy controls for federal information systems, emphasizing flexibility and coverage across low, moderate, and high-impact systems to support FISMA compliance.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nist-800-53-r5',
+    name: 'NIST 800-53 Revision 5',
+    category: 'Best Practice',
+    description: 'NIST 800-53 Rev. 5 modernizes the control catalog with a focus on outcome-based controls, integrating cybersecurity and privacy, and addressing modern threats across all system types, including cloud and mobile environments.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nist-csf',
+    name: 'NIST Cyber Security Framework (CSF) Version 1.1',
+    category: 'Best Practice',
+    description: 'The NIST CSF 1.1 offers a voluntary, risk-based approach for organizations to manage and improve cybersecurity posture. It is organized into five core functions: Identify, Protect, Detect, Respond, and Recover.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'pci-dss-3.2.1',
+    name: 'PCI DSS Version 3.2.1',
+    category: 'Certification',
+    description: 'PCI DSS 3.2.1 outlines security requirements for organizations that store, process, or transmit credit card data, focusing on access control, encryption, and regular monitoring to protect payment card information.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'pci-dss-4.0',
+    name: 'PCI DSS Version 4.0',
+    category: 'Certification',
+    description: 'PCI DSS 4.0 introduces a more flexible, risk-based approach to payment card data security, emphasizing continuous compliance, customized validation methods, and stronger authentication and encryption controls.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'rbi-csf',
+    name: 'RBI Cyber Security Framework',
+    category: 'Regulatory',
+    description: 'Issued by the Reserve Bank of India, this framework mandates banks and financial institutions to implement robust cybersecurity measures, including risk assessment, real-time monitoring, incident response, and regular audits.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'soc2',
+    name: 'AICPA - SOC 2',
+    category: 'Certification',
+    description: "'SOC 2 is a framework developed by the AICPA to assess service organizations' controls related to security, availability, processing integrity, confidentiality, and privacy, helping ensure trust and transparency with clients.",
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'apra-cps234',
+    name: 'Australia APRA CPS 234',
+    category: 'Regulatory',
+    description: 'CPS 234 is an Australian Prudential Regulation Authority (APRA) standard that requires regulated entities to implement robust information security controls, manage third-party risks, and ensure rapid detection and response to cyber incidents.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'ccpa',
+    name: 'CCPA (California Consumer Privacy Act)',
+    category: 'Regulatory',
+    description: 'CCPA is a U.S. privacy law that gives California residents rights over their personal data, including access, deletion, and opting out of data sales. It mandates transparency and accountability for businesses handling consumer data.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'sebi-cscrf',
+    name: 'SEBI - Cybersecurity and Cyber Resilience Framework (CSCRF)',
+    category: 'Regulatory',
+    description: 'The SEBI CSF mandates regulated market entities in India to establish robust cybersecurity and cyber resilience measures. It focuses on governance, risk assessment, incident response, and continuous monitoring to safeguard securities market infrastructure.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'irdai',
+    name: 'IRDAI - Information & Cyber Security Guidelines',
+    category: 'Regulatory',
+    description: 'Issued by the Insurance Regulatory and Development Authority of India (IRDAI), these guidelines require insurers to implement strong cybersecurity policies, conduct regular audits, manage third-party risks, and ensure timely incident reporting and response.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'mas-trm',
+    name: 'MAS - Technology Risk Management',
+    category: 'Regulatory',
+    description: 'The MAS TRM guidelines provide financial institutions in Singapore with comprehensive requirements to manage technology and cyber risks. It emphasizes governance, system availability, data protection, and incident response to ensure operational resilience.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nis2',
+    name: 'EU - Network and Information Systems Directive 2',
+    category: 'Regulatory',
+    description: 'The NIS2 Directive (Network and Information Systems Directive 2) is an EU law focused on enhancing cybersecurity across the European Union. It expands on the original NIS directive by broadening its scope to include more sectors, tightening security requirements, and introducing stricter enforcement measures.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'essential-eight',
+    name: 'Essential Eight Maturity Model (2023)',
+    category: 'Benchmark',
+    description: 'The Essential Eight Maturity Model is an Australian cybersecurity framework developed by the Australian Signals Directorate (ASD) and published by the Australian Cyber Security Centre (ACSC). Originally released in June 2017, the November 2023 update incorporates alignment with the Information Security Manual (ISM) and strengthened security requirements to counter evolving threat landscapes.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'ism-2024',
+    name: 'Information Security Manual (2024)',
+    category: 'Standard',
+    description: "'The Information Security Manual (ISM) is a comprehensive cybersecurity framework published by the Australian Signals Directorate (ASD) and updated in December 2024. It represents the considered advice of Australia's national intelligence agency and provides organizations with strategic and practical guidance for protecting information technology (IT) and operational technology (OT) systems, applications, and data from cyber threats.",
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'cyber-essentials-uk',
+    name: 'Cyber Essentials (UK) v3.2',
+    category: 'Standard',
+    description: 'Cyber Essentials v3.2 is a UK government-backed cybersecurity certification scheme developed by the National Cyber Security Centre (NCSC) and published in April 2025. It provides a baseline framework for organizations to protect their IT infrastructure against common, internet-originating cyber threats.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'c2m2',
+    name: 'C2M2 (2022)',
+    category: 'Benchmark',
+    description: 'The Cybersecurity Capability Maturity Model (C2M2) is a free, self-assessment framework developed by the U.S. Department of Energy in collaboration with public and private sector cybersecurity experts. It provides organizations with a structured, risk-based methodology to evaluate, benchmark, and progressively improve their cybersecurity capabilities across 10 critical domains.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'dora',
+    name: 'DORA in Control Framework v3.2',
+    category: 'Regulatory',
+    description: "European Union (EU) financial entities and their critical Information and Communications Technology (ICT) providers must comply with the EU Digital Operational Resilience Act (Regulation (EU) 2022/2554 - 'DORA'). DORA standardizes how financial entities report cybersecurity incidents, test their digital operational resilience, and manage ICT third-party risk across the financial services sector and EU member states.",
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
+  },
+  {
+    id: 'nist-800-66r2',
+    name: 'NIST SP 800-66r2 (HIPAA Security Rule)',
+    category: 'Best Practice',
+    description: 'NIST Special Publication 800-66 Revision 2, published February 14, 2024, titled "Implementing the Health Insurance Portability and Accountability Act (HIPAA) Security Rule: A Cybersecurity Resource Guide," provides authoritative practical guidance for HIPAA-regulated entities to protect electronic protected health information (ePHI) and achieve compliance with the HIPAA Security Rule.',
+    platforms: { AWS: 'full', Azure: 'full', GCP: 'full', Kubernetes: 'none' },
+    hasDetailsPage: true,
   },
 ]
+
 // HERO SECTION
 function ComplianceCoverageHero() {
   const ref = useRef(null)
@@ -334,7 +352,7 @@ function ComplianceCoverageHero() {
           </h1>
 
           <p className="text-base md:text-xl lg:text-2xl text-gray-400 leading-relaxed">
-            Automated support for 40+ security frameworks across AWS, Azure, GCP, and Kubernetes
+            Automated support for 40+ security frameworks across AWS, Azure, and GCP
           </p>
         </motion.div>
       </div>
@@ -423,7 +441,7 @@ function MobileFilters({
                 <div>
                   <div className="text-xs text-gray-500 font-semibold uppercase mb-2">Platform</div>
                   <div className="flex flex-wrap gap-2">
-                    {['AWS', 'Azure', 'GCP', 'Kubernetes'].map((platform) => (
+                    {['AWS', 'Azure', 'GCP'].map((platform) => (
                       <button
                         key={platform}
                         onClick={() => {
@@ -447,7 +465,7 @@ function MobileFilters({
                 <div>
                   <div className="text-xs text-gray-500 font-semibold uppercase mb-2">Category</div>
                   <div className="flex flex-wrap gap-2">
-                    {['Security', 'Industry', 'Regional', 'Cloud-native'].map((category) => (
+                    {['Best Practice', 'Regulatory', 'Certification', 'Benchmark', 'Standard'].map((category) => (
                       <button
                         key={category}
                         onClick={() => {
@@ -527,7 +545,7 @@ function DesktopFilters({
           {/* Platform Filters */}
           <div className="flex flex-wrap gap-3 items-center">
             <span className="text-sm text-gray-500 font-medium uppercase tracking-wider">Platform:</span>
-            {['AWS', 'Azure', 'GCP', 'Kubernetes'].map((platform) => (
+            {['AWS', 'Azure', 'GCP'].map((platform) => (
               <motion.button
                 key={platform}
                 whileHover={{ scale: 1.05 }}
@@ -551,7 +569,7 @@ function DesktopFilters({
           {/* Category Filters */}
           <div className="flex flex-wrap gap-3 items-center">
             <span className="text-sm text-gray-500 font-medium uppercase tracking-wider">Category:</span>
-            {['Security', 'Industry', 'Regional', 'Cloud-native'].map((category) => (
+            {['Best Practice', 'Regulatory', 'Certification', 'Benchmark', 'Standard'].map((category) => (
               <motion.button
                 key={category}
                 whileHover={{ scale: 1.05 }}
@@ -592,21 +610,6 @@ function DesktopFilters({
   )
 }
 
-// SUPPORT INDICATOR
-function SupportIndicator({ support }: { support: 'full' | 'partial' | 'none' | 'roadmap' }) {
-  if (support === 'full') {
-    return (
-      <div className="inline-flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-lg bg-gradient-to-r from-[#D33E9E] to-[#3530BA]">
-        <svg className="w-3 h-3 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-        </svg>
-      </div>
-    )
-  }
-
-  return <div className="text-gray-700 text-xs md:text-base">—</div>
-}
-
 // MOBILE CARD VIEW
 function MobileFrameworkCard({ framework, isExpanded, onToggle }: any) {
   const supportedPlatforms = Object.entries(framework.platforms)
@@ -628,6 +631,11 @@ function MobileFrameworkCard({ framework, isExpanded, onToggle }: any) {
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-white text-sm mb-1 line-clamp-2">
               {framework.name}
+              {framework.isGrouped && (
+                <span className="ml-2 text-xs text-gray-400 font-normal">
+                  ({framework.versionCount} versions)
+                </span>
+              )}
             </h3>
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs text-gray-500 px-2 py-0.5 bg-white/5 rounded">
@@ -683,7 +691,29 @@ function MobileFrameworkCard({ framework, isExpanded, onToggle }: any) {
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 {framework.description}
               </p>
-              <a
+
+              	      	      {/* Show versions if grouped */}
+              {framework.isGrouped && framework.versions && (
+  <div className="mb-4 pb-4 border-b border-white/10">
+    <div className="text-xs text-gray-500 font-semibold uppercase mb-2">
+      Supported Versions
+    </div>
+    <div className="grid grid-cols-2 gap-2">
+      {framework.versions.map((version: any) => (
+        <div key={version.id} className="text-xs text-gray-400 px-2 py-1 bg-white/5 rounded">
+          {version.name}
+        </div>
+      ))}
+    </div>
+    <div className="text-xs text-gray-500 italic mt-2">
+      and more...
+    </div>
+  </div>
+)}
+
+			      
+			      
+			      <a
                 href="/contact"
                 className="inline-flex items-center gap-2 text-sm text-[#D33E9E] hover:text-white transition-colors"
               >
@@ -700,7 +730,7 @@ function MobileFrameworkCard({ framework, isExpanded, onToggle }: any) {
   )
 }
 
-// DESKTOP CARD VIEW - Award-level design replacing checkmarks table
+// DESKTOP CARD VIEW
 function CoverageMatrix({ frameworks, expandedRow, setExpandedRow }: any) {
   return (
     <div className="hidden md:block max-w-7xl mx-auto px-6 py-12">
@@ -741,10 +771,11 @@ function CoverageMatrix({ frameworks, expandedRow, setExpandedRow }: any) {
                 <div className="relative z-10">
                   {/* Category Badge */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${framework.category === 'Security' ? 'bg-[#D33E9E]/20 text-[#D33E9E]' :
-                      framework.category === 'Industry' ? 'bg-[#3530BA]/20 text-[#8B4FB8]' :
-                        framework.category === 'Regional' ? 'bg-amber-500/20 text-amber-400' :
-                          'bg-cyan-500/20 text-cyan-400'
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${framework.category === 'Best Practice' ? 'bg-[#D33E9E]/20 text-[#D33E9E]' :
+                      framework.category === 'Regulatory' ? 'bg-[#3530BA]/20 text-[#8B4FB8]' :
+                        framework.category === 'Certification' ? 'bg-amber-500/20 text-amber-400' :
+                          framework.category === 'Benchmark' ? 'bg-cyan-500/20 text-cyan-400' :
+                            'bg-emerald-500/20 text-emerald-400'
                       }`}>
                       {framework.category}
                     </span>
@@ -762,6 +793,11 @@ function CoverageMatrix({ frameworks, expandedRow, setExpandedRow }: any) {
                   {/* Framework Name */}
                   <h3 className="text-lg font-bold text-white mb-3 line-clamp-2 group-hover:text-[#D33E9E] transition-colors">
                     {framework.name}
+                    {framework.isGrouped && (
+                      <span className="block text-xs text-gray-400 font-normal mt-1">
+                        {framework.versionCount} versions supported
+                      </span>
+                    )}
                   </h3>
 
                   {/* Platform Logos */}
@@ -792,6 +828,26 @@ function CoverageMatrix({ frameworks, expandedRow, setExpandedRow }: any) {
                           <p className="text-sm text-gray-400 leading-relaxed mb-4">
                             {framework.description}
                           </p>
+
+                          {/* Show versions if grouped */}
+{framework.isGrouped && framework.versions && (
+  <div className="mb-4">
+    <div className="text-xs text-gray-500 font-semibold uppercase mb-2">
+      Supported Versions
+    </div>
+    <div className="grid grid-cols-2 gap-2">
+      {framework.versions.map((version: any) => (
+        <div key={version.id} className="text-xs text-gray-300 px-2 py-1 bg-white/5 rounded border border-white/10">
+          {version.name}
+        </div>
+      ))}
+    </div>
+    <div className="text-xs text-gray-500 italic mt-2">
+      and more...
+    </div>
+  </div>
+)}
+
                           <a
                             href="/contact"
                             className="inline-flex items-center gap-2 text-sm font-medium text-[#D33E9E] hover:text-white transition-colors"
@@ -961,4 +1017,3 @@ export default function ComplianceCoveragePage() {
     </main>
   )
 }
-
